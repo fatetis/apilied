@@ -55,7 +55,7 @@ return [
             'charset' => 'utf8',
             'collation' => 'utf8_general_ci',
             'prefix' => env('DB_PREFIX', ''),
-            'prefix_indexes' => true,
+            'prefix_indexes' => false,
             'strict' => false,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([

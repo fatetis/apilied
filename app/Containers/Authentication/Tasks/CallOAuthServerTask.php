@@ -19,7 +19,7 @@ class CallOAuthServerTask extends Task
     /**
      * @string
      */
-    CONST AUTH_ROUTE = 'v1/oauth/token';
+    CONST AUTH_ROUTE = '/v1/oauth/token';
 
     /**
      * @param $data
@@ -30,7 +30,7 @@ class CallOAuthServerTask extends Task
     public function run($data)
     {
         // Full url to the oauth token endpoint
-        $authFullApiUrl = Config::get('apiato.api.url'). '/' .Config::get('apiato.api.prefix') . self::AUTH_ROUTE;
+        $authFullApiUrl = Config::get('apiato.api.url') . self::AUTH_ROUTE;
 
         $headers = ['HTTP_ACCEPT' => 'application/json'];
 

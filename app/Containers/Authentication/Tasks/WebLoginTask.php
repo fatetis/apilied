@@ -17,7 +17,7 @@ class WebLoginTask extends Task
     /**
      * @param string $email
      * @param string $password
-     * @param bool   $remember
+     * @param boolean   $remember
      *
      * @return Authenticatable
      * @throws LoginFailedException
