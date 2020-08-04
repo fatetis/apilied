@@ -3,6 +3,7 @@
 namespace App\Ship\Parents\Controllers;
 
 use Apiato\Core\Abstracts\Controllers\ApiController as AbstractApiController;
+use Apiato\Core\Traits\ApiResponseTrait;
 
 /**
  * Class ApiController.
@@ -11,5 +12,5 @@ use Apiato\Core\Abstracts\Controllers\ApiController as AbstractApiController;
  */
 abstract class ApiController extends AbstractApiController
 {
-
+    use ApiResponseTrait;
 }

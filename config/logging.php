@@ -51,7 +51,7 @@ return [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
-            'days' => 14,
+            'days' => 30,
         ],
 
         'slack' => [
@@ -99,6 +99,14 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        'api' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/api/laravel.log'),
+            'level' => 'info',
+            'days' => 30,
+        ],
+
     ],
 
 ];

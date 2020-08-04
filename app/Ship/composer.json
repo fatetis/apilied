@@ -3,5 +3,10 @@
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "2.6.*"
+  },
+  "autoload": {
+    "files": [
+      "Helpers/Helpers.php"
+    ]
   }
 }
