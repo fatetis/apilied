@@ -55,7 +55,7 @@ class Product extends Model
 
     public function medias()
     {
-        return $this->hasMany(ProductMedia::class, 'product_id')->with(['media']);
+        return $this->hasMany(ProductMedia::class, 'product_id')->with(['media'])->orderByDesc('sort');
     }
 
 

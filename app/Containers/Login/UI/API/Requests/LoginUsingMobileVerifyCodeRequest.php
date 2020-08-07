@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Product\UI\API\Requests;
+namespace App\Containers\Login\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class FindProductDetailByIdRequest.
+ * Class LoginUsingMobileVerifyCodeRequest.
  */
-class FindProductDetailByIdRequest extends Request
+class LoginUsingMobileVerifyCodeRequest extends Request
 {
 
     /**
@@ -33,7 +33,7 @@ class FindProductDetailByIdRequest extends Request
      * @var  array
      */
     protected $decode = [
-
+        // 'id',
     ];
 
     /**
@@ -43,7 +43,7 @@ class FindProductDetailByIdRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-         'id',
+        // 'id',
     ];
 
     /**
@@ -52,16 +52,8 @@ class FindProductDetailByIdRequest extends Request
     public function rules()
     {
         return [
-            'id' => 'required|regex:/^[1-9][0-9]*$/|exists:product,id'
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'id.required' => '产品id缺失',
-            'id.regex' => '产品id不合法',
-            'id.exists' => '产品数据不存在',
+            // 'id' => 'required',
+            // '{user-input}' => 'required|max:255',
         ];
     }
 

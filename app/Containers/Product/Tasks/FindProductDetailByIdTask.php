@@ -16,16 +16,16 @@ class FindProductDetailByIdTask extends Task
         $this->repository = $repository;
     }
 
-    public function run($id)
+    public function run($id, $with)
     {
         $result = $this->repository
             ->where('is_on_sale', GlobalStatusCode::YES)
             ->where('is_audit', GlobalStatusCode::YES)
             ->where('id', $id)
-            ->with(['attrs', 'skus', 'medias'])
+            ->with($with)
             ->orderByDesc('sort')
             ->orderByDesc('updated_at')
             ->first()->toArray();
-        dd($result);
+        return $result;
     }
 }

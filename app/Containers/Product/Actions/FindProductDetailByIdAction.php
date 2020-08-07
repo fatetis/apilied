@@ -10,7 +10,10 @@ class FindProductDetailByIdAction extends Action
 {
     public function run(DataTransporter $data)
     {
-        $product = Apiato::call('Product@FindProductDetailByIdTask', [[$data->id]]);
+        $product = Apiato::call('Product@FindProductDetailByIdTask', [
+            [$data->id],
+            ['attrs', 'skus', 'medias', 'brand']
+        ]);
 
         return $product;
     }

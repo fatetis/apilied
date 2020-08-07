@@ -6,6 +6,7 @@ use App\Ship\Parents\Models\Model;
 
 class Brand extends Model
 {
+    protected $table = 'brand';
     protected $fillable = [
 
     ];
@@ -23,8 +24,8 @@ class Brand extends Model
     ];
 
     protected $dates = [
-        'created_at',
-        'updated_at',
+//        'created_at',
+//        'updated_at',
     ];
 
     /**

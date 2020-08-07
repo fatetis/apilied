@@ -70,7 +70,8 @@ return [
         */
 
         'attributes' => [
-            'email' => ['email'],
+//            'email' => ['email'],
+            'user_name' => ['string'],
         ],
 
         /*
