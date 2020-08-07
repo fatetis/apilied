@@ -75,7 +75,7 @@ class Controller extends ApiController
 
         $result = Apiato::call('Authentication@ProxyApiLoginAction', [$dataTransporter]);
 
-        return $this->json($result['response_content'])->withCookie($result['refresh_cookie']);
+        return $this->successResponse($request, $result['response_content'])->withCookie($result['refresh_cookie']);
     }
 
     /**

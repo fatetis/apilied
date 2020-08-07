@@ -17,4 +17,6 @@ abstract class Model extends AbstractModel
     use HashIdTrait;
     use HasResourceKeyTrait;
 
+    public $timestamps = false;
+
 }

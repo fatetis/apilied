@@ -6,6 +6,7 @@ use App\Ship\Parents\Models\Model;
 
 class ProductAttrValueMap extends Model
 {
+    protected $table = 'product_attr_value_map';
     protected $fillable = [
 
     ];
@@ -23,12 +24,15 @@ class ProductAttrValueMap extends Model
     ];
 
     protected $dates = [
-        'created_at',
-        'updated_at',
     ];
 
     /**
      * A resource key to be used by the the JSON API Serializer responses.
      */
     protected $resourceKey = 'productattrvaluemaps';
+
+    public function value()
+    {
+        return $this->belongsTo(ProductAttrValues::class, 'product_attr_value_id');
+    }
 }

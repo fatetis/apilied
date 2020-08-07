@@ -6,6 +6,7 @@ use App\Ship\Parents\Models\Model;
 
 class ProductSkuStock extends Model
 {
+    protected $table = 'product_sku_stock';
     protected $fillable = [
 
     ];
@@ -23,8 +24,6 @@ class ProductSkuStock extends Model
     ];
 
     protected $dates = [
-        'created_at',
-        'updated_at',
     ];
 
     /**

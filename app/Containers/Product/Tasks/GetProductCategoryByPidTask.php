@@ -2,6 +2,7 @@
 
 namespace App\Containers\Product\Tasks;
 
+use Apiato\Core\Traits\HashIdTrait;
 use App\Containers\Product\Data\Repositories\ProductCategoryRepository;
 use App\Containers\Product\Models\ProductCategory;
 use App\Ship\Exceptions\NotFoundException;
@@ -30,7 +31,7 @@ class GetProductCategoryByPidTask extends Task
                 ->select('name', 'id', 'is_rec', 'pid')
                 ->orderBy('sort')
                 ->orderByDesc('updated_at')
-                ->get()->toArray();
+                ->get();
         } catch (\Exception $e) {
             throw new NotFoundException();
         }

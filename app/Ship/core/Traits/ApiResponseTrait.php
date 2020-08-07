@@ -4,6 +4,7 @@ namespace Apiato\Core\Traits;
 
 
 use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -14,10 +15,22 @@ use Illuminate\Support\Facades\Log;
 trait ApiResponseTrait
 {
 
+    /**
+     * 数据响应
+     * @param object $request 请求对象
+     * @param array $data 数据
+     * @param string $status 返回状态
+     * @param string $erorcd 返回处理状态
+     * @param string $message 返回处理信息
+     * @param string $sign 数据签名 防篡改
+     * @return false|JsonResponse|string
+     * Author: fatetis
+     * Date:2020/8/6 000616:06
+     */
     protected function response($request, $data, $status, $erorcd, $message, $sign)
     {
         $resno = $this->getUniqueResno($erorcd);
-
+        $data['created_at'] = date('Y-m-d H:i:s', time());
         $response_arr = [
             'charset' => 'UTF-8',
             'sign' => $sign,
@@ -46,7 +59,7 @@ trait ApiResponseTrait
         $text = "响应单号：{$resno}，路径：{$request->path()}\n请求数据：{$request_json}\n响应数据：{$response_json}";
         Log::channel('api')->info($text);
 
-        return $response_json;
+        return empty($message) ?  $this->apiJson($response_arr) : $response_json;
     }
 
     public function successResponse($request, $data = [], $erorcd = GlobalStatusCode::RESULT_SUCCESS_CODE, $message = '', $sign = '')
@@ -61,8 +74,13 @@ trait ApiResponseTrait
 
     protected function getUniqueResno($erorcd)
     {
-        $resno = date('YmdHis').randNum().$erorcd;
-        return $resno;
+        return date('YmdHis').randNum().$erorcd;
     }
+
+    public function apiJson($message, $status = 200, array $headers = [], $options = 256)
+    {
+        return new JsonResponse($message, $status, $headers, $options);
+    }
+
 
 }

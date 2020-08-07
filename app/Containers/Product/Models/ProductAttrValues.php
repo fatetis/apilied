@@ -23,12 +23,15 @@ class ProductAttrValues extends Model
     ];
 
     protected $dates = [
-        'created_at',
-        'updated_at',
     ];
 
     /**
      * A resource key to be used by the the JSON API Serializer responses.
      */
     protected $resourceKey = 'productattrvalues';
+
+    public function attr()
+    {
+        return $this->belongsTo(ProductAttr::class, 'product_attr_id', 'id');
+    }
 }
