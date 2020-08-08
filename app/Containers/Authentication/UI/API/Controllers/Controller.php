@@ -7,6 +7,7 @@ use App\Containers\Authentication\Data\Transporters\ProxyApiLoginTransporter;
 use App\Containers\Authentication\Data\Transporters\ProxyRefreshTransporter;
 use App\Containers\Authentication\UI\API\Requests\LoginRequest;
 use App\Containers\Authentication\UI\API\Requests\LogoutRequest;
+use App\Containers\Authentication\UI\API\Requests\ProxyLoginForMobileApiClientRequest;
 use App\Containers\Authentication\UI\API\Requests\RefreshRequest;
 use App\Ship\Parents\Controllers\ApiController;
 use App\Ship\Transporters\DataTransporter;
@@ -64,7 +65,7 @@ class Controller extends ApiController
         return $this->json($result['response_content'])->withCookie($result['refresh_cookie']);
     }
 
-    public function ProxyLoginForMobileApiClient(LoginRequest $request)
+    public function ProxyLoginForMobileApiClient(ProxyLoginForMobileApiClientRequest $request)
     {
         $dataTransporter = new ProxyApiLoginTransporter(
             array_merge($request->all(), [

@@ -39,7 +39,7 @@ trait ApiResponseTrait
                     'resno' => $resno,
                     'return_code' => $status,
                     'result_code' => $erorcd,
-                    'result_msg' => $message ?: (GlobalStatusCode::$statusTexts[$erorcd] ?? ''),
+                    'result_msg' => $message ?: (GlobalStatusCode::$status_texts[$erorcd] ?? ''),
                     'time' => date('Y-m-d H:i:s', time()),
                 ],
                 'body' => $data

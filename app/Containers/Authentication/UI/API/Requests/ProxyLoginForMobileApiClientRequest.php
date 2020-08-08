@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Login\UI\API\Requests;
+namespace App\Containers\Authentication\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class LoginUsingMobileVerifyCodeRequest.
+ * Class ProxyLoginForMobileApiClientRequest.
  */
-class LoginUsingMobileVerifyCodeRequest extends Request
+class ProxyLoginForMobileApiClientRequest extends Request
 {
 
     /**
@@ -49,24 +49,30 @@ class LoginUsingMobileVerifyCodeRequest extends Request
     /**
      * @return  array
      */
+    /**
+     * @return  array
+     */
     public function rules()
     {
         return [
-             'mobile' => 'required|mobile|exists:users:mobile',
-             'code' => 'required|min:6|max:6|regex:/^\d{6,6}$/',
+            // 至少2-16个字符，不允许包含特殊字符
+            'user_name' => 'required|min:2|max:16|regex:/^[\x{4e00}-\x{9fa5}A-Za-z0-9]{2,16}$/u',
+            // 至少6-16个字符，至少1个大写字母，1个小写字母和1个数字，其他可以是任意字符
+//            'password' => 'required|min:6|max:16|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[\s\S]{6,16}$/',
         ];
     }
 
     public function messages()
     {
         return [
-            'mobile.required' => '手机号码为必填',
-            'mobile.mobile' => '手机号码不合法',
-            'mobile.exists' => '手机号码不存在',
-            'code.required' => '验证码为必填',
-            'code.min' => '验证码不合法1',
-            'code.max' => '验证码不合法2',
-            'code.regex' => '验证码不合法3',
+            'user_name.required' => '用户名为必填',
+            'user_name.min' => '用户名至少为2个字符',
+            'user_name.max' => '用户名最多为16个字符',
+            'user_name.regex' => '用户名不合法，不允许包含特殊字符',
+            'password.required' => '密码为必填',
+            'password.min' => '密码至少为6个字符',
+            'password.max' => '密码最多为16个字符',
+            'password.regex' => '密码不合法，至少包含1个大写字母，1个小写字母和1个数字',
         ];
     }
 

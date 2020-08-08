@@ -20,7 +20,7 @@
  */
 
 /** @var Route $router */
-$router->post('login/mobile', [
+$router->post('mobile/login', [
     'as' => 'api_login_login_using_mobile_verify_code',
     'uses'  => 'Controller@loginUsingMobileVerifyCode',
     'middleware' => [

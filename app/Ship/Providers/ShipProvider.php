@@ -3,6 +3,7 @@
 namespace App\Ship\Providers;
 
 use App\Ship\Parents\Providers\MainProvider;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Class ShipProvider
@@ -30,7 +31,7 @@ class ShipProvider extends MainProvider
     public function __construct()
     {
         parent::__construct(app());
-        
+
         if (class_exists('Barryvdh\Debugbar\ServiceProvider')) {
             $this->serviceProviders[] = \Barryvdh\Debugbar\ServiceProvider::class;
         }
@@ -38,6 +39,12 @@ class ShipProvider extends MainProvider
         if (class_exists('Barryvdh\Debugbar\Facade')) {
             $this->aliases[] = \Barryvdh\Debugbar\Facade::class;
         }
+
+        //拓展手机号码验证
+        Validator::extend('mobile', function($attribute, $value, $parameters) {
+            return preg_match('/^1[3456789][0-9]{9}$/', $value);
+        });
+
     }
     /**
      * Bootstrap any application services.
@@ -67,5 +74,5 @@ class ShipProvider extends MainProvider
 
         parent::register();
     }
-    
+
 }
