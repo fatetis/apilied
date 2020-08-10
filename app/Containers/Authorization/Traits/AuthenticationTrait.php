@@ -2,6 +2,8 @@
 
 namespace App\Containers\Authorization\Traits;
 
+use Illuminate\Support\Facades\Hash;
+
 /**
  * Class AuthenticationTrait
  *
@@ -29,4 +31,11 @@ trait AuthenticationTrait
 
         return $builder->first();
     }
+
+    public function validateForPassportPasswordGrant($password)
+    {
+        if(empty($password)) return true;
+        return Hash::check($password, $this->getAuthPassword());
+    }
+
 }

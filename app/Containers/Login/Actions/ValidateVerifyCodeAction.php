@@ -21,15 +21,17 @@ class ValidateVerifyCodeAction extends Action
             'num' => $data['num'] ?? GlobalStatusCode::VERIFY_CODE_DEFAULT_NUM,
             'using_type' => $data['using_type'] ?? GlobalStatusCode::VERIFY_CODE_DEFAULT_USING_TYPE,
         ];
-        $code_info = Apiato::call('Login@FindVerifyCodeByMobileAndCodeTask', [$data]);
+        $code_info = Apiato::call('Login@FindVerifyCodeByMobileTask', [$data]);
 
         if ($code_info){
-            $code_info = Apiato::call('Login@IncrementVerifyCodeByRepeatNumTask', 1);
-            $time = Carbon::now()->addMinutes(3);
-            $created_at = Carbon::parse($code_info['created_at'])->toDateTimeString();
-            if($created_at->gt($time)) return GlobalStatusCode::LOGIN_VERIFY_CODE_OVERDUE;
+//            $code_info = Apiato::call('Login@IncrementVerifyCodeByRepeatNumTask', [1]);
+            $time = Carbon::now();
+            $created_at = Carbon::parse($code_info['created_at'])->addMinutes(3)->toDateTimeString();
+//            if($time->gt($created_at)) return GlobalStatusCode::LOGIN_VERIFY_CODE_OVERDUE;
             if($code_info['code'] !== $data['code']) return GlobalStatusCode::LOGIN_VERIFY_CODE_ERROR;
             if($code_info['repeat_num'] > $data['num']) return GlobalStatusCode::LOGIN_MAXED_NUM;
+//            $code_info['deleted_at'] = dt();
+//            $code_info->save();
             return GlobalStatusCode::RESULT_SUCCESS_CODE;
         } else {
             return GlobalStatusCode::LOGIN_NOT_ISSET_VERIFY_CODE;

@@ -26,6 +26,7 @@ class GlobalStatusCode
     const LOGIN_VERIFY_CODE_ERROR = 'A1002';
     const LOGIN_NOT_ISSET_VERIFY_CODE = 'A1003';
     const LOGIN_VERIFY_CODE_OVERDUE = 'A1004';
+    const LOGIN_NOT_ISSET_MOBILE = 'A1005';
     // 服务端错误码
     const RESULT_SYSTEM_FAIL_CODE = 'B0001';
     // cdn端错误码
@@ -45,6 +46,8 @@ class GlobalStatusCode
         'A1002' => '验证码错误，最多允许3次输入错误',
         'A1003' => '请先获取验证码',
         'A1004' => '验证码已过期，请重新获取验证码，最多允许3次输入错误',
+        'A1005' => '手机号不存在',
+
 
         'B0001' => '系统端错误',
         'C0001' => 'CDN端错误',

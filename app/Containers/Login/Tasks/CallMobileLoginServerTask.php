@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\App;
 class CallMobileLoginServerTask extends Task
 {
 
-    CONST AUTH_ROUTE = '/v1/clients/api/mobile/login';
+    CONST AUTH_ROUTE = '/v1/oauth/token';
 
     public function __construct()
     {
@@ -32,11 +32,11 @@ class CallMobileLoginServerTask extends Task
 
         // response content as Array
         $content = \GuzzleHttp\json_decode($response->getContent(), true);
-dd($response, $content);
+dd($authFullApiUrl, $data, $content);
         // If the internal request to the oauth token endpoint was not successful we throw an exception
-//        if (!$response->isSuccessful()) {
-//            throw new LoginFailedException($content['message'], null, $response->getStatusCode());
-//        }
+        if (!$response->isSuccessful()) {
+            throw new LoginFailedException($content['message'], null, $response->getStatusCode());
+        }
 
         return $content;
     }

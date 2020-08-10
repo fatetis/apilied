@@ -5,7 +5,7 @@ namespace App\Containers\Login\Tasks;
 use App\Containers\Login\Data\Repositories\VerifyCodeRepository;
 use App\Ship\Parents\Tasks\Task;
 
-class FindVerifyCodeByMobileAndCodeTask extends Task
+class FindVerifyCodeByMobileTask extends Task
 {
 
     protected $repository;

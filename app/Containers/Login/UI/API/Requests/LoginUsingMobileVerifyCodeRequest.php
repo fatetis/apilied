@@ -52,7 +52,7 @@ class LoginUsingMobileVerifyCodeRequest extends Request
     public function rules()
     {
         return [
-             'mobile' => 'required|mobile|exists:users:mobile',
+             'mobile' => 'required|mobile',
              'code' => 'required|min:6|max:6|regex:/^\d{6,6}$/',
         ];
     }
