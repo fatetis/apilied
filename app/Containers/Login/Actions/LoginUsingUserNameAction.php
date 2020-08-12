@@ -10,7 +10,7 @@ class LoginUsingUserNameAction extends Action
 {
     public function run(DataTransporter $data)
     {
-        $result = Apiato::call('Login@LoginUsingUserNameTask', [
+        $result = Apiato::call('Login@LoginAuthUsingUserNameTask', [
             [
                 'user_name' => $data->name,
                 'password' => $data->password,

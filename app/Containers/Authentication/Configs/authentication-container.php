@@ -71,7 +71,7 @@ return [
 
         'attributes' => [
 //            'email' => ['email'],
-            'user_name' => ['string'],
+            'username' => ['string'],
         ],
 
         /*

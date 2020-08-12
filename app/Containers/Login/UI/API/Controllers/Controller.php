@@ -10,18 +10,11 @@ use App\Ship\Parents\Controllers\ApiController;
 class Controller extends ApiController
 {
 
-    public function loginUsingUserName(LoginUsingUserNameRequest $request)
-    {
-        $result = Apiato::call('Login@LoginUsingUserNameAction', [$request]);
-
-        return $result;
-    }
-
     public function loginUsingMobileVerifyCode(LoginUsingMobileVerifyCodeRequest $request)
     {
         $result = Apiato::call('Login@LoginUsingMobileVerifyCodeAction', [$request]);
 
-        return $result;
+        return $this->successResponse($request, $result['response_content'])->withCookie($result['refresh_cookie']);
     }
 
 }

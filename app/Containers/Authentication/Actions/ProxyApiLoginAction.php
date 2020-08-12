@@ -5,6 +5,7 @@ namespace App\Containers\Authentication\Actions;
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\Authentication\Data\Transporters\ProxyApiLoginTransporter;
 use App\Ship\Parents\Actions\Action;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ProxyApiLoginAction.
@@ -31,12 +32,15 @@ class ProxyApiLoginAction extends Action
         ];
 
         $responseContent = Apiato::call('Authentication@CallOAuthServerTask', [$requestData]);
-
         // check if user email is confirmed only if that feature is enabled.
-        Apiato::call('Authentication@CheckIfUserIsConfirmedTask', [],
-            [['loginWithCredentials' => [
-                $requestData['username'], $requestData['password'], $loginCustomAttribute['loginAttribute']]]
-            ]);
+        if($requestData['password'] == $requestData['client_secret']){
+            Apiato::call('Login@LoginAuthUsingUserNameTask', [$requestData['username']]);
+        } else {
+            Apiato::call('Authentication@CheckIfUserIsConfirmedTask', [],
+                [['loginWithCredentials' => [
+                    $requestData['username'], $requestData['password'], $loginCustomAttribute['loginAttribute']]]
+                ]);
+        }
 
         $refreshCookie = Apiato::call('Authentication@MakeRefreshCookieTask', [$responseContent['refresh_token']]);
 
