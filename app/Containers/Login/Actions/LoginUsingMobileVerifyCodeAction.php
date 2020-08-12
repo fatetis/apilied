@@ -19,19 +19,21 @@ class LoginUsingMobileVerifyCodeAction extends Action
             'account' => $mobile,
             'code' => $code,
         ];
+        // 获取用户名数据
         $user_info = Apiato::call('User@FindUserByMobileTask', [$data['account']]);
         if(empty($user_info)) return GlobalStatusCode::LOGIN_NOT_ISSET_MOBILE;
 
+        // 验证码校验
         $validateCode = Apiato::call('Login@ValidateVerifyCodeAction', [$data]);
         if($validateCode !== GlobalStatusCode::RESULT_SUCCESS_CODE) return $validateCode;
 
+        // 用户登录
         $dataTransporter = new ProxyApiLoginTransporter([
                 'username' => $user_info['username'],
                 'password'      => Config::get('authentication-container.clients.mobile.api.secret'),
                 'client_id'       => Config::get('authentication-container.clients.mobile.api.id'),
                 'client_password' => Config::get('authentication-container.clients.mobile.api.secret')
             ]);
-
         $result = Apiato::call('Authentication@ProxyApiLoginAction', [$dataTransporter]);
 
         return $result;

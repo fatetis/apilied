@@ -27,6 +27,7 @@ class Controller extends ApiController
     }
 
     /**
+     * 获取一条产品数据
      * @param FindProductDetailByIdRequest $request
      * @return false|string
      * Author: fatetis
