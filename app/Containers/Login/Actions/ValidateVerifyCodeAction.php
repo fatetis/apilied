@@ -18,10 +18,10 @@ class ValidateVerifyCodeAction extends Action
             'type' => $data['type'] ?? GlobalStatusCode::VERIFY_CODE_DEFAULT_TYPE,
             'account' => $data['account'],
             'code' => $data['code'],
-            'num' => $data['num'] ?? GlobalStatusCode::VERIFY_CODE_DEFAULT_NUM,
+            'num' => $data['num'] ?? GlobalStatusCode::VERIFY_CODE_REPEAT_NUM_DEFAULT,
             'using_type' => $data['using_type'] ?? GlobalStatusCode::VERIFY_CODE_DEFAULT_USING_TYPE,
         ];
-        $code_info = Apiato::call('Login@FindVerifyCodeByMobileTask', [$data]);
+        $code_info = Apiato::call('Login@FindVerifyCodeByAccountAndTypeAndUsingTypeTask', [$data]);
 
         if ($code_info){
             Apiato::call('Login@IncrementVerifyCodeByRepeatNumTask', [$code_info['id'], 1]);

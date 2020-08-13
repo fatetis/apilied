@@ -18,10 +18,7 @@ class FindUserByMobileTask extends Task
 
     public function run($mobile)
     {
-        try {
-            return $this->repository->findByField('mobile', $mobile)->first();
-        } catch (\Exception $e) {
-            throw new NotFoundException();
-        }
+        return $this->repository->findWhere(['mobile' => $mobile]);
+
     }
 }

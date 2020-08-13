@@ -3,8 +3,10 @@
 namespace App\Containers\Login\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Login\UI\API\Requests\CreateMobileVerifyCodeRequest;
 use App\Containers\Login\UI\API\Requests\LoginUsingMobileVerifyCodeRequest;
 use App\Ship\Parents\Controllers\ApiController;
+use App\Ship\Transporters\DataTransporter;
 
 class Controller extends ApiController
 {
@@ -22,7 +24,14 @@ class Controller extends ApiController
         return is_string($result)
             ? $this->errorResponse($request, '', [], $result)
             : $this->successResponse($request, $result['response_content'])->withCookie($result['refresh_cookie']);
+    }
 
+    public function CreateMobileVerifyCode(CreateMobileVerifyCodeRequest $request)
+    {
+        $result = Apiato::call('Login@CreateMobileVerifyCodeAction', [new DataTransporter($request)]);
+        return is_string($result)
+            ? $this->errorResponse($request, '', [], $result)
+            : $this->successResponse($request, $result);
     }
 
 }

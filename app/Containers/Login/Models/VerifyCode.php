@@ -8,12 +8,24 @@ class VerifyCode extends Model
 {
     protected $table = 'verify_code';
 
-    const type_mobile = 0; // 手机
-    const type_email = 1; // 邮箱
-    const using_type_login = 0; // 登录
+    const TYPE_MOBILE = 0; // 手机
+    const TYPE_EMAIL = 1; // 邮箱
+    const USING_TYPE_LOGIN = 0; // 登录
+    const USING_TYPE_REGISTER = 1; // 注册
+
+    public static $using_type_arr = [
+        0 => '登录',
+        1 => '注册',
+    ];
 
     protected $fillable = [
-
+        'account',
+        'code',
+        'type',
+        'using_type',
+        'repeat_num',
+        'created_at',
+        'updated_at',
     ];
 
     protected $attributes = [
