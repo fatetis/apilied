@@ -71,7 +71,8 @@ return [
 
         'attributes' => [
 //            'email' => ['email'],
-            'username' => ['string'],
+            'username' => 'min:2|max:16|regex:/^[\x{4e00}-\x{9fa5}A-Za-z0-9]{2,16}$/u',
+            'mobile' => 'mobile',
         ],
 
         /*

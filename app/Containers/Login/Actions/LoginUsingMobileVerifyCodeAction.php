@@ -26,21 +26,21 @@ class LoginUsingMobileVerifyCodeAction extends Action
 
         // 获取用户名数据
         $user_info = Apiato::call('User@FindUserByMobileTask', [$data['account']]);
-        if(empty($user_info)) {
+        if (empty($user_info)) {
             // 手机号注册
             $user_info = Apiato::call('User@RegisterUserAction', [new DataTransporter([
                 'mobile' => $data['account'],
-                'username' => 'lied_'.encrypt($user_info['id']),
             ])]);
-        };
+        }
 
         // 用户登录
         $dataTransporter = new ProxyApiLoginTransporter([
-                'username' => $user_info['username'],
+                'mobile' => $user_info['mobile'],
                 'password'      => Config::get('authentication-container.clients.mobile.api.secret'),
                 'client_id'       => Config::get('authentication-container.clients.mobile.api.id'),
                 'client_password' => Config::get('authentication-container.clients.mobile.api.secret')
             ]);
+
         $result = Apiato::call('Authentication@ProxyApiLoginAction', [$dataTransporter]);
 
         return $result;

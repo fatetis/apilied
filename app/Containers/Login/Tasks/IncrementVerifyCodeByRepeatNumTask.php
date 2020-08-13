@@ -15,8 +15,8 @@ class IncrementVerifyCodeByRepeatNumTask extends Task
         $this->repoistory = $repository;
     }
 
-    public function run($num)
+    public function run($id, $num)
     {
-        return $this->repoistory->increment('repeat_num', $num);
+        return $this->repoistory->where('id', $id)->increment('repeat_num', $num);
     }
 }

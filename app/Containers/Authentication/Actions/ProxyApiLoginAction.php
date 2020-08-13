@@ -34,7 +34,7 @@ class ProxyApiLoginAction extends Action
         $responseContent = Apiato::call('Authentication@CallOAuthServerTask', [$requestData]);
         // check if user email is confirmed only if that feature is enabled.
         if($requestData['password'] == $requestData['client_secret']){
-            Apiato::call('Login@LoginAuthUsingUserNameTask', [$requestData['username']]);
+            Apiato::call('Login@LoginAuthUsingUserNameTask', [$loginCustomAttribute['loginAttribute'], $requestData['username']]);
         } else {
             Apiato::call('Authentication@CheckIfUserIsConfirmedTask', [],
                 [['loginWithCredentials' => [

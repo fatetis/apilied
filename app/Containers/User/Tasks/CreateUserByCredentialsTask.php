@@ -25,20 +25,22 @@ class CreateUserByCredentialsTask extends Task
     }
 
     /**
-     * @param bool        $isClient
-     * @param string      $email
-     * @param string      $password
+     * @param bool $isClient
+     * @param string $mobile
+     * @param string|null $email
+     * @param string|null $password
      * @param string|null $name
      * @param string|null $gender
      * @param string|null $birth
-     *
-     * @return  mixed
-     * @throws  CreateResourceFailedException
+     * @return User
+     * Author: fatetis
+     * Date:2020/8/13 001315:17
      */
     public function run(
         bool $isClient = true,
-        string $email,
-        string $password,
+        string $mobile,
+        string $email = null,
+        string $password = null,
         string $name = null,
         string $gender = null,
         string $birth = null
@@ -47,7 +49,8 @@ class CreateUserByCredentialsTask extends Task
         try {
             // create new user
             $user = $this->repository->create([
-                'password'  => Hash::make($password),
+                'mobile' => $mobile,
+                'password'  => empty($password) ? null : Hash::make($password),
                 'email'     => $email,
                 'name'      => $name,
                 'gender'    => $gender,

@@ -19,8 +19,10 @@ class Controller extends ApiController
     public function loginUsingMobileVerifyCode(LoginUsingMobileVerifyCodeRequest $request)
     {
         $result = Apiato::call('Login@LoginUsingMobileVerifyCodeAction', [$request]);
+        return is_string($result)
+            ? $this->errorResponse($request, '', [], $result)
+            : $this->successResponse($request, $result['response_content'])->withCookie($result['refresh_cookie']);
 
-        return $this->successResponse($request, $result['response_content'])->withCookie($result['refresh_cookie']);
     }
 
 }

@@ -32,14 +32,17 @@ class RegisterUserAction extends Action
         // create user record in the database and return it.
         $user = Apiato::call('User@CreateUserByCredentialsTask', [
             $isClient = true,
+            $data->mobile,
             $data->email,
             $data->password,
             $data->name,
             $data->gender,
-            $data->birth
+            $data->birth,
         ]);
 
-        Mail::send(new UserRegisteredMail($user));
+        if(!empty($user->email)) {
+            Mail::send(new UserRegisteredMail($user));
+        }
 
         Notification::send($user, new UserRegisteredNotification($user));
 

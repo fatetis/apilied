@@ -24,9 +24,9 @@ class ValidateVerifyCodeAction extends Action
         $code_info = Apiato::call('Login@FindVerifyCodeByMobileTask', [$data]);
 
         if ($code_info){
-            $code_info = Apiato::call('Login@IncrementVerifyCodeByRepeatNumTask', [1]);
+            Apiato::call('Login@IncrementVerifyCodeByRepeatNumTask', [$code_info['id'], 1]);
             $time = Carbon::now();
-            $created_at = Carbon::parse($code_info['created_at'])->addMinutes(3)->toDateTimeString();
+            $created_at = Carbon::parse($code_info['created_at'])->addMinutes(5)->toDateTimeString();
             // 3分钟有效期校验
             if($time->gt($created_at)) return GlobalStatusCode::LOGIN_VERIFY_CODE_OVERDUE;
             // 验证码核对
@@ -34,6 +34,7 @@ class ValidateVerifyCodeAction extends Action
             // 重复3次数核对
             if($code_info['repeat_num'] > $data['num']) return GlobalStatusCode::LOGIN_MAXED_NUM;
             $code_info['deleted_at'] = dt();
+
             $code_info->save();
             return GlobalStatusCode::RESULT_SUCCESS_CODE;
         } else {
