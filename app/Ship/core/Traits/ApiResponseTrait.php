@@ -30,7 +30,7 @@ trait ApiResponseTrait
     protected function response($request, $data, $status, $erorcd, $message, $sign)
     {
         $resno = $this->getUniqueResno($erorcd);
-        $data['created_at'] = date('Y-m-d H:i:s', time());
+        !empty($data) && $data['created_at'] = date('Y-m-d H:i:s', time());
         $response_arr = [
             'charset' => 'UTF-8',
             'sign' => $sign,
