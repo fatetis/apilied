@@ -19,4 +19,5 @@ abstract class Model extends AbstractModel
 
     public $timestamps = false;
 
+//    protected $dateFormat = 'Y-m-d H:i:s';
 }

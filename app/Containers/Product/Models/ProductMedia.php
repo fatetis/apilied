@@ -3,6 +3,7 @@
 namespace App\Containers\Product\Models;
 
 use App\Containers\Media\Models\Media;
+use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
 use App\Ship\Parents\Models\Model;
 
 class ProductMedia extends Model
@@ -34,6 +35,6 @@ class ProductMedia extends Model
 
     public function media()
     {
-        return $this->belongsTo(Media::class, 'media_id');
+        return $this->belongsTo(Media::class, 'media_id')->where('is_show', GlobalStatusCode::YES);
     }
 }

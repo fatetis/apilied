@@ -3,7 +3,9 @@
 namespace App\Containers\Product\UI\API\Controllers;
 
 use App\Containers\Product\UI\API\Requests\FindProductDetailByIdRequest;
+use App\Containers\Product\UI\API\Requests\GetProductByCategoryIdRequest;
 use App\Containers\Product\UI\API\Requests\GetProductCategoryByPidRequest;
+use App\Containers\Product\UI\API\Transformers\ProductTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Ship\Transporters\DataTransporter;
@@ -38,8 +40,16 @@ class Controller extends ApiController
         $data = Apiato::call('Product@FindProductDetailByIdAction', [new DataTransporter($request)]);
 
         return $this->successResponse($request, $data);
-
     }
+
+    public function getProductByCategoryId(GetProductByCategoryIdRequest $request)
+    {
+        $data = Apiato::call('Product@GetProductByCategoryIdAction', [new DataTransporter($request)]);
+
+
+        return $this->successResponse($request, $this->transform($data, ProductTransformer::class));
+    }
+
 
 
 }

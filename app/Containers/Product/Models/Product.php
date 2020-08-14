@@ -28,6 +28,11 @@ class Product extends Model
 
     ];
 
+    /**
+     * A resource key to be used by the the JSON API Serializer responses.
+     */
+    protected $resourceKey = 'products';
+
     public function category()
     {
         return $this->belongsTo(ProductCategory::class, 'category_id', 'id');
@@ -57,10 +62,4 @@ class Product extends Model
     {
         return $this->hasMany(ProductMedia::class, 'product_id')->with(['media'])->orderByDesc('sort');
     }
-
-
-    /**
-     * A resource key to be used by the the JSON API Serializer responses.
-     */
-    protected $resourceKey = 'products';
 }
