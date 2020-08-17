@@ -52,14 +52,14 @@ class GetIndexAdvRequest extends Request
     public function rules()
     {
         return [
-             'city_id' => 'required',
+             'city' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'city_id.required' => '城市id不能为空',
+            'city.required' => '城市id不能为空',
         ];
     }
 

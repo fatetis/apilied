@@ -19,7 +19,7 @@ class Controller extends ApiController
      */
     public function getIndexAdv(GetIndexAdvRequest $request)
     {
-        $index = Apiato::call('Index@GetIndexAdvAction', [['city_id' => $request->input('city_id', '')]]);
+        $index = Apiato::call('Index@GetIndexAdvAction', [['city_id' => $request->input('city', '')]]);
         return $this->successResponse($request, $index);
     }
 
