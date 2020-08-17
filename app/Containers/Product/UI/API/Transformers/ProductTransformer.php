@@ -2,6 +2,7 @@
 
 namespace App\Containers\Product\UI\API\Transformers;
 
+use App\Containers\Brand\UI\API\Transformers\BrandTransformer;
 use App\Containers\Product\Models\Product;
 use App\Ship\Parents\Transformers\Transformer;
 
@@ -11,9 +12,9 @@ class ProductTransformer extends Transformer
      * @var  array
      */
     protected $availableIncludes = [
-//        'category',
-//        'brand',
-//        'attrs',
+        'category',
+        'brand',
+        'attrs',
         'skus',
         'medias',
     ];
@@ -64,11 +65,20 @@ class ProductTransformer extends Transformer
         return $response;
     }
 
+    public function includeCategory(Product $product)
+    {
+        return $this->item($product->category, new ProductCategoryTransformer());
+    }
 
-//    public function includeAttrs(Product $product)
-//    {
-//        return $this->collection($product->attrs, new ProductAttrTransformer());
-//    }
+    public function includeBrand(Product $product)
+    {
+        return $this->item($product->brand, new BrandTransformer());
+    }
+
+    public function includeAttrs(Product $product)
+    {
+        return $this->collection($product->attrs, new ProductAttrMapTransformer());
+    }
 
     public function includeSkus(Product $product)
     {
@@ -79,6 +89,8 @@ class ProductTransformer extends Transformer
     {
         return $this->collection($product->medias, new ProductMediaTransformer());
     }
+
+
 
 
 

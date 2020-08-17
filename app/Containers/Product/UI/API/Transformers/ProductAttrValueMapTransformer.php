@@ -2,16 +2,16 @@
 
 namespace App\Containers\Product\UI\API\Transformers;
 
-use App\Containers\Product\Models\ProductAttr;
+use App\Containers\Product\Models\ProductAttrValueMap;
 use App\Ship\Parents\Transformers\Transformer;
 
-class ProductAttrTransformer extends Transformer
+class ProductAttrValueMapTransformer extends Transformer
 {
     /**
      * @var  array
      */
     protected $defaultIncludes = [
-        'values'
+        'value'
     ];
 
     /**
@@ -22,16 +22,19 @@ class ProductAttrTransformer extends Transformer
     ];
 
     /**
-     * @param ProductAttr $entity
+     * @param ProductAttrValueMap $entity
      *
      * @return array
      */
-    public function transform(ProductAttr $entity)
+    public function transform(ProductAttrValueMap $entity)
     {
         $response = [
-            'object' => 'ProductAttr',
+            'object' => 'ProductAttrValueMap',
             'id' => $entity->getHashedKey(),
-            'name' => $entity->name,
+            'product_id' => $entity->product_id,
+            'product_attr_id' => $entity->product_attr_id,
+            'product_attr_map_id' => $entity->product_attr_map_id,
+            'product_attr_value_id' => $entity->product_attr_value_id,
             'sort' => $entity->sort,
 //            'created_at' => $entity->created_at,
 //            'updated_at' => $entity->updated_at,
@@ -47,9 +50,9 @@ class ProductAttrTransformer extends Transformer
         return $response;
     }
 
-    public function includeValues(ProductAttr $product)
+    public function includeValue(ProductAttrValueMap $product)
     {
-        return $this->collection($product->values, new ProductAttrValuesTransformer());
+        return $this->item($product->value, new ProductAttrValuesTransformer());
     }
 
 }

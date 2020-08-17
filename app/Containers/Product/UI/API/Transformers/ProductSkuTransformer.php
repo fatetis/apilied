@@ -31,7 +31,7 @@ class ProductSkuTransformer extends Transformer
     public function transform(ProductSku $entity)
     {
         $response = [
-            'object' => 'ProductSku',
+//            'object' => 'ProductSku',
             'id' => $entity->getHashedKey(),
             'product_id' => $entity->product_id,
             'attr_key' => $entity->attr_key,
@@ -40,9 +40,9 @@ class ProductSkuTransformer extends Transformer
             'cost_price' => $entity->cost_price,
             'sold_num' => $entity->sold_num,
             'code' => $entity->code,
-            'created_at' => $entity->created_at,
-            'updated_at' => $entity->updated_at,
-            'deleted_at' => $entity->deleted_at,
+//            'created_at' => $entity->created_at,
+//            'updated_at' => $entity->updated_at,
+//            'deleted_at' => $entity->deleted_at,
 
         ];
 

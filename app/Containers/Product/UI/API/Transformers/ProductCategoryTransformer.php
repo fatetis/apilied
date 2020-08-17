@@ -2,16 +2,16 @@
 
 namespace App\Containers\Product\UI\API\Transformers;
 
-use App\Containers\Product\Models\ProductAttr;
+use App\Containers\Product\Models\ProductCategory;
 use App\Ship\Parents\Transformers\Transformer;
 
-class ProductAttrTransformer extends Transformer
+class ProductCategoryTransformer extends Transformer
 {
     /**
      * @var  array
      */
     protected $defaultIncludes = [
-        'values'
+
     ];
 
     /**
@@ -22,16 +22,18 @@ class ProductAttrTransformer extends Transformer
     ];
 
     /**
-     * @param ProductAttr $entity
+     * @param ProductCategory $entity
      *
      * @return array
      */
-    public function transform(ProductAttr $entity)
+    public function transform(ProductCategory $entity)
     {
         $response = [
-            'object' => 'ProductAttr',
+            'object' => 'ProductCategory',
             'id' => $entity->getHashedKey(),
+            'pid' => $entity->pid,
             'name' => $entity->name,
+            'is_rec' => $entity->is_rec,
             'sort' => $entity->sort,
 //            'created_at' => $entity->created_at,
 //            'updated_at' => $entity->updated_at,
@@ -46,10 +48,4 @@ class ProductAttrTransformer extends Transformer
 
         return $response;
     }
-
-    public function includeValues(ProductAttr $product)
-    {
-        return $this->collection($product->values, new ProductAttrValuesTransformer());
-    }
-
 }

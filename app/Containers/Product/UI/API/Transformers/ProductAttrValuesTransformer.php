@@ -33,9 +33,9 @@ class ProductAttrValuesTransformer extends Transformer
             'product_attr_id' => $entity->product_attr_id,
             'name' => $entity->name,
             'sort' => $entity->sort,
-            'created_at' => $entity->created_at,
-            'updated_at' => $entity->updated_at,
-            'deleted_at' => $entity->deleted_at,
+//            'created_at' => $entity->created_at,
+//            'updated_at' => $entity->updated_at,
+//            'deleted_at' => $entity->deleted_at,
 
         ];
 

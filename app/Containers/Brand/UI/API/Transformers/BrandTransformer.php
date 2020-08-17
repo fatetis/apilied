@@ -39,9 +39,9 @@ class BrandTransformer extends Transformer
             'sort' => $entity->sort,
             'is_audit' => $entity->is_audit,
             'is_show' => $entity->is_show,
-            'created_at' => $entity->created_at,
-            'updated_at' => $entity->updated_at,
-            'deleted_at' => $entity->deleted_at,
+//            'created_at' => $entity->created_at,
+//            'updated_at' => $entity->updated_at,
+//            'deleted_at' => $entity->deleted_at,
 
         ];
 
