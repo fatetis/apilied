@@ -30,7 +30,7 @@ class GetAdvByEnameTask extends Task
                 ->where('adv_position.is_show', GlobalStatusCode::YES)
                 ->where('adv_open.region_open_id', $data['region_open_id'])
                 ->with('media')
-                ->select('adv.url', 'adv.media_id', 'adv.position_id', 'adv_open.adv_id', 'adv_open.id', 'adv_position.ename')
+                ->select('adv.name', 'adv.desc', 'adv.url', 'adv.media_id', 'adv.position_id', 'adv_open.adv_id', 'adv_open.id', 'adv_position.ename')
                 ->orderByDesc('sort')
                 ->get();
         } catch (\Exception $e) {

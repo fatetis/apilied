@@ -16,6 +16,8 @@ class GetIndexAdvAction extends Action
             if(isset($data['index_plug']) && count($data['index_plug']) >= 3) continue;
             if(isset($data['index_daily']) && count($data['index_daily']) >= 8) continue;
             $data[$value['ename']][$key]['link'] = $value['media']['link'] ?? '';
+            $data[$value['ename']][$key]['name'] = $value['name'];
+            $data[$value['ename']][$key]['content'] = $value['desc'];
             $data[$value['ename']][$key]['url'] = $value['url'];
             $data[$value['ename']][$key]['adv_id'] = $value['adv_id'];
             $data[$value['ename']][$key]['adv_open_id'] = $value['id'];
