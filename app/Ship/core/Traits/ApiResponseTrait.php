@@ -56,7 +56,7 @@ trait ApiResponseTrait
         $request_json  = je($request_arr);
         $response_json  = je($response_arr);
 
-        $text = "响应单号：{$resno}，路径：{$request->path()}\n请求数据：{$request_json}\n响应数据：{$response_json}";
+        $text = "请求单号：{$request_arr['reqno']}，响应单号：{$resno}，路径：{$request->path()}\n请求数据：{$request_json}\n响应数据：{$response_json}";
         Log::channel('api')->info($text);
 
         return empty($message) ?  $this->apiJson($response_arr) : $response_json;
