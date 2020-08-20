@@ -18,7 +18,6 @@ class FindUserByMobileTask extends Task
 
     public function run($mobile)
     {
-        return $this->repository->findWhere(['mobile' => $mobile]);
-
+        return $this->repository->findWhere(['mobile' => $mobile])->first();
     }
 }
