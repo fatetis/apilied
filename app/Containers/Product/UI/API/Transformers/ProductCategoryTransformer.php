@@ -29,7 +29,7 @@ class ProductCategoryTransformer extends Transformer
     public function transform(ProductCategory $entity)
     {
         $response = [
-            'object' => 'ProductCategory',
+//            'object' => 'ProductCategory',
             'id' => $entity->getHashedKey(),
             'pid' => $entity->pid,
             'name' => $entity->name,

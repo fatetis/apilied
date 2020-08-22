@@ -21,8 +21,8 @@
 
 /** @var Route $router */
 $router->get('prod/detail/{id}', [
-    'as' => 'api_product_find_product_detail_by_id',
-    'uses'  => 'Controller@findProductDetailById',
+    'as' => 'api_product_find_product_by_id',
+    'uses' => 'Controller@findProductById',
     'middleware' => [
 //      'auth:api',
     ],

@@ -27,10 +27,11 @@ class GetProductCategoryByPidTask extends Task
                 : $this->repository->where(['is_rec' => GlobalStatusCode::YES]);
 
             return $query_sql
+                ->with('media')
                 ->with('children')
-                ->select('name', 'id', 'is_rec', 'pid')
+                ->select('name', 'product_category.id', 'is_rec', 'pid', 'media_id')
                 ->orderBy('sort')
-                ->orderByDesc('updated_at')
+                ->orderByDesc('product_category.updated_at')
                 ->get();
         } catch (\Exception $e) {
             throw new NotFoundException();

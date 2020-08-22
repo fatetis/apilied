@@ -6,13 +6,12 @@ use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Ship\Transporters\DataTransporter;
 
-class FindProductDetailByIdAction extends Action
+class FindProductByIdAction extends Action
 {
     public function run(DataTransporter $data)
     {
-        $product = Apiato::call('Product@FindProductDetailByIdTask', [
-            [$data->id],
-            ['attrs', 'skus', 'medias', 'brand']
+        $product = Apiato::call('Product@FindProductByIdTask', [
+            $data->id
         ]);
 
         return $product;

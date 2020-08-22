@@ -7,7 +7,7 @@ use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
 use App\Ship\Parents\Tasks\Task;
 
-class FindProductDetailByIdTask extends Task
+class FindProductByIdTask extends Task
 {
 
     protected $repository;
@@ -17,17 +17,16 @@ class FindProductDetailByIdTask extends Task
         $this->repository = $repository;
     }
 
-    public function run($id, $with)
+    public function run($id)
     {
         try{
             $result = $this->repository
                 ->where('is_on_sale', GlobalStatusCode::YES)
                 ->where('is_audit', GlobalStatusCode::YES)
                 ->where('id', $id)
-                ->with($with)
                 ->orderByDesc('sort')
                 ->orderByDesc('updated_at')
-                ->first()->toArray();
+                ->first();
             return $result;
         } catch (\Exception $e) {
             throw new NotFoundException();

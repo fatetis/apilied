@@ -2,7 +2,7 @@
 
 namespace App\Containers\Product\UI\API\Controllers;
 
-use App\Containers\Product\UI\API\Requests\FindProductDetailByIdRequest;
+use App\Containers\Product\UI\API\Requests\FindProductByIdRequest;
 use App\Containers\Product\UI\API\Requests\GetProductByCategoryIdRequest;
 use App\Containers\Product\UI\API\Requests\GetProductCategoryByPidRequest;
 use App\Containers\Product\UI\API\Transformers\ProductTransformer;
@@ -30,16 +30,17 @@ class Controller extends ApiController
 
     /**
      * 获取一条产品数据
-     * @param FindProductDetailByIdRequest $request
+     * @param FindProductByIdRequest $request
      * @return false|string
      * Author: fatetis
      * Date:2020/8/6 000611:19
      */
-    public function findProductDetailById(FindProductDetailByIdRequest $request)
+    public function findProductById(FindProductByIdRequest $request)
     {
-        $data = Apiato::call('Product@FindProductDetailByIdAction', [new DataTransporter($request)]);
+        $data = Apiato::call('Product@FindProductByIdAction', [new DataTransporter($request)]);
 
-        return $this->successResponse($request, $data);
+        return $this->successResponse($request, $this->transform($data, ProductTransformer::class));
+//        return $this->successResponse($request, $data);
     }
 
     public function getProductByCategoryId(GetProductByCategoryIdRequest $request)

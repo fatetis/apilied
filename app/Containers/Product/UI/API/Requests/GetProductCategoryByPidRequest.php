@@ -45,8 +45,15 @@ class GetProductCategoryByPidRequest extends Request
     public function rules()
     {
         return [
-            // 'id' => 'required',
+            'pid' => 'required',
             // '{user-input}' => 'required|max:255',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'pid.required' => '缺少必要参数，请刷新页面重试',
         ];
     }
 

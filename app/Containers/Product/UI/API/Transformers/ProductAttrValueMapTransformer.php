@@ -29,7 +29,7 @@ class ProductAttrValueMapTransformer extends Transformer
     public function transform(ProductAttrValueMap $entity)
     {
         $response = [
-            'object' => 'ProductAttrValueMap',
+//            'object' => 'ProductAttrValueMap',
             'id' => $entity->getHashedKey(),
             'product_id' => $entity->product_id,
             'product_attr_id' => $entity->product_attr_id,

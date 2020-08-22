@@ -18,7 +18,11 @@ class LoginAuthUsingUserNameTask extends Task
     {
         $user = $loginAttribute == 'mobile'
             ? Apiato::call('User@FindUserByMobileTask', [$username])
-            : Apiato::call('User@FindUserByUserNameTask', [$username]);
+            : (
+            $loginAttribute == 'username'
+                ? Apiato::call('User@FindUserByUserNameTask', [$username])
+                : Apiato::call('User@FindUserByEmailTask', [$username])
+            );
         Auth::login($user);
     }
 }

@@ -28,7 +28,7 @@ class ProductAttrValuesTransformer extends Transformer
     public function transform(ProductAttrValues $entity)
     {
         $response = [
-            'object' => 'ProductAttrValues',
+//            'object' => 'ProductAttrValues',
             'id' => $entity->getHashedKey(),
             'product_attr_id' => $entity->product_attr_id,
             'name' => $entity->name,

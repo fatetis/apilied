@@ -11,7 +11,9 @@ class GetProductCategoryByPidAction extends Action
 {
     public function run(DataTransporter $data)
     {
-        $cate_data = Apiato::call('Product@GetProductCategoryByPidTask', [$data->pid]);
+        $pid = $data->pid;
+        $cate_data['rec'] = $pid == 0 ? Apiato::call('Product@GetProductCategoryByPidTask', [null]) : [];
+        $cate_data['data'] = Apiato::call('Product@GetProductCategoryByPidTask', [$pid]);
         return $cate_data;
     }
 

@@ -52,7 +52,7 @@ class GetProductByCategoryIdRequest extends Request
     public function rules()
     {
         return [
-             'cid' => 'required|exists:product_category,id',
+            'cid' => 'exists:product_category,id',
             // '{user-input}' => 'required|max:255',
         ];
     }
@@ -60,7 +60,6 @@ class GetProductByCategoryIdRequest extends Request
     public function messages()
     {
         return [
-            'cid.required' => '请求参数不能为空',
             'cid.exists' => '无此请求参数，请刷新页面重试'
         ];
     }

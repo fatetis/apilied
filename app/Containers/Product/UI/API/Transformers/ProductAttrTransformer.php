@@ -29,7 +29,7 @@ class ProductAttrTransformer extends Transformer
     public function transform(ProductAttr $entity)
     {
         $response = [
-            'object' => 'ProductAttr',
+//            'object' => 'ProductAttr',
             'id' => $entity->getHashedKey(),
             'name' => $entity->name,
             'sort' => $entity->sort,

@@ -2,6 +2,8 @@
 
 namespace App\Containers\Product\Models;
 
+use App\Containers\Media\Models\Media;
+use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
 use App\Ship\Parents\Models\Model;
 
 class ProductCategory extends Model
@@ -33,10 +35,16 @@ class ProductCategory extends Model
 
     public function children()
     {
-        return $this->hasMany(ProductCategory::class, 'pid')
-            ->select('name', 'id', 'is_rec', 'pid')
+        return $this->hasMany(ProductCategory::class, 'pid')->with('media')
+            ->select('name', 'id', 'is_rec', 'pid', 'media_id')
             ->orderBy('sort')
             ->OrderBydesc('updated_at');
+    }
+
+    public function media()
+    {
+        return $this->belongsTo(Media::class, 'media_id', 'id')
+            ->where('is_show', GlobalStatusCode::YES)->select('id', 'link');
     }
 
 }

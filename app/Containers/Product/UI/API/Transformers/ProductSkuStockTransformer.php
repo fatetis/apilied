@@ -29,7 +29,7 @@ class ProductSkuStockTransformer extends Transformer
     public function transform(ProductSkuStock $entity)
     {
         $response = [
-            'object' => 'ProductSkuStock',
+//            'object' => 'ProductSkuStock',
             'id' => $entity->getHashedKey(),
             'product_id' => $entity->product_id,
             'sku_id' => $entity->sku_id,

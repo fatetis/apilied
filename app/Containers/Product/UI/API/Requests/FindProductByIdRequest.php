@@ -5,9 +5,9 @@ namespace App\Containers\Product\UI\API\Requests;
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class FindProductDetailByIdRequest.
+ * Class FindProductByIdRequest.
  */
-class FindProductDetailByIdRequest extends Request
+class FindProductByIdRequest extends Request
 {
 
     /**
@@ -33,7 +33,7 @@ class FindProductDetailByIdRequest extends Request
      * @var  array
      */
     protected $decode = [
-
+        'id',
     ];
 
     /**
