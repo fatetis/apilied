@@ -3,6 +3,7 @@
 namespace App\Containers\Brand\UI\API\Transformers;
 
 use App\Containers\Brand\Models\Brand;
+use App\Containers\Media\UI\API\Transformers\MediaTransformer;
 use App\Ship\Parents\Transformers\Transformer;
 
 class BrandTransformer extends Transformer
@@ -11,7 +12,7 @@ class BrandTransformer extends Transformer
      * @var  array
      */
     protected $defaultIncludes = [
-
+        'media'
     ];
 
     /**
@@ -29,7 +30,7 @@ class BrandTransformer extends Transformer
     public function transform(Brand $entity)
     {
         $response = [
-            'object' => 'Brand',
+//            'object' => 'Brand',
             'id' => $entity->getHashedKey(),
             'name' => $entity->name,
             'category_id' => $entity->category_id,
@@ -52,4 +53,10 @@ class BrandTransformer extends Transformer
 
         return $response;
     }
+
+    public function includeMedia(Brand $brand)
+    {
+        return $this->item($brand->media, new MediaTransformer());
+    }
+
 }

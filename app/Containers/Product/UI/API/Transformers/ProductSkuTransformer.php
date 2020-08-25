@@ -30,13 +30,18 @@ class ProductSkuTransformer extends Transformer
      */
     public function transform(ProductSku $entity)
     {
+        $price = explode('.', $entity->price);
         $response = [
 //            'object' => 'ProductSku',
             'id' => $entity->getHashedKey(),
             'product_id' => $entity->product_id,
             'attr_key' => $entity->attr_key,
             'media_id' => $entity->media_id,
-            'price' => $entity->price,
+            'price' => [
+                'price' => $entity->price,
+                'int' => $price[0],
+                'point' => $price[1],
+            ],
             'cost_price' => $entity->cost_price,
             'sold_num' => $entity->sold_num,
             'code' => $entity->code,

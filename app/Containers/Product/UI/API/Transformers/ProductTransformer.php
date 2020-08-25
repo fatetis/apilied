@@ -33,6 +33,7 @@ class ProductTransformer extends Transformer
      */
     public function transform(Product $entity)
     {
+        $price = explode('.', $entity->price);
         $response = [
 //            'object' => 'Product',
             'id' => $entity->getHashedKey(),
@@ -41,9 +42,13 @@ class ProductTransformer extends Transformer
             'category_id' => $entity->category_id,
 //            'virtual_quantity' => $entity->virtual_quantity,
             'line_price' => $entity->line_price,
-            'price' => $entity->price,
-//            'description' => $entity->description,
-//            'content' => $entity->content,
+            'price' => [
+                'price' => $entity->price,
+                'int' => $price[0],
+                'point' => $price[1],
+            ],
+            'description' => $entity->description,
+            'content' => $entity->content,
             'is_real' => $entity->is_real,
 //            'is_audit' => $entity->is_audit,
 //            'is_on_sale' => $entity->is_on_sale,
