@@ -64,6 +64,7 @@ trait ApiResponseTrait
 
     public function successResponse($request, $data = [], $erorcd = GlobalStatusCode::RESULT_SUCCESS_CODE, $message = '', $sign = '')
     {
+        if(is_string($data) && isset(GlobalStatusCode::$status_texts[$data])) return $this->errorResponse($request, '', [], $data);
         return $this->response($request, $data, GlobalStatusCode::RETURN_SUCCESS_CODE, $erorcd, $message, $sign);
     }
 

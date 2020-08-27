@@ -6,6 +6,7 @@
  * Time: 16:17
  */
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 if (!function_exists('curlLink')) {
@@ -342,6 +343,13 @@ if (!function_exists('getIP')) {
         function imgUrl($link)
         {
             return env('IMAGE_URL').$link;
+        }
+    }
+
+    if (!function_exists('elog')) {
+        function elog($msg, $throwable)
+        {
+            Log::error($msg.'。文件目录：'.$throwable->getFile().'.'.$throwable->getLine().'行，异常信息：'.$throwable->getMessage());
         }
     }
 

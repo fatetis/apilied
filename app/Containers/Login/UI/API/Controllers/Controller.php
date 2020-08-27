@@ -29,9 +29,7 @@ class Controller extends ApiController
     public function CreateMobileVerifyCode(CreateMobileVerifyCodeRequest $request)
     {
         $result = Apiato::call('Login@CreateMobileVerifyCodeAction', [new DataTransporter($request)]);
-        return is_string($result)
-            ? $this->errorResponse($request, '', [], $result)
-            : $this->successResponse($request, $result);
+        return $this->successResponse($request, $result);
     }
 
 }

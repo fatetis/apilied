@@ -11,9 +11,8 @@ class Controller extends ApiController
 {
     public function preValidateBuyProduct(PreValidateBuyProductRequest $request)
     {
-        $data = Apiato::call('Order@PreValidateBuyProductAction', [new DataTransporter($request)]);
-        dd($data);
-        return $this->successResponse($request, $data);
+        $result = Apiato::call('Order@PreValidateBuyProductAction', [new DataTransporter($request)]);
+        return $this->successResponse($request, $result);
     }
 
 }

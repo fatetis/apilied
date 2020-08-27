@@ -34,6 +34,7 @@ class GlobalStatusCode
     // 服务端错误码
     const RESULT_SYSTEM_FAIL_CODE = 'B0001';
     const VERIFY_CODE_NOT_USING_TYPE = 'B0002';
+    const MODEL_NOTHING_RESULT = 'B0003';
     // cdn端错误码
     const RESULT_CDN_FAIL_CODE = 'C0001';
     // 验证码类型默认码
@@ -59,7 +60,8 @@ class GlobalStatusCode
 
 
         'B0001' => '系统端错误',
-        'B0002' => '系统无此使用类型',
+        'B0002' => '系统无此验证码使用类型',
+        'B0003' => '系统无此数据',
 
         'C0001' => 'CDN端错误',
     ];
