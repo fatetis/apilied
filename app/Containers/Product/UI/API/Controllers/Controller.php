@@ -5,6 +5,7 @@ namespace App\Containers\Product\UI\API\Controllers;
 use App\Containers\Product\UI\API\Requests\FindProductByIdRequest;
 use App\Containers\Product\UI\API\Requests\GetProductByCategoryIdRequest;
 use App\Containers\Product\UI\API\Requests\GetProductCategoryByPidRequest;
+use App\Containers\Product\UI\API\Requests\ValidateProductBySkuIdAndNumRequest;
 use App\Containers\Product\UI\API\Transformers\ProductTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
@@ -40,15 +41,26 @@ class Controller extends ApiController
         $data = Apiato::call('Product@FindProductByIdAction', [new DataTransporter($request)]);
 
         return $this->successResponse($request, $this->transform($data, ProductTransformer::class));
-//        return $this->successResponse($request, $data);
     }
 
+    /**
+     * 根据分类id获取产品列表
+     * @param GetProductByCategoryIdRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/9/14 001410:03
+     */
     public function getProductByCategoryId(GetProductByCategoryIdRequest $request)
     {
         $data = Apiato::call('Product@GetProductByCategoryIdAction', [new DataTransporter($request)]);
 
-
         return $this->successResponse($request, $this->transform($data, ProductTransformer::class));
+    }
+
+    public function validateProductBySkuIdAndNum(ValidateProductBySkuIdAndNumRequest $request)
+    {
+        $result = Apiato::call('Product@ValidateProductBySkuIdAndNumAction', [new DataTransporter($request)]);
+        return $this->successResponse($request, $result);
     }
 
 

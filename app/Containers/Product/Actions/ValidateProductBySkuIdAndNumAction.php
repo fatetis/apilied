@@ -1,28 +1,38 @@
 <?php
 
-namespace App\Containers\Order\Actions;
+namespace App\Containers\Product\Actions;
 
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
-use Illuminate\Support\Facades\Log;
 
-class PreValidateBuyProductAction extends Action
+class ValidateProductBySkuIdAndNumAction extends Action
 {
     public function run($data)
     {
         try {
-            $product_sku = Apiato::call('Product@FindProductSkuByIdTask', [
+            $sku = Apiato::call('Product@FindProductSkuByIdTask', [
                 $data->sku_id
             ]);
             $product = Apiato::call('Product@FindProductByIdTask', [
-                $product_sku->product_id
+                $sku->product_id
             ]);
-            return $product;
+            $sku_stock = Apiato::call('Product@FindProductSkuStockBySkuIdTask', [
+                $sku->id
+            ]);
+            if(empty($sku) || empty($product) || empty($sku_stock)){
+                throw new NotFoundException();
+            }
+
+            // 库存不足
+            if($data->num > $sku_stock->quantity) return GlobalStatusCode::PRODUCT_STOCK_INSUFFICIENT;
+
+            return true;
         }catch (NotFoundException $notFoundException) {
             return GlobalStatusCode::MODEL_NOTHING_RESULT;
         } catch (\Throwable $throwable) {
+            dd($throwable->getMessage());
             elog('下单产品校验异常', $throwable);
             return GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE;
         }

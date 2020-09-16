@@ -9,10 +9,5 @@ use App\Ship\Transporters\DataTransporter;
 
 class Controller extends ApiController
 {
-    public function preValidateBuyProduct(PreValidateBuyProductRequest $request)
-    {
-        $result = Apiato::call('Order@PreValidateBuyProductAction', [new DataTransporter($request)]);
-        return $this->successResponse($request, $result);
-    }
 
 }

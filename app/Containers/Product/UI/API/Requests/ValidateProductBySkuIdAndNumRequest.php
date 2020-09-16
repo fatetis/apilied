@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Order\UI\API\Requests;
+namespace App\Containers\Product\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class PreValidateBuyProductRequest.
+ * Class ValidateProductBySkuIdAndNumRequest.
  */
-class PreValidateBuyProductRequest extends Request
+class ValidateProductBySkuIdAndNumRequest extends Request
 {
 
     /**
@@ -33,7 +33,7 @@ class PreValidateBuyProductRequest extends Request
      * @var  array
      */
     protected $decode = [
-         'sku_id',
+        // 'id',
     ];
 
     /**
@@ -52,21 +52,19 @@ class PreValidateBuyProductRequest extends Request
     public function rules()
     {
         return [
-            'sku_id' => 'required|exists:product_sku,id',
-            'num' => 'required'
-
+             'sku_id' => 'required|exists:product_sku,id',
+             'num' => 'required|numeric',
         ];
     }
 
     public function messages()
     {
         return [
-            'sku_id.required' => '缺少必要参数1',
-            'sku_id.exists' => '缺少必要参数1-1',
-            'num.required' => '缺少必要参数2',
+            'sku_id.required' => '请选择需要购买的商品',
+            'sku_id.exists' => '该商品已下架，请刷新页面重试',
+            'num.required' => '请选择商品的购买数量',
+            'num.numeric' => '商品的购买数量不足',
         ];
-
-
     }
 
     /**

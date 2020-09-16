@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @apiGroup           Order
- * @apiName            preValidateBuyProduct
+ * @apiGroup           Product
+ * @apiName            validateProductBySkuIdAndNum
  *
  * @api                {POST} /v1/product/validate Endpoint title here..
  * @apiDescription     Endpoint description here..
@@ -21,8 +21,8 @@
 
 /** @var Route $router */
 $router->post('product/validate', [
-    'as' => 'api_order_pre_validate_buy_product',
-    'uses'  => 'Controller@preValidateBuyProduct',
+    'as' => 'api_product_validate_product_by_sku_id_and_num',
+    'uses'  => 'Controller@validateProductBySkuIdAndNum',
     'middleware' => [
       'auth:api',
     ],

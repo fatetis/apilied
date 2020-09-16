@@ -22,6 +22,7 @@ class GlobalStatusCode
     const RESULT_SUCCESS_CODE = '00000';
     // 用户端错误码
     const RESULT_USER_FAIL_CODE = 'A0001';
+    // 登录模块
     const LOGIN_MAXED_NUM = 'A1001';
     const LOGIN_VERIFY_CODE_ERROR = 'A1002';
     const LOGIN_NOT_ISSET_VERIFY_CODE = 'A1003';
@@ -30,6 +31,8 @@ class GlobalStatusCode
     const VERIFY_CODE_ISSET_ACCOUNT = 'A1006';
     const VERIFY_CODE_NOT_ISSET_ACCOUNT = 'A1007';
     const VERIFY_CODE_MAXED_GET = 'A1008';
+    // 产品模块
+    const PRODUCT_STOCK_INSUFFICIENT = 'A2001';
 
     // 服务端错误码
     const RESULT_SYSTEM_FAIL_CODE = 'B0001';
@@ -58,6 +61,7 @@ class GlobalStatusCode
         'A1007' => '不存在该账户',
         'A1008' => '获取次数已达上限，每天最多获取3次验证码',
 
+        'A2001' => '商品库存不足',
 
         'B0001' => '系统端错误',
         'B0002' => '系统无此验证码使用类型',
