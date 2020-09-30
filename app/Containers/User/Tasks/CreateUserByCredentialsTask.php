@@ -25,7 +25,7 @@ class CreateUserByCredentialsTask extends Task
     }
 
     /**
-     * @param bool $isClient
+     * @param boolean $isClient
      * @param string $mobile
      * @param string|null $email
      * @param string|null $password

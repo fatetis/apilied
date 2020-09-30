@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Containers\Product\Tasks;
+namespace App\Containers\User\Tasks;
 
-use App\Containers\Product\Data\Repositories\ProductSkuRepository;
+use App\Containers\User\Data\Repositories\UserAddressRepository;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class FindProductSkuByIdTask extends Task
+class FindUserAddressByIdTask extends Task
 {
 
     protected $repository;
 
-    public function __construct(ProductSkuRepository $repository)
+    public function __construct(UserAddressRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -20,7 +20,7 @@ class FindProductSkuByIdTask extends Task
     public function run($id)
     {
         try {
-            return $this->repository->lockForUpdate()->find($id);
+            return $this->repository->find($id);
         }
         catch (Exception $exception) {
             throw new NotFoundException();

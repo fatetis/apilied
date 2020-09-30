@@ -19,7 +19,7 @@ abstract class Model extends AbstractModel
     use HasResourceKeyTrait;
     use SoftDeletes;
 
-    public $timestamps = false;
+    public $timestamps = true;
 
 //    protected $dateFormat = 'Y-m-d H:i:s';
 }

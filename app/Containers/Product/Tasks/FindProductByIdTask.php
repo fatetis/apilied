@@ -21,6 +21,7 @@ class FindProductByIdTask extends Task
     {
         try{
             $result = $this->repository
+                ->lockForUpdate()
                 ->where('is_on_sale', GlobalStatusCode::YES)
                 ->where('is_audit', GlobalStatusCode::YES)
                 ->where('id', $id)

@@ -57,10 +57,17 @@ class Controller extends ApiController
         return $this->successResponse($request, $this->transform($data, ProductTransformer::class));
     }
 
+    /**
+     * 校验产品是否符合购买条件
+     * @param ValidateProductBySkuIdAndNumRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/9/28 002813:58
+     */
     public function validateProductBySkuIdAndNum(ValidateProductBySkuIdAndNumRequest $request)
     {
         $result = Apiato::call('Product@ValidateProductBySkuIdAndNumAction', [new DataTransporter($request)]);
-        return $this->successResponse($request, $result);
+        return is_string($result) ? $this->errorResponse($request, '', [], $result) : $this->successResponse($request);
     }
 
 

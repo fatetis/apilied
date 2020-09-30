@@ -20,7 +20,10 @@ class FindProductSkuStockBySkuIdTask extends Task
     public function run($id)
     {
         try {
-            return $this->repository->findWhere(['sku_id' => $id])->first();
+            return $this->repository
+                ->lockForUpdate()
+                ->where(['sku_id' => $id])
+                ->first();
         }
         catch (Exception $exception) {
             throw new NotFoundException();

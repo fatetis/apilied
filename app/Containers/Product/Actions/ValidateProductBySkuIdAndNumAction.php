@@ -28,12 +28,15 @@ class ValidateProductBySkuIdAndNumAction extends Action
             // 库存不足
             if($data->num > $sku_stock->quantity) return GlobalStatusCode::PRODUCT_STOCK_INSUFFICIENT;
 
-            return true;
+            return [
+                'sku' => $sku,
+                'product' => $product,
+                'sku_stock' => $sku_stock
+            ];
         }catch (NotFoundException $notFoundException) {
             return GlobalStatusCode::MODEL_NOTHING_RESULT;
         } catch (\Throwable $throwable) {
-            dd($throwable->getMessage());
-            elog('下单产品校验异常', $throwable);
+            elog('购买产品前校验异常', $throwable);
             return GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE;
         }
 

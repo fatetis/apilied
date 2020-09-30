@@ -4,6 +4,7 @@ namespace App\Containers\User\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\User\UI\API\Requests\CreateAdminRequest;
+use App\Containers\User\UI\API\Requests\CreateUserAddressRequest;
 use App\Containers\User\UI\API\Requests\DeleteUserRequest;
 use App\Containers\User\UI\API\Requests\FindUserByIdRequest;
 use App\Containers\User\UI\API\Requests\ForgotPasswordRequest;
@@ -155,6 +156,12 @@ class Controller extends ApiController
         Apiato::call('User@ForgotPasswordAction', [new DataTransporter($request)]);
 
         return $this->noContent(202);
+    }
+
+    public function createUserAddress(CreateUserAddressRequest $request)
+    {
+        $result = Apiato::call('User@CreateUserAddressAction', [new DataTransporter($request)]);
+        return $this->successResponse($request, $result);
     }
 
 }
