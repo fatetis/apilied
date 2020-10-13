@@ -7,7 +7,7 @@ use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class FindProductSkuByIdTask extends Task
+class FindProductSkuWithProductAndStockByIdTask extends Task
 {
 
     protected $repository;
@@ -20,7 +20,7 @@ class FindProductSkuByIdTask extends Task
     public function run($id)
     {
         try {
-            return $this->repository->lockForUpdate()->find($id);
+            return $this->repository->with(['product', 'stock'])->lockForUpdate()->find($id);
         }
         catch (Exception $exception) {
             throw new NotFoundException();

@@ -353,6 +353,29 @@ if (!function_exists('getIP')) {
         }
     }
 
+    /**
+     * 构造固定长度数字，不足补零
+     * @param $string
+     * @param $num
+     * @return int
+     * Author: fatetis
+     * Date:2020/10/10 00109:50
+     */
+    if (!function_exists('cutNumber')) {
+        function cutNumber($string, $num)
+        {
+            $length = strlen($string);
+            if ($length >= $num) {
+                $cutString = substr($string, -$num);
+            } else {
+                $cutString = str_pad($string, $num, 0);
+            }
+
+            return (int)$cutString;
+        }
+    }
+
+
 }
 
 

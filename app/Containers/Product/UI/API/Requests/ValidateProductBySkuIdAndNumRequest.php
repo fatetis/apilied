@@ -52,8 +52,9 @@ class ValidateProductBySkuIdAndNumRequest extends Request
     public function rules()
     {
         return [
-             'sku_id' => 'required|exists:product_sku,id',
-             'num' => 'required|numeric',
+//             'sku_id' => 'required|exists:product_sku,id',
+             'sku_id' => 'required',
+             'num' => 'numeric',
         ];
     }
 
@@ -61,8 +62,8 @@ class ValidateProductBySkuIdAndNumRequest extends Request
     {
         return [
             'sku_id.required' => '请选择需要购买的商品',
-            'sku_id.exists' => '该商品已下架，请刷新页面重试',
-            'num.required' => '请选择商品的购买数量',
+//            'sku_id.exists' => '该商品已下架，请刷新页面重试',
+//            'num.required' => '请选择商品的购买数量',
             'num.numeric' => '商品的购买数量不足',
         ];
     }

@@ -33,6 +33,11 @@ class GlobalStatusCode
     const VERIFY_CODE_MAXED_GET = 'A1008';
     // 产品模块
     const PRODUCT_STOCK_INSUFFICIENT = 'A2001';
+    const PRODUCT_BUY_NUM_NECESSARY = 'A2002';
+    const PRODUCT_SELLER_UNIQUE = 'A2003';
+
+    // 订单模块
+    const ORDER_ADDRESS_MATE = 'A3001';
 
     // 服务端错误码
     const RESULT_SYSTEM_FAIL_CODE = 'B0001';
@@ -62,10 +67,15 @@ class GlobalStatusCode
         'A1008' => '获取次数已达上限，每天最多获取3次验证码',
 
         'A2001' => '商品库存不足',
+        'A2002' => '请选择商品的购买数量',
+        'A2003' => '暂时只允许在一个商家里进行多个产品结算',
+
+
+        'A3001' => '收货地址不合法，请重新输入',
 
         'B0001' => '系统端错误',
         'B0002' => '系统无此验证码使用类型',
-        'B0003' => '数据不存在',
+        'B0003' => '数据出错，请重新刷新页面再试',
 
         'C0001' => 'CDN端错误',
     ];
