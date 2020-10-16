@@ -8,6 +8,10 @@ class OrderChild extends Model
 {
     protected $table = 'order_child';
 
+    protected $guarded = [
+        'id'
+    ];
+
     protected $fillable = [
 
     ];

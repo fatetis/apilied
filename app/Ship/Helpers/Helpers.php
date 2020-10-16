@@ -368,10 +368,10 @@ if (!function_exists('getIP')) {
             if ($length >= $num) {
                 $cutString = substr($string, -$num);
             } else {
-                $cutString = str_pad($string, $num, 0);
+                $cutString = str_pad($string, $num, 0, STR_PAD_LEFT);
             }
 
-            return (int)$cutString;
+            return (string)($cutString);
         }
     }
 

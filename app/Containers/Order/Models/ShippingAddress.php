@@ -7,6 +7,11 @@ use App\Ship\Parents\Models\Model;
 class ShippingAddress extends Model
 {
     protected $table = 'shipping_address';
+
+    protected $guarded = [
+        'id'
+    ];
+
     protected $fillable = [
 
     ];

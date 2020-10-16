@@ -8,6 +8,10 @@ class OrderBase extends Model
 {
     protected $table = 'order_base';
 
+    protected $guarded = [
+        'id'
+    ];
+
     protected $fillable = [
 
     ];
@@ -21,18 +25,9 @@ class OrderBase extends Model
     ];
 
     protected $casts = [
-
-    ];
-
-    protected $dates = [
-        'created_at',
         'updated_at',
+        'created_at',
     ];
-
-    /**
-     * A resource key to be used by the the JSON API Serializer responses.
-     */
-    protected $resourceKey = 'orderbases';
 
     /**
      * 订单状态

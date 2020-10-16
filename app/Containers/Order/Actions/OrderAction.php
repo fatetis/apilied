@@ -9,6 +9,7 @@ use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class OrderAction extends Action
@@ -16,17 +17,22 @@ class OrderAction extends Action
     public function run($data)
     {
         try{
-            DB::transaction(function () use ($data){
-                // sku_id num address_id
+            $result = '';
+            DB::transaction(function () use ($data, &$result){
+                // $data里面的值sku_id num address_id msg
+                // 校验产品数据
                 $prod_info = Apiato::call('Product@ValidateProductBySkuIdAndNumAction', [$data]);
                 if(is_string($prod_info)) throw new WrongEnoughIfException($prod_info);
+                // 获取用户地址数据
                 $address_info = Apiato::call('User@FindUserAddressByIdTask', [$data->address_id]);
+                // 获取登录用户信息
                 $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');
                 if($address_info['user_id'] !== $user_info['id'])
                     throw new WrongEnoughIfException(GlobalStatusCode::ORDER_ADDRESS_MATE);
-                $this->dealCreateOrderData($address_info, $prod_info, $user_info, $data);
-                dd($address_info, $prod_info, $user_info, $data);
+                // 创建订单数据处理
+                $result = $this->dealCreateOrderData($address_info, $prod_info, $user_info, $data);
             });
+            return $result;
         }catch (WrongEnoughIfException $wrongEnoughIfException){
             return $wrongEnoughIfException->getMessage();
         }catch (NotFoundException $notFoundException){
@@ -42,11 +48,10 @@ class OrderAction extends Action
     public function dealCreateOrderData(...$original_data)
     {
         list($address_info, $prod_info, $user_info, $request_info) = $original_data;
-
         $sku_id = $request_info->sku_id;
-
         $total_price = 0;
         $brand_id = '';
+        $order_child_data = [];
         foreach ($prod_info as $key => $value){
             $prod_sku_id = $value->id;
             $num = is_string($sku_id) ? $request_info->num : $sku_id->$prod_sku_id;
@@ -55,9 +60,8 @@ class OrderAction extends Action
                 'product_id' => $value->product_id,
                 'sku_id' => $value->id,
                 'product_price' => $value->price,
-                'shipping_fee' => null,
+//                'shipping_fee' => null,
                 'number' => $num,
-                'delivery_id' => '',
             ];
             $total_price = $total_price + upDecimal($value->price*$num);
             $brand_id = $value->product->brand_id;
@@ -68,24 +72,26 @@ class OrderAction extends Action
             'orderno' => $this->generateOrderNo($user_info['id']),
             'user_id' => $user_info['id'],
             'price' => $total_price,
-            'shipping_price' => null,
+//            'shipping_price' => null,
             'pay_price' => null,
             'order_status' => OrderBase::ORDER_STATUS_WAIT_PAY,
             'pay_status' => OrderBase::PAY_STATUS_PAY,
             'source' => OrderBase::SOURCE_ORDINARY,
         ];
-
+        $order_base_result = Apiato::call('Order@CreateOrderBaseTask', [$order_base_data]);
+dd($order_base_result, Carbon::now());
         // 订单数据
         $order_data = [
-            'base_id' => '',
+            'base_id' => $order_base_result['id'],
             'brand_id' => $brand_id,
             'message' => $request_info->msg,
             'order_type' => Order::ORDER_TYPE_ORDINARY,
         ];
+        $order_result = Apiato::call('Order@CreateOrderTask', [$order_data]);
 
         // 配送地址数据
         $shipping_address_data = [
-            'order_base_id' => '',
+            'order_base_id' => $order_base_result['id'],
             'name' => $address_info->name,
             'region_pid' => $address_info->region_pid,
             'region_cid' => $address_info->region_cid,
@@ -94,8 +100,14 @@ class OrderAction extends Action
             'mobile' => $address_info->mobile,
             'code' => $address_info->code,
         ];
+        Apiato::call('Order@CreateShippingAddressTask', [$shipping_address_data]);
 
+        foreach ($order_child_data as $val) {
+            $val['order_id'] = $order_result['id'];
+            Apiato::call('Order@CreateOrderChildTask', [$val]);
+        }
 
+        return $order_base_result;
     }
 
     public function generateOrderNo($user_id)

@@ -7,6 +7,11 @@ use App\Ship\Parents\Models\Model;
 class Order extends Model
 {
     protected $table = 'order';
+
+    protected $guarded = [
+        'id'
+    ];
+
     protected $fillable = [
 
     ];

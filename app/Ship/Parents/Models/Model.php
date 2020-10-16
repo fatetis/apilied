@@ -19,7 +19,16 @@ abstract class Model extends AbstractModel
     use HasResourceKeyTrait;
     use SoftDeletes;
 
-    public $timestamps = true;
+    /**
+     * 重写序列化
+     * @param \DateTimeInterface $date
+     * @return string
+     * Author: fatetis
+     * Date:2020/10/14 001413:51
+     */
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
+    }
 
-//    protected $dateFormat = 'Y-m-d H:i:s';
 }
