@@ -38,7 +38,6 @@ class OrderAction extends Action
         }catch (NotFoundException $notFoundException){
             return GlobalStatusCode::MODEL_NOTHING_RESULT;
         }catch (\Throwable $throwable){
-            dd($throwable->getMessage());
             elog('下单产品校验异常', $throwable);
             return GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE;
         }
@@ -79,7 +78,7 @@ class OrderAction extends Action
             'source' => OrderBase::SOURCE_ORDINARY,
         ];
         $order_base_result = Apiato::call('Order@CreateOrderBaseTask', [$order_base_data]);
-dd($order_base_result, Carbon::now());
+
         // 订单数据
         $order_data = [
             'base_id' => $order_base_result['id'],

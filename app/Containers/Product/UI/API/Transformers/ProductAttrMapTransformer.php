@@ -35,9 +35,9 @@ class ProductAttrMapTransformer extends Transformer
             'product_id' => $entity->product_id,
             'product_attr_id' => $entity->product_attr_id,
             'sort' => $entity->sort,
-            'created_at' => $entity->created_at,
-            'updated_at' => $entity->updated_at,
-            'deleted_at' => $entity->deleted_at,
+            'created_at' => toDateTimeString($entity->created_at),
+            'updated_at' => toDateTimeString($entity->updated_at),
+//            'deleted_at' => $entity->deleted_at,
 
         ];
 

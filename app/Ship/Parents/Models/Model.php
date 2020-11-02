@@ -19,16 +19,16 @@ abstract class Model extends AbstractModel
     use HasResourceKeyTrait;
     use SoftDeletes;
 
+
     /**
-     * 重写序列化
-     * @param \DateTimeInterface $date
+     * 为数组 / JSON 序列化准备日期。
+     *
+     * @param  \DateTimeInterface  $date
      * @return string
-     * Author: fatetis
-     * Date:2020/10/14 001413:51
      */
     protected function serializeDate(\DateTimeInterface $date)
     {
-        return $date->format('Y-m-d H:i:s');
+        return $date->format($this->dateFormat ?: 'Y-m-d H:i:s');
     }
 
 }

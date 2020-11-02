@@ -25,7 +25,8 @@ class Product extends Model
     ];
 
     protected $dates = [
-
+//        'updated_at',
+//        'created_at',
     ];
 
     /**
@@ -62,4 +63,5 @@ class Product extends Model
     {
         return $this->hasMany(ProductMedia::class, 'product_id')->with(['media'])->orderByDesc('sort');
     }
+
 }

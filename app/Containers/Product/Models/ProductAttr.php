@@ -24,6 +24,8 @@ class ProductAttr extends Model
     ];
 
     protected $dates = [
+        'updated_at',
+        'created_at',
     ];
 
     /**

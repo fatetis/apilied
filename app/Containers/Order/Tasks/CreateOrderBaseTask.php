@@ -20,7 +20,7 @@ class CreateOrderBaseTask extends Task
     public function run(array $data)
     {
         try {
-            return $this->repository->create($data)->toArray();
+            return $this->repository->create($data);
         }
         catch (Exception $exception) {
             throw new CreateResourceFailedException();

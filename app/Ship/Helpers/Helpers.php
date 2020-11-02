@@ -375,6 +375,13 @@ if (!function_exists('getIP')) {
         }
     }
 
+    if (!function_exists('toDateTimeString')) {
+        function toDateTimeString($date)
+        {
+            if(empty($date)) return null;
+            return $date->toDateTimeString();
+        }
+    }
 
 }
 

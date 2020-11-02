@@ -25,9 +25,14 @@ class OrderBase extends Model
     ];
 
     protected $casts = [
-        'updated_at',
-        'created_at',
+//        'updated_at',
+//        'created_at',
     ];
+
+    /**
+     * A resource key to be used by the the JSON API Serializer responses.
+     */
+    protected $resourceKey = 'order_base';
 
     /**
      * 订单状态
@@ -49,5 +54,6 @@ class OrderBase extends Model
      * 来源订单
      */
     const SOURCE_ORDINARY = 0; // 普通订单
+
 
 }

@@ -35,9 +35,9 @@ class ProductSkuStockTransformer extends Transformer
             'sku_id' => $entity->sku_id,
             'quantity' => $entity->quantity,
             'warn_number' => $entity->warn_number,
-            'created_at' => $entity->created_at,
-            'updated_at' => $entity->updated_at,
-            'deleted_at' => $entity->deleted_at,
+            'created_at' => toDateTimeString($entity->created_at),
+            'updated_at' => toDateTimeString($entity->updated_at),
+            'deleted_at' => toDateTimeString($entity->deleted_at),
 
         ];
 

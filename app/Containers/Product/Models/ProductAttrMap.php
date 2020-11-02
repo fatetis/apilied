@@ -25,6 +25,8 @@ class ProductAttrMap extends Model
     ];
 
     protected $dates = [
+//        'updated_at',
+//        'created_at',
     ];
 
     /**
@@ -42,4 +44,6 @@ class ProductAttrMap extends Model
         return $this->hasMany(ProductAttrValueMap::class, 'product_attr_map_id', 'id')
             ->orderByDesc('sort');
     }
+
+
 }
