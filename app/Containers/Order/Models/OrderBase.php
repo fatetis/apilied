@@ -55,5 +55,10 @@ class OrderBase extends Model
      */
     const SOURCE_ORDINARY = 0; // 普通订单
 
+    public function order()
+    {
+        return $this->hasOne(Order::class, 'base_id', 'id')->with('orderchild');
+    }
+
 
 }

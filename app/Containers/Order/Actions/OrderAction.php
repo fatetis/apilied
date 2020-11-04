@@ -104,6 +104,8 @@ class OrderAction extends Action
         foreach ($order_child_data as $val) {
             $val['order_id'] = $order_result['id'];
             Apiato::call('Order@CreateOrderChildTask', [$val]);
+            // 减少库存
+            Apiato::call('Product@DecrementProductSkuStockQuantityBySkuIdTask', [$val['sku_id']]);
         }
 
         return $order_base_result;
