@@ -31,7 +31,7 @@ class ProductCategoryTransformer extends Transformer
         $response = [
 //            'object' => 'ProductCategory',
             'id' => $entity->getHashedKey(),
-            'pid' => $entity->pid,
+            'pid' => $entity->getHashedKey('pid'),
             'name' => $entity->name,
             'is_rec' => $entity->is_rec,
             'sort' => $entity->sort,

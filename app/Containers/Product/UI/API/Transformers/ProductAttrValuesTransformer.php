@@ -30,7 +30,7 @@ class ProductAttrValuesTransformer extends Transformer
         $response = [
 //            'object' => 'ProductAttrValues',
             'id' => $entity->getHashedKey(),
-            'product_attr_id' => $entity->product_attr_id,
+            'product_attr_id' => $entity->getHashedKey('product_attr_id'),
             'name' => $entity->name,
             'sort' => $entity->sort,
 //            'created_at' => $entity->created_at,

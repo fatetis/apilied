@@ -18,10 +18,11 @@ class GetProductByCategoryIdTask extends Task
 
     public function run($category_id)
     {
-        return $this->repository->where([
-            'category_id' => $category_id,
+        $query = $this->repository->where([
             'is_audit' => GlobalStatusCode::YES,
             'is_on_sale' => GlobalStatusCode::YES,
-            ])->orderByDesc('sort')->orderByDesc('updated_at')->paginate();
+        ]);
+        if($category_id !== null) $query->where(['category_id' => $category_id]);
+        return $query->orderByDesc('sort')->orderByDesc('updated_at')->paginate();
     }
 }

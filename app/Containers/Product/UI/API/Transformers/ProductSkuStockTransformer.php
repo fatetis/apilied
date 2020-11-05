@@ -31,13 +31,13 @@ class ProductSkuStockTransformer extends Transformer
         $response = [
 //            'object' => 'ProductSkuStock',
             'id' => $entity->getHashedKey(),
-            'product_id' => $entity->product_id,
-            'sku_id' => $entity->sku_id,
+            'product_id' => $entity->getHashedKey('product_id'),
+            'sku_id' => $entity->getHashedKey('sku_id'),
             'quantity' => $entity->quantity,
             'warn_number' => $entity->warn_number,
             'created_at' => toDateTimeString($entity->created_at),
             'updated_at' => toDateTimeString($entity->updated_at),
-            'deleted_at' => toDateTimeString($entity->deleted_at),
+//            'deleted_at' => toDateTimeString($entity->deleted_at),
 
         ];
 

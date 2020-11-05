@@ -38,8 +38,9 @@ class ProductTransformer extends Transformer
 //            'object' => 'Product',
             'id' => $entity->getHashedKey(),
             'name' => $entity->name,
-            'brand_id' => $entity->brand_id,
-            'category_id' => $entity->category_id,
+//            'brand_id' => $entity->brand_id,
+            'brand_id' => $entity->getHashedKey('brand_id'),
+            'category_id' => $entity->getHashedKey('category_id'),
 //            'virtual_quantity' => $entity->virtual_quantity,
             'line_price' => $entity->line_price,
             'price' => [

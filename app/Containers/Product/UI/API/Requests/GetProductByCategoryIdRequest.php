@@ -33,7 +33,7 @@ class GetProductByCategoryIdRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+         'cid',
     ];
 
     /**

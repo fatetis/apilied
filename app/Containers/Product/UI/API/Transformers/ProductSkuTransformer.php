@@ -34,9 +34,9 @@ class ProductSkuTransformer extends Transformer
         $response = [
 //            'object' => 'ProductSku',
             'id' => $entity->getHashedKey(),
-            'product_id' => $entity->product_id,
+            'product_id' => $entity->getHashedKey('product_id'),
             'attr_key' => $entity->attr_key,
-            'media_id' => $entity->media_id,
+            'media_id' => $entity->getHashedKey('media_id'),
             'price' => [
                 'price' => $entity->price,
                 'int' => $price[0],

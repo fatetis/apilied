@@ -32,8 +32,8 @@ class ProductMediaTransformer extends Transformer
         $response = [
 //            'object' => 'ProductMedia',
             'id' => $entity->getHashedKey(),
-            'product_id' => $entity->product_id,
-            'media_id' => $entity->media_id,
+            'product_id' => $entity->getHashedKey('product_id'),
+            'media_id' => $entity->getHashedKey('media_id'),
             'sort' => $entity->sort,
 //            'created_at' => $entity->created_at,
 //            'updated_at' => $entity->updated_at,

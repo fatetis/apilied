@@ -32,8 +32,8 @@ class ProductAttrMapTransformer extends Transformer
         $response = [
 //            'object' => 'ProductAttrMap',
             'id' => $entity->getHashedKey(),
-            'product_id' => $entity->product_id,
-            'product_attr_id' => $entity->product_attr_id,
+            'product_id' => $entity->getHashedKey('product_id'),
+            'product_attr_id' => $entity->getHashedKey('product_attr_id'),
             'sort' => $entity->sort,
             'created_at' => toDateTimeString($entity->created_at),
             'updated_at' => toDateTimeString($entity->updated_at),
