@@ -1,0 +1,499 @@
+{
+	"info": {
+		"_postman_id": "65c96283-a3d3-44c0-ade4-551b0e591c4a",
+		"name": "lied",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Index",
+			"item": [
+				{
+					"name": "获取首页banner",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiODVhYmNlYjk5OWE3NWU4YTVmMDExZjRmMTQwYzEwYmY0Yjg1YzMyYWM2OWE0ZGRkYzllZTNiOWEyNjE3NjQ0YmIyZGJiYTg4YTAzNDRiMTgiLCJpYXQiOjE1OTc5OTE2MDYsIm5iZiI6MTU5Nzk5MTYwNiwiZXhwIjoxNTk4MDc4MDA2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.rU55fE4gG3s_V_xJDY6PcnXSJNAwFUhTrtK99OAkhqp1lUGyQlTBa2XS07kbreCaDIXGcuLXxPcK_3uzyRxqqJiZqPZCPqk8oOu6ObFdnmpWJFdXFbSPZIqkLYyNLSgXFzGJfJgbVdm7vmOD50Vu3ZAmZHuagHVeESUTYbe_Y2OPjsMHl--FzLiB_9v0F2igMpWDPVfHW77vUdZRY9yC9sZcuRTfZPLTB_JavT1laBmrn5riyOiCsIXmTx1dAtF6OBG_Yy8hn4aW8CTssXLopv5uLF1yeJ7GQ-Pe3SA7WJkMUJE-S9tw00rfdwJSNWa4jLAewm6onG9sSpdiuWfrAk1hJcxtcPvfMQVJgtD2W8XHv6UaMrHgPGDVofvjwsDJbINDPctisiRX0MmE0Rg-RRW67PcND9y1vpVBrAFlAx14z4ICkCYL9DA8Yxe13HyBzXHy0-X5KgfPQ6Ivgu9SZze5pG8056zL7GaP2FX735BWkiq-CGLvwOTMU_NV_FUnOiYQBOXqoyTdKs51saqQK-oBQ0RDkN-CA8d0_xOFggUWqmaFMrmBQEeRGfZ-llqa-9EiCz7JbfmNcEiGuDsBdMK9fnPjkXX60xdh_zxdIGL2hktHVL9N4DeZ9pI7T7SRI_VHeLcBBsUatFResDlIwtiECXPwL52elFONs2-AITg",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/index/adv?city=1",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"index",
+								"adv"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "1"
+								}
+							]
+						},
+						"description": "获取首页banner"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "获取产品分类",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/prod/category/pid?pid=1",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"prod",
+								"category",
+								"pid"
+							],
+							"query": [
+								{
+									"key": "pid",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取一条产品详情数据",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{service}}/prod/detail/ND?include=attrs,medias,brand,skus",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"prod",
+								"detail",
+								"ND"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "attrs,medias,brand,skus"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取产品列表",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/product/list?include=medias",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"product",
+								"list"
+							],
+							"query": [
+								{
+									"key": "cid",
+									"value": "ND",
+									"disabled": true
+								},
+								{
+									"key": "include",
+									"value": "medias"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "产品校验",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "sku_id[10]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sku_id[9]",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{service}}/product/validate?num=1",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"product",
+								"validate"
+							],
+							"query": [
+								{
+									"key": "sku_id",
+									"value": "9",
+									"disabled": true
+								},
+								{
+									"key": "num",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "用户名和密码登录",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "18825099087",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "admin@admin.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{service}}/clients/api/mobile/login",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"clients",
+								"api",
+								"mobile",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "手机验证码登录",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "18825099088",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{service}}/mobile/login",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"mobile",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取手机验证码",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiZGU4NjhkOTRhZjRlOGY2Yjk2Yzk5MzdkMTVlODY1ODZmMjZmMzZmYzRjZGNjNGU3MmYzYzM1NmFkN2VjYjM5MTVjMmEwZDMxZjRjYjM4MzMiLCJpYXQiOjE1OTc5OTI1ODYsIm5iZiI6MTU5Nzk5MjU4NiwiZXhwIjoxNTk4MDc4OTg2LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.g4B9V2Hr5FVLSHlOgVUkNyT4gAqly01aWxk1A9tO0BhM_jhOA2NIedeS0iHmAfvdZIoMrO3itCCzS5AuNbPZa8GTrrhvght2DCyvcWxdKP2a5UmriajwUwjgW2HDG3vuvfXmWrf9gsklbbiyu-Olch7xI0jFtiL3KNiaWpr9hUQolKPDb4GYs3ntoY5XuUYp6KzevXFBF-ibhLUc3yCKeY-Z7_fLFQi5-VXD2fMseA_2sw2di6JHnF8eAoWH8L_yHn59n0UiXS_09kj3ewFDArF3IxjSqJmlWUfUdQNKkD4oPx94LZFN9peul0HXci9XU1k-4xfPaGO4-2_D5HaJua0u1SQbkL-NNIobaIXQj9i8277eRUhYHTZ5Lnug57gsDwlj74Jl6K-I9gl_mRbV6nhIyHv4bbJ8g2saiclYeWX2VMb6GPBvEWcouZHM05kLa4lQq0Zq2rWfRRdzEWlf9tHCMuweru4qaV8MLaGVFydlWQ_FIOv4HyQPW1Nv-yss-_0KFWd9_1M0zblFBD8DCj2GZA0XHyIPBfmxIMEPfVN_dCkl6DzGyZ-_d2WMABNyd5ND5scqR7Je8Haa-28yGfuapGeqZx_Bjyw7nOszQXM3eIHICvPIcDFEzTjNaFO8tAVPyKz161TTNgmfUYYpuaY_zG7CasBU9s5QDIaUaKE",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "mobile",
+									"value": "18825099087",
+									"type": "text"
+								},
+								{
+									"key": "using_type",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{service}}/mobile/verify/code",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"mobile",
+								"verify",
+								"code"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "购买产品下单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "sku_id[10]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "sku_id[9]",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{service}}/order?num=1&address_id=4",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"order"
+							],
+							"query": [
+								{
+									"key": "sku_id",
+									"value": "9",
+									"disabled": true
+								},
+								{
+									"key": "num",
+									"value": "1"
+								},
+								{
+									"key": "address_id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "新增收货地址",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiYTExN2Q3MmI4NDZjMDUwZmNjMGM3Y2I1M2FiOWVkZjM1YmYyNzZkNzI0MDNiNWRiMTNkM2Q2MTk1NTVkOGRjMmEyYzI3NTQwNzhjNjUxMjMiLCJpYXQiOjE2MDE0MzY4MTksIm5iZiI6MTYwMTQzNjgxOSwiZXhwIjoxNjAxNTIzMjE5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.fkUdJNgUfgjMlPnvXqsTI_sMUUcLfYWb-Buve1rqT6yQ4or4gfrn-HnhFjs60yGkbdLbUZhQOdxfx7ph8ZSmD5RxKuY_TOgLRp-N9pwFXBm6mKBsxlAG_WV9AGhPoLnvKdDkKh3HasaRT6mqdBFAPYBbKUQeHnU1R9jlHkRYuGuAQdzp9VtRWRtSbf8D8ZAb5k9ngTz33dTRqM1H_UsGGv00j1z1kIIF4Va47nXCLkKYUwmtMMyQQilXgK3dNd2f3v0u5yEeVJTR25FQdQRC3176QquvGbo-VfCWapxLcTybq3TDTMZz9wkn_hMrKV5TPjxpMVPa26vLNZ8AyxgXrR-a1zC1lhonnj9JOm2bUBvSnS2oK6i6sI5swWfFYrWi9qgrakikGDqP5cT-UmgQCTt1oq0CnKdrer4stcgIr-zvEULqSBt345y_Q9l5mwvnwWRovaRZp7umaJ4qu1qrHMbYMqUgmsERs4Pl-lyIWptGaT7GApl3VUas6knlAtam392cJITrsG4dofknIdlWGTNA-_nN4gzpph1Tn34gDs-3FOY7jgdRopm3lvzmy47qQv8TQcdu4ecZPCTGQmrjVFtTfZkHHYLQHXk0ub81SO1BlGuNVJZO4zJiyoVUQvLYqEqxn56IeK9rzY14NV1sDq_tXSwt5w8Not6ZvvVWuW4",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "蛇形",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "18825099088",
+									"type": "text"
+								},
+								{
+									"key": "aid",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "愉景大厦3楼",
+									"type": "text"
+								},
+								{
+									"key": "default",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{service}}/address/create",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"address",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
