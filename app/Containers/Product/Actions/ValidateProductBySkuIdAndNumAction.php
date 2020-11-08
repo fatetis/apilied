@@ -29,10 +29,7 @@ class ValidateProductBySkuIdAndNumAction extends Action
              * ]
              */
             $result = [];
-            if(is_string($data->sku_id)) {
-                if(empty($data->num)) throw new WrongEnoughIfException(GlobalStatusCode::PRODUCT_BUY_NUM_NECESSARY);
-                $result[] = $this->dealValidateProduct($data);
-            }else{
+            if(is_array($data->sku_id)) {
                 $seller_id = '';
                 foreach ($data->sku_id as $key => $value) {
                     $prod_data = $this->dealValidateProduct(new DataTransporter(['sku_id' => $key, 'num' => $value]));
@@ -45,6 +42,9 @@ class ValidateProductBySkuIdAndNumAction extends Action
                     }
                     $result[] = $prod_data;
                 }
+            }else{
+                if(empty($data->num)) throw new WrongEnoughIfException(GlobalStatusCode::PRODUCT_BUY_NUM_NECESSARY);
+                $result[] = $this->dealValidateProduct($data);
             }
             if(empty($result)) throw new NotFoundException();
             return $result;
