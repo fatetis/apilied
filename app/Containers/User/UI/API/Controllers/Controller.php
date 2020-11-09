@@ -201,7 +201,13 @@ class Controller extends ApiController
         return $this->successResponse($request, $this->transform($result, FindUserAddressTransformer::class));
     }
 
-
+    /**
+     * 删除收货地址
+     * @param FindUserAddressByUserIdAndIdRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/9 000917:01
+     */
     public function deleteUserAddress(FindUserAddressByUserIdAndIdRequest $request)
     {
         $result = Apiato::call('User@DeleteUserAddressAction', [new DataTransporter($request)]);

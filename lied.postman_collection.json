@@ -598,6 +598,41 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "region",
+			"item": [
+				{
+					"name": "获取省市区数据",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/region/pca/get",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"region",
+								"pca",
+								"get"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}
