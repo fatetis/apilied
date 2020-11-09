@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Containers\User\Data\Repositories;
+namespace App\Containers\Region\Data\Repositories;
 
 use App\Ship\Parents\Repositories\Repository;
 

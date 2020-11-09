@@ -7,7 +7,7 @@ use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class CreateUserAddressTask extends Task
+class UpdateOrCreateUserAddressTask extends Task
 {
 
     protected $repository;
@@ -17,10 +17,12 @@ class CreateUserAddressTask extends Task
         $this->repository = $repository;
     }
 
-    public function run(array $data)
+    public function run($id, array $data)
     {
         try {
-            return $this->repository->create($data);
+            return $this->repository->updateOrCreate([
+                'id' => $id
+            ], $data);
         }
         catch (Exception $exception) {
             throw new CreateResourceFailedException();

@@ -20,9 +20,9 @@
  */
 
 /** @var Route $router */
-$router->post('address/create', [
-    'as' => 'api_user_create_user_address',
-    'uses'  => 'Controller@createUserAddress',
+$router->post('address/modify', [
+    'as' => 'api_user_update_or_create_user_address',
+    'uses'  => 'Controller@updateOrCreateUserAddress',
     'middleware' => [
       'auth:api',
     ],

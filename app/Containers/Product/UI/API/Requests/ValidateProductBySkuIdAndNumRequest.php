@@ -52,7 +52,7 @@ class ValidateProductBySkuIdAndNumRequest extends Request
     public function rules()
     {
         return [
-            'sku_id' => 'required|exists:product_sku,id',
+            'sku_id' => 'required|exists:product_sku,id,deleted_at,NULL',
             //  'sku_id' => 'required',
              'num' => 'numeric',
         ];

@@ -4,7 +4,9 @@ namespace App\Containers\User\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\User\UI\API\Requests\CreateAdminRequest;
-use App\Containers\User\UI\API\Requests\CreateUserAddressRequest;
+use App\Containers\User\UI\API\Requests\FindUserAddressByUserIdAndIdRequest;
+use App\Containers\User\UI\API\Requests\GetUserAddressRequest;
+use App\Containers\User\UI\API\Requests\UpdateOrCreateUserAddressRequest;
 use App\Containers\User\UI\API\Requests\DeleteUserRequest;
 use App\Containers\User\UI\API\Requests\FindUserByIdRequest;
 use App\Containers\User\UI\API\Requests\ForgotPasswordRequest;
@@ -13,6 +15,8 @@ use App\Containers\User\UI\API\Requests\GetAuthenticatedUserRequest;
 use App\Containers\User\UI\API\Requests\RegisterUserRequest;
 use App\Containers\User\UI\API\Requests\ResetPasswordRequest;
 use App\Containers\User\UI\API\Requests\UpdateUserRequest;
+use App\Containers\User\UI\API\Transformers\FindUserAddressTransformer;
+use App\Containers\User\UI\API\Transformers\UserAddressTransformer;
 use App\Containers\User\UI\API\Transformers\UserPrivateProfileTransformer;
 use App\Containers\User\UI\API\Transformers\UserTransformer;
 use App\Ship\Parents\Controllers\ApiController;
@@ -158,9 +162,49 @@ class Controller extends ApiController
         return $this->noContent(202);
     }
 
-    public function createUserAddress(CreateUserAddressRequest $request)
+    /**
+     * 创建与更新用户收货地址
+     * @param UpdateOrCreateUserAddressRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/9 00099:18
+     */
+    public function updateOrCreateUserAddress(UpdateOrCreateUserAddressRequest $request)
     {
-        $result = Apiato::call('User@CreateUserAddressAction', [new DataTransporter($request)]);
+        $result = Apiato::call('User@UpdateOrCreateUserAddressAction', [new DataTransporter($request)]);
+        return $this->successResponse($request, $this->transform($result, UserAddressTransformer::class));
+    }
+
+    /**
+     * 获取用户收货地址
+     * @param GetUserAddressRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/9 000913:42
+     */
+    public function getUserAddress(GetUserAddressRequest $request)
+    {
+        $result = Apiato::call('User@GetUserAddressAction', [new DataTransporter($request)]);
+        return $this->successResponse($request, $this->transform($result, UserAddressTransformer::class));
+    }
+
+    /**
+     * 查询一条用户的收货地址
+     * @param FindUserAddressByUserIdAndIdRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/9 000914:26
+     */
+    public function findUserAddressByUserIdAndId(FindUserAddressByUserIdAndIdRequest $request)
+    {
+        $result = Apiato::call('User@FindUserAddressByUserIdAndIdAction', [new DataTransporter($request)]);
+        return $this->successResponse($request, $this->transform($result, FindUserAddressTransformer::class));
+    }
+
+
+    public function deleteUserAddress(FindUserAddressByUserIdAndIdRequest $request)
+    {
+        $result = Apiato::call('User@DeleteUserAddressAction', [new DataTransporter($request)]);
         return $this->successResponse($request, $result);
     }
 

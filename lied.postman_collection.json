@@ -416,6 +416,34 @@
 			"name": "user",
 			"item": [
 				{
+					"name": "获取收货地址列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/address/get",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"address",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "新增收货地址",
 					"request": {
 						"auth": {
@@ -463,29 +491,106 @@
 								},
 								{
 									"key": "aid",
-									"value": "3",
+									"value": "Dk",
 									"type": "text"
 								},
 								{
 									"key": "address",
-									"value": "愉景大厦3楼",
+									"value": "愉景大厦3楼1233",
 									"type": "text"
 								},
 								{
 									"key": "default",
 									"value": "0",
 									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "Je",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{service}}/address/create",
+							"raw": "{{service}}/address/modify",
 							"host": [
 								"{{service}}"
 							],
 							"path": [
 								"address",
-								"create"
+								"modify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取一条收货地址",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/address/find?id=Je",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"address",
+								"find"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "Je"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "删除收货地址",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "Je",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{service}}/address/delete",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"address",
+								"delete"
 							]
 						}
 					},

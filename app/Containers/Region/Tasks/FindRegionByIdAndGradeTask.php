@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Containers\User\Tasks;
+namespace App\Containers\Region\Tasks;
 
-use App\Containers\User\Data\Repositories\RegionRepository;
+use App\Containers\Region\Data\Repositories\RegionRepository;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;

@@ -52,7 +52,7 @@ class FindProductByIdRequest extends Request
     public function rules()
     {
         return [
-            'id' => 'required|regex:/^[1-9][0-9]*$/|exists:product,id'
+            'id' => 'required|regex:/^[1-9][0-9]*$/|exists:product,id,deleted_at,NULL'
         ];
     }
 

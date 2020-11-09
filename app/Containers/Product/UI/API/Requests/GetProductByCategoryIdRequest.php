@@ -52,7 +52,7 @@ class GetProductByCategoryIdRequest extends Request
     public function rules()
     {
         return [
-            'cid' => 'exists:product_category,id',
+            'cid' => 'exists:product_category,id,deleted_at,NULL',
             // '{user-input}' => 'required|max:255',
         ];
     }
