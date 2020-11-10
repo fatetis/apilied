@@ -26,7 +26,7 @@ class GetCompletePCAByAreaIdAction extends Action
             });
             return $result;
         }catch (\Throwable $throwable){
-            elog('获取我的收货地址抛出异常', $throwable, je($ids));
+            elog('获取我的收货地址抛出异常', $throwable, $ids);
             return GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE;
         }
 

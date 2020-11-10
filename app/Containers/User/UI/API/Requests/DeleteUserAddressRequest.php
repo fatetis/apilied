@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Card\UI\API\Requests;
+namespace App\Containers\User\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class CreateCartRequest.
+ * Class DeleteUserAddressRequest.
  */
-class CreateCartRequest extends Request
+class DeleteUserAddressRequest extends Request
 {
 
     /**
@@ -33,7 +33,7 @@ class CreateCartRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+         'id',
     ];
 
     /**
@@ -52,8 +52,16 @@ class CreateCartRequest extends Request
     public function rules()
     {
         return [
-            // 'id' => 'required',
+            'id' => 'required_without:is_default|exists:user_address,id,deleted_at,NULL',
             // '{user-input}' => 'required|max:255',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'id.required_without' => '缺少必要参数，请刷新重试',
+            'id.exists' => '数据不存在，请刷新重试',
         ];
     }
 

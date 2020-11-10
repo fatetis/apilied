@@ -23,7 +23,7 @@ class ProductTransformer extends Transformer
      * @var  array
      */
     protected $defaultIncludes = [
-
+        'medias',
     ];
 
     /**

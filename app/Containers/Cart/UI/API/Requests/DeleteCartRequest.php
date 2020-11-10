@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\User\UI\API\Requests;
+namespace App\Containers\Cart\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class FindUserAddressByUserIdAndIdRequest.
+ * Class DeleteCartRequest.
  */
-class FindUserAddressByUserIdAndIdRequest extends Request
+class DeleteCartRequest extends Request
 {
 
     /**
@@ -52,7 +52,7 @@ class FindUserAddressByUserIdAndIdRequest extends Request
     public function rules()
     {
         return [
-             'id' => 'required|exists:user_address,id,deleted_at,NULL',
+             'id' => 'required|exists:cart,id,deleted_at,NULL',
             // '{user-input}' => 'required|max:255',
         ];
     }
@@ -60,8 +60,8 @@ class FindUserAddressByUserIdAndIdRequest extends Request
     public function messages()
     {
         return [
-            'id.required' => '数据错误，请刷新重试',
-            'id.exists' => '数据不存在，请刷新重试',
+            'id.required' => '缺少必要数据，请刷新页面重试',
+            'id.exists' => '数据不存在，请刷新页面',
         ];
     }
 

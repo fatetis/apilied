@@ -4,7 +4,8 @@ namespace App\Containers\User\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\User\UI\API\Requests\CreateAdminRequest;
-use App\Containers\User\UI\API\Requests\FindUserAddressByUserIdAndIdRequest;
+use App\Containers\User\UI\API\Requests\DeleteUserAddressRequest;
+use App\Containers\User\UI\API\Requests\FindUserAddressByUserIdAndIdOrIsDefaultRequest;
 use App\Containers\User\UI\API\Requests\GetUserAddressRequest;
 use App\Containers\User\UI\API\Requests\UpdateOrCreateUserAddressRequest;
 use App\Containers\User\UI\API\Requests\DeleteUserRequest;
@@ -190,25 +191,25 @@ class Controller extends ApiController
 
     /**
      * 查询一条用户的收货地址
-     * @param FindUserAddressByUserIdAndIdRequest $request
+     * @param FindUserAddressByUserIdAndIdOrIsDefaultRequest $request
      * @return false|\Illuminate\Http\JsonResponse|string
      * Author: fatetis
      * Date:2020/11/9 000914:26
      */
-    public function findUserAddressByUserIdAndId(FindUserAddressByUserIdAndIdRequest $request)
+    public function findUserAddressByUserIdAndId(FindUserAddressByUserIdAndIdOrIsDefaultRequest $request)
     {
-        $result = Apiato::call('User@FindUserAddressByUserIdAndIdAction', [new DataTransporter($request)]);
+        $result = Apiato::call('User@FindUserAddressByUserIdAndIdOrIsDefaultAction', [new DataTransporter($request)]);
         return $this->successResponse($request, $this->transform($result, FindUserAddressTransformer::class));
     }
 
     /**
      * 删除收货地址
-     * @param FindUserAddressByUserIdAndIdRequest $request
+     * @param DeleteUserAddressRequest $request
      * @return false|\Illuminate\Http\JsonResponse|string
      * Author: fatetis
-     * Date:2020/11/9 000917:01
+     * Date:2020/11/10 001011:51
      */
-    public function deleteUserAddress(FindUserAddressByUserIdAndIdRequest $request)
+    public function deleteUserAddress(DeleteUserAddressRequest $request)
     {
         $result = Apiato::call('User@DeleteUserAddressAction', [new DataTransporter($request)]);
         return $this->successResponse($request, $result);

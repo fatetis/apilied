@@ -13,7 +13,8 @@ class ProductSkuTransformer extends Transformer
      */
     protected $defaultIncludes = [
         'stock',
-        'media'
+        'media',
+        'product'
     ];
 
     /**
@@ -67,6 +68,11 @@ class ProductSkuTransformer extends Transformer
     public function includeStock(ProductSku $product)
     {
         return $this->item($product->stock, new ProductSkuStockTransformer());
+    }
+
+    public function includeProduct(ProductSku $product)
+    {
+        return $this->item($product->product, new ProductTransformer());
     }
 
 }

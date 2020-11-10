@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Containers\User\Tasks;
+namespace App\Containers\Cart\Tasks;
 
-use App\Containers\User\Data\Repositories\UserAddressRepository;
+use App\Containers\Cart\Data\Repositories\CartRepository;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class UpdateOrCreateUserAddressTask extends Task
+class UpdateOrCreateCartTask extends Task
 {
 
     protected $repository;
 
-    public function __construct(UserAddressRepository $repository)
+    public function __construct(CartRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    public function run($arr, array $data)
+    public function run($array, array $data)
     {
         try {
-            return $this->repository->updateOrCreate($arr, $data);
+            return $this->repository->updateOrCreate($array, $data);
         }
         catch (Exception $exception) {
             throw new CreateResourceFailedException();

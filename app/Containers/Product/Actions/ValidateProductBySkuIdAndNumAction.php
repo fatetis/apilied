@@ -60,6 +60,13 @@ class ValidateProductBySkuIdAndNumAction extends Action
     }
 
 
+    /**
+     * 校验产品是否符合购买条件
+     * @param $data
+     * @return mixed
+     * Author: fatetis
+     * Date:2020/11/10 00109:51
+     */
     public function dealValidateProduct($data)
     {
         $sku = Apiato::call('Product@FindProductSkuWithProductAndStockByIdTask', [

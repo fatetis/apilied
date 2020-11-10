@@ -347,9 +347,9 @@ if (!function_exists('getIP')) {
     }
 
     if (!function_exists('elog')) {
-        function elog($msg, $throwable, $data = '')
+        function elog($msg, $throwable, $data = [])
         {
-            Log::error($msg.'。文件目录：'.$throwable->getFile().'.'.$throwable->getLine().'行，异常信息：'.$throwable->getMessage().'。数据：'.$data);
+            Log::error($msg.'。文件目录：'.$throwable->getFile().'.'.$throwable->getLine().'行，异常信息：'.$throwable->getMessage().'。数据：'.je($data));
         }
     }
 

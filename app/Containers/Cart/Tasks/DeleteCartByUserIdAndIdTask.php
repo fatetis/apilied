@@ -3,11 +3,11 @@
 namespace App\Containers\Cart\Tasks;
 
 use App\Containers\Cart\Data\Repositories\CartRepository;
-use App\Ship\Exceptions\CreateResourceFailedException;
+use App\Ship\Exceptions\DeleteResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class CreateCartTask extends Task
+class DeleteCartByUserIdAndIdTask extends Task
 {
 
     protected $repository;
@@ -17,13 +17,13 @@ class CreateCartTask extends Task
         $this->repository = $repository;
     }
 
-    public function run(array $data)
+    public function run($id, $user_id)
     {
         try {
-            return $this->repository->create($data);
+            return $this->repository->where('user_id', $user_id)->where('id', $id)->delete();
         }
         catch (Exception $exception) {
-            throw new CreateResourceFailedException();
+            throw new DeleteResourceFailedException();
         }
     }
 }

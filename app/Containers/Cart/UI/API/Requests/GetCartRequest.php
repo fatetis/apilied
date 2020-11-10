@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Order\UI\API\Requests;
+namespace App\Containers\Cart\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class OrderRequest.
+ * Class GetCartRequest.
  */
-class OrderRequest extends Request
+class GetCartRequest extends Request
 {
 
     /**
@@ -52,23 +52,8 @@ class OrderRequest extends Request
     public function rules()
     {
         return [
-             'sku_id' => 'required',
-             'num' => 'numeric',
-             'address_id' => 'required|numeric|exists:user_address,id,deleted_at,NULL',
-//             'msg' => '',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'sku_id.required' => '请选择需购买的产品sku',
-//            'sku_id.exists' => '产品数据不合法',
-//            'num.required' => '请输入需购买的产品数量',
-            'num.numeric' => '产品数量数据类型不正确',
-            'address_id.required' => '请填写收货人信息',
-            'address_id.numeric' => '收货人信息数据类型不正确',
-            'address_id.exists' => '收货人信息不存在',
+            // 'id' => 'required',
+            // '{user-input}' => 'required|max:255',
         ];
     }
 

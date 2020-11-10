@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Order\UI\API\Requests;
+namespace App\Containers\User\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class OrderRequest.
+ * Class FindUserAddressByUserIdAndIdOrIsDefaultRequest.
  */
-class OrderRequest extends Request
+class FindUserAddressByUserIdAndIdOrIsDefaultRequest extends Request
 {
 
     /**
@@ -33,7 +33,7 @@ class OrderRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+         'id',
     ];
 
     /**
@@ -52,23 +52,18 @@ class OrderRequest extends Request
     public function rules()
     {
         return [
-             'sku_id' => 'required',
-             'num' => 'numeric',
-             'address_id' => 'required|numeric|exists:user_address,id,deleted_at,NULL',
-//             'msg' => '',
+             'id' => 'required_without:is_default|exists:user_address,id,deleted_at,NULL',
+             'is_default' => 'required_without:id|boolean',
         ];
     }
 
     public function messages()
     {
         return [
-            'sku_id.required' => '请选择需购买的产品sku',
-//            'sku_id.exists' => '产品数据不合法',
-//            'num.required' => '请输入需购买的产品数量',
-            'num.numeric' => '产品数量数据类型不正确',
-            'address_id.required' => '请填写收货人信息',
-            'address_id.numeric' => '收货人信息数据类型不正确',
-            'address_id.exists' => '收货人信息不存在',
+            'id.required_without' => '缺少必要参数，请刷新重试',
+            'id.exists' => '数据不存在，请刷新重试',
+            'is_default.required_without' => '缺少必要参数，请刷新重试',
+            'is_default.boolean' => '数据不合法，请刷新重试',
         ];
     }
 

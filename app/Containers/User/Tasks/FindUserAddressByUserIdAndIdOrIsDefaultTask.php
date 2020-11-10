@@ -7,7 +7,7 @@ use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class FindUserAddressByUserIdAndIdTask extends Task
+class FindUserAddressByUserIdAndIdOrIsDefaultTask extends Task
 {
 
     protected $repository;
@@ -17,10 +17,11 @@ class FindUserAddressByUserIdAndIdTask extends Task
         $this->repository = $repository;
     }
 
-    public function run($id, $user_id)
+    public function run($id, $user_id, $is_default)
     {
         try {
-            return $this->repository->where('user_id', $user_id)->find($id);
+            if(!empty($id)) return $this->repository->where('user_id', $user_id)->find($id);
+            return $this->repository->where('is_default', $is_default)->where('user_id', $user_id)->first();
         }
         catch (Exception $exception) {
             throw new NotFoundException();
