@@ -3,9 +3,11 @@
 namespace App\Containers\Product\UI\API\Controllers;
 
 use App\Containers\Product\UI\API\Requests\FindProductByIdRequest;
+use App\Containers\Product\UI\API\Requests\FindProductBySkuIdRequest;
 use App\Containers\Product\UI\API\Requests\GetProductByCategoryIdRequest;
 use App\Containers\Product\UI\API\Requests\GetProductCategoryByPidRequest;
 use App\Containers\Product\UI\API\Requests\ValidateProductBySkuIdAndNumRequest;
+use App\Containers\Product\UI\API\Transformers\ProductSkuTransformer;
 use App\Containers\Product\UI\API\Transformers\ProductTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use Apiato\Core\Foundation\Facades\Apiato;
@@ -30,7 +32,7 @@ class Controller extends ApiController
     }
 
     /**
-     * 获取一条产品数据
+     * 根据product_id获取一条产品数据
      * @param FindProductByIdRequest $request
      * @return false|string
      * Author: fatetis
@@ -41,6 +43,20 @@ class Controller extends ApiController
         $data = Apiato::call('Product@FindProductByIdAction', [new DataTransporter($request)]);
 
         return $this->successResponse($request, $this->transform($data, ProductTransformer::class));
+    }
+
+    /**
+     * 根据sku_id获取一条产品数据
+     * @param FindProductBySkuIdRequest $request
+     * @return false|string
+     * Author: fatetis
+     * Date:2020/8/6 000611:19
+     */
+    public function findProductBySkuId(FindProductBySkuIdRequest $request)
+    {
+        $data = Apiato::call('Product@FindProductBySkuIdAction', [new DataTransporter($request)]);
+
+        return $this->successResponse($request, $this->transform($data, ProductSkuTransformer::class));
     }
 
     /**
@@ -69,6 +85,7 @@ class Controller extends ApiController
         $result = Apiato::call('Product@ValidateProductBySkuIdAndNumAction', [new DataTransporter($request)]);
         return is_string($result) ? $this->errorResponse($request, '', [], $result) : $this->successResponse($request);
     }
+
 
 
 

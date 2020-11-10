@@ -5,9 +5,9 @@ namespace App\Containers\Product\UI\API\Requests;
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class FindProductByIdRequest.
+ * Class FindProductBySkuIdRequest.
  */
-class FindProductByIdRequest extends Request
+class FindProductBySkuIdRequest extends Request
 {
 
     /**
@@ -33,7 +33,7 @@ class FindProductByIdRequest extends Request
      * @var  array
      */
     protected $decode = [
-        'id',
+         'id',
     ];
 
     /**
@@ -52,7 +52,8 @@ class FindProductByIdRequest extends Request
     public function rules()
     {
         return [
-            'id' => 'required|regex:/^[1-9][0-9]*$/|exists:product,id,deleted_at,NULL'
+             'id' => 'required|regex:/^[1-9][0-9]*$/|exists:product_sku,id,deleted_at,NULL',
+            // '{user-input}' => 'required|max:255',
         ];
     }
 

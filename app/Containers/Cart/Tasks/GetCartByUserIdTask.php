@@ -17,6 +17,9 @@ class GetCartByUserIdTask extends Task
 
     public function run($user_id)
     {
-        return $this->repository->where('user_id', $user_id)->get();
+        return $this->repository
+            ->where('user_id', $user_id)
+            ->orderByDesc('created_at')
+            ->get();
     }
 }
