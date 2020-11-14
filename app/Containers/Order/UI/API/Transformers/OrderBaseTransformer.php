@@ -18,7 +18,7 @@ class OrderBaseTransformer extends Transformer
      * @var  array
      */
     protected $availableIncludes = [
-
+        'order'
     ];
 
     /**
@@ -53,4 +53,10 @@ class OrderBaseTransformer extends Transformer
 
         return $response;
     }
+
+    public function includeOrder(OrderBase $order)
+    {
+        return $this->item($order->order, new OrderTransformer());
+    }
+
 }

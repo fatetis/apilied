@@ -23,7 +23,8 @@ class Controller extends ApiController
     public function updateOrCreateCart(UpdateOrCreateCartRequest $request)
     {
         $result = Apiato::call('Cart@UpdateOrCreateCartAction', [new DataTransporter($request)]);
-        return $this->successResponse($request, $this->transform($result, CartTransformer::class));
+        $result = is_string($result) ? $result : $this->transform($result, CartTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
     /**
@@ -49,7 +50,8 @@ class Controller extends ApiController
     public function getCart(GetCartRequest $request)
     {
         $result = Apiato::call('Cart@GetCartAction', [new DataTransporter($request)]);
-        return $this->successResponse($request, $this->transform($result, CartTransformer::class));
+        $result = is_string($result) ? $result : $this->transform($result, CartTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
 

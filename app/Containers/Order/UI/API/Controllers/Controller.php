@@ -3,6 +3,7 @@
 namespace App\Containers\Order\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Order\UI\API\Requests\FindOrderBaseByOrderNoRequest;
 use App\Containers\Order\UI\API\Requests\HandleSyncCallBackToWeChatRequest;
 use App\Containers\Order\UI\API\Requests\OrderRequest;
 use App\Containers\Order\UI\API\Transformers\OrderBaseTransformer;
@@ -23,7 +24,8 @@ class Controller extends ApiController
     {
         // sku_id num address_id
         $result = Apiato::call('Order@OrderAction', [new DataTransporter($request)]);
-        return $this->successResponse($request, $this->transform($result, OrderBaseTransformer::class));
+        $result = is_string($result) ? $result : $this->transform($result, OrderBaseTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
     /**
@@ -38,6 +40,13 @@ class Controller extends ApiController
         $result = Apiato::call('Order@HandleSyncCallBackToWeChatAction', [new DataTransporter($request)]);
         $this->successResponse($request, $result);
         return $result;
+    }
+
+    public function findOrderBaseByOrderNo(FindOrderBaseByOrderNoRequest $request)
+    {
+        $result = Apiato::call('Order@FindOrderBaseByOrderNoAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, OrderBaseTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
 

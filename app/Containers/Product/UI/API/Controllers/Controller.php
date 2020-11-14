@@ -40,9 +40,9 @@ class Controller extends ApiController
      */
     public function findProductById(FindProductByIdRequest $request)
     {
-        $data = Apiato::call('Product@FindProductByIdAction', [new DataTransporter($request)]);
-
-        return $this->successResponse($request, $this->transform($data, ProductTransformer::class));
+        $result = Apiato::call('Product@FindProductByIdAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, ProductTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
     /**
@@ -54,9 +54,9 @@ class Controller extends ApiController
      */
     public function findProductBySkuId(FindProductBySkuIdRequest $request)
     {
-        $data = Apiato::call('Product@FindProductBySkuIdAction', [new DataTransporter($request)]);
-
-        return $this->successResponse($request, $this->transform($data, ProductSkuTransformer::class));
+        $result = Apiato::call('Product@FindProductBySkuIdAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, ProductSkuTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
     /**
@@ -68,9 +68,9 @@ class Controller extends ApiController
      */
     public function getProductByCategoryId(GetProductByCategoryIdRequest $request)
     {
-        $data = Apiato::call('Product@GetProductByCategoryIdAction', [new DataTransporter($request)]);
-
-        return $this->successResponse($request, $this->transform($data, ProductTransformer::class));
+        $result = Apiato::call('Product@GetProductByCategoryIdAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, ProductTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
     /**

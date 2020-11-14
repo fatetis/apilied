@@ -38,7 +38,7 @@ class OrderAction extends Action
         }catch (NotFoundException $notFoundException){
             return GlobalStatusCode::MODEL_NOTHING_RESULT;
         }catch (\Throwable $throwable){
-            elog('下单产品校验异常', $throwable);
+            elog('下单产品校验异常', $throwable, $data);
             return GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE;
         }
 
@@ -114,7 +114,7 @@ class OrderAction extends Action
     public function generateOrderNo($user_id)
     {
         $orderno = date("Ymd") . rand(10000, 99999) . cutNumber($user_id, 7) . rand(10000, 99999);
-        $result = Apiato::call('Order@FindOrderBaseByOrdernoTask', [$orderno]);
+        $result = Apiato::call('Order@FindOrderBaseByOrdernoOrUserIdTask', [$orderno]);
         if (!empty($result)) {
             return $this->generateOrderNo($user_id);
         }

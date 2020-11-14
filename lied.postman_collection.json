@@ -192,6 +192,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "获取产品sku的详细数据",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/prod/sku/dj",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"prod",
+								"sku",
+								"dj"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -403,6 +422,40 @@
 								{
 									"key": "address_id",
 									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取一条订单信息",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/order/2020101450541000000158960?include=order,order.orderchild",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"order",
+								"2020101450541000000158960"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "order,order.orderchild"
 								}
 							]
 						}

@@ -173,7 +173,8 @@ class Controller extends ApiController
     public function updateOrCreateUserAddress(UpdateOrCreateUserAddressRequest $request)
     {
         $result = Apiato::call('User@UpdateOrCreateUserAddressAction', [new DataTransporter($request)]);
-        return $this->successResponse($request, $this->transform($result, UserAddressTransformer::class));
+        $result = is_string($result) ? $result : $this->transform($result, UserAddressTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
     /**
@@ -186,7 +187,8 @@ class Controller extends ApiController
     public function getUserAddress(GetUserAddressRequest $request)
     {
         $result = Apiato::call('User@GetUserAddressAction', [new DataTransporter($request)]);
-        return $this->successResponse($request, $this->transform($result, UserAddressTransformer::class));
+        $result = is_string($result) ? $result : $this->transform($result, UserAddressTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
     /**
@@ -199,7 +201,8 @@ class Controller extends ApiController
     public function findUserAddressByUserIdAndId(FindUserAddressByUserIdAndIdOrIsDefaultRequest $request)
     {
         $result = Apiato::call('User@FindUserAddressByUserIdAndIdOrIsDefaultAction', [new DataTransporter($request)]);
-        return $this->successResponse($request, $this->transform($result, FindUserAddressTransformer::class));
+        $result = is_string($result) ? $result : $this->transform($result, FindUserAddressTransformer::class);
+        return $this->successResponse($request, $result);
     }
 
     /**

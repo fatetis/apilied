@@ -14,14 +14,13 @@ class ProductSkuTransformer extends Transformer
     protected $defaultIncludes = [
         'stock',
         'media',
-        'product'
     ];
 
     /**
      * @var  array
      */
     protected $availableIncludes = [
-
+        'product'
     ];
 
     /**
