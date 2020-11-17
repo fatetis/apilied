@@ -4,6 +4,7 @@ namespace App\Containers\Order\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\Order\UI\API\Requests\FindOrderBaseByOrderNoRequest;
+use App\Containers\Order\UI\API\Requests\GetAllOrderBaseByStatusRequest;
 use App\Containers\Order\UI\API\Requests\HandleSyncCallBackToWeChatRequest;
 use App\Containers\Order\UI\API\Requests\OrderRequest;
 use App\Containers\Order\UI\API\Transformers\OrderBaseTransformer;
@@ -42,9 +43,30 @@ class Controller extends ApiController
         return $result;
     }
 
+    /**
+     * 获取一条订单详情的数据
+     * @param FindOrderBaseByOrderNoRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/16 001619:10
+     */
     public function findOrderBaseByOrderNo(FindOrderBaseByOrderNoRequest $request)
     {
-        $result = Apiato::call('Order@FindOrderBaseByOrderNoAction', [new DataTransporter($request)]);
+        $result = Apiato::call('Order@FindOrderBaseByOrderNoAndUserIdAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, OrderBaseTransformer::class);
+        return $this->successResponse($request, $result);
+    }
+
+    /**
+     * 获取订单列表的数据
+     * @param GetAllOrderBaseByStatusRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/17 001710:34
+     */
+    public function getAllOrderBaseByStatus(GetAllOrderBaseByStatusRequest $request)
+    {
+        $result = Apiato::call('Order@GetAllOrderBaseByStatusAction', [new DataTransporter($request)]);
         $result = is_string($result) ? $result : $this->transform($result, OrderBaseTransformer::class);
         return $this->successResponse($request, $result);
     }

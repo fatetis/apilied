@@ -5,9 +5,9 @@ namespace App\Containers\Order\UI\API\Requests;
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class FindOrderBaseByOrderNoRequest.
+ * Class GetAllOrderBaseByStatusRequest.
  */
-class FindOrderBaseByOrderNoRequest extends Request
+class GetAllOrderBaseByStatusRequest extends Request
 {
 
     /**
@@ -43,7 +43,6 @@ class FindOrderBaseByOrderNoRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-         'id',
     ];
 
     /**
@@ -52,16 +51,8 @@ class FindOrderBaseByOrderNoRequest extends Request
     public function rules()
     {
         return [
-             'id' => 'required|exists:order_base,orderno,deleted_at,NULL',
+            // 'id' => 'required',
             // '{user-input}' => 'required|max:255',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'id.required' => '缺少必要参数,请刷新页面重试',
-            'id.exists' => '数据不存在，请退出重试'
         ];
     }
 
