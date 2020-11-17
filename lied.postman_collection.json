@@ -461,6 +461,87 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "获取订单列表信息",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/orders/list?status=ne&include=order,order.orderchild",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"orders",
+								"list"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "ne"
+								},
+								{
+									"key": "include",
+									"value": "order,order.orderchild"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新订单信息",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/order/update/2020101450541000000158960?price=4&shipping_price=2&status=ne",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"order",
+								"update",
+								"2020101450541000000158960"
+							],
+							"query": [
+								{
+									"key": "price",
+									"value": "4"
+								},
+								{
+									"key": "shipping_price",
+									"value": "2"
+								},
+								{
+									"key": "status",
+									"value": "ne"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}

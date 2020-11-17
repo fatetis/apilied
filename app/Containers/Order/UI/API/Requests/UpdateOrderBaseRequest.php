@@ -1,16 +1,21 @@
 <?php
 
-namespace App\Containers\User\UI\API\Requests;
+namespace App\Containers\Order\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class UpdateUserRequest.
- *
- * @author Mahmoud Zalt <mahmoud@zalt.me>
+ * Class UpdateOrderBaseRequest.
  */
-class UpdateUserRequest extends Request
+class UpdateOrderBaseRequest extends Request
 {
+
+    /**
+     * The assigned Transporter for this Request
+     *
+     * @var string
+     */
+    // protected $transporter = \App\Ship\Transporters\DataTransporter::class;
 
     /**
      * Define which Roles and/or Permissions has access to this request.
@@ -18,7 +23,7 @@ class UpdateUserRequest extends Request
      * @var  array
      */
     protected $access = [
-        'permissions' => 'update-users',
+        'permissions' => '',
         'roles'       => '',
     ];
 
@@ -28,17 +33,17 @@ class UpdateUserRequest extends Request
      * @var  array
      */
     protected $decode = [
-        'id',
+        'status'
     ];
 
     /**
-     * Defining the URL parameters (`/stores/999/items`) allows applying
+     * Defining the URL parameters (e.g, `/user/{id}`) allows applying
      * validation rules on them and allows accessing them like request data.
      *
      * @var  array
      */
     protected $urlParameters = [
-        'id',
+        'orderno',
     ];
 
     /**
@@ -47,11 +52,15 @@ class UpdateUserRequest extends Request
     public function rules()
     {
         return [
-            'email'    => 'email|unique:users,email,deleted_at,null',
-            'mobile'    => 'mobile|unique:users,mobile,deleted_at,null',
-            'id'       => 'required|exists:users,id',
-            'password' => 'min:6|max:40',
-            'name'     => 'min:2|max:50',
+            'orderno' => 'required|exists:order_base,orderno,deleted_at,NULL',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'orderno.required' => '缺少必要参数，请刷新页面重试',
+            'orderno.exists' => '数据不合法，请刷新页面重试',
         ];
     }
 
@@ -60,11 +69,8 @@ class UpdateUserRequest extends Request
      */
     public function authorize()
     {
-        // is this an admin who has access to permission `update-users`
-        // or the user is updating his own object (is the owner).
-
         return $this->check([
-            'hasAccess|isOwner',
+            'hasAccess',
         ]);
     }
 }

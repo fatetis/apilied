@@ -38,6 +38,7 @@ class GlobalStatusCode
 
     // 订单模块
     const ORDER_ADDRESS_MATE = 'A3001';
+    const ORDER_STATUS_FAIL = 'A3002';
 
     // 服务端错误码
     const RESULT_SYSTEM_FAIL_CODE = 'B0001';
@@ -72,10 +73,11 @@ class GlobalStatusCode
 
 
         'A3001' => '收货地址不合法，请重新输入',
+        'A3002' => '订单状态不存在，请刷新页面重试',
 
         'B0001' => '系统端错误',
         'B0002' => '系统无此验证码使用类型',
-        'B0003' => '数据出错，请重新刷新页面再试',
+        'B0003' => '数据出错，请重新刷新页面重试',
 
         'C0001' => 'CDN端错误',
     ];

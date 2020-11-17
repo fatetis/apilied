@@ -33,7 +33,7 @@ class GetAllOrderBaseByStatusRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'status'
     ];
 
     /**

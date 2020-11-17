@@ -34,6 +34,17 @@ class OrderBase extends Model
      */
     protected $resourceKey = 'order_base';
 
+    const ORDER_STATUS = [
+        0 => '待付款',
+        1 => '待发货',
+        2 => '待收货',
+        3 => '待评价',
+        4 => '交易成功',
+        5 => '交易关闭',
+        6 => '退款中',
+        7 => '退款完成',
+    ];
+
     /**
      * 订单状态
      */
