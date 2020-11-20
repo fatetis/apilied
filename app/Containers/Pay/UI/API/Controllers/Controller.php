@@ -12,7 +12,7 @@ class Controller extends ApiController
 
     public function pay(PayRequest $request)
     {
-        $result = Apiato::call('Order@OrderAction', [new DataTransporter($request)]);
+        $result = Apiato::call('Order@CreateOrderAction', [new DataTransporter($request)]);
         return $this->successResponse($request, $result);
     }
 

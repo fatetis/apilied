@@ -29,7 +29,7 @@ class ValidateProductBySkuIdAndNumAction extends Action
              * ]
              */
             $result = [];
-            if(is_array($data->sku_id)) {
+            if(is_object($data->sku_id)) {
                 $seller_id = '';
                 foreach ($data->sku_id as $key => $value) {
                     $prod_data = $this->dealValidateProduct(new DataTransporter(['sku_id' => $key, 'num' => $value]));
@@ -53,6 +53,7 @@ class ValidateProductBySkuIdAndNumAction extends Action
         }catch (NotFoundException $notFoundException) {
             return GlobalStatusCode::MODEL_NOTHING_RESULT;
         } catch (\Throwable $throwable) {
+            dd($throwable->getMessage());
             elog('购买产品前校验异常', $throwable);
             return GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE;
         }
@@ -73,6 +74,10 @@ class ValidateProductBySkuIdAndNumAction extends Action
             $data->sku_id
         ]);
         if(empty($sku)) throw new NotFoundException();
+        $attr_key = explode('-', $sku->attr_key);
+        $sku->attr_values = Apiato::call('Product@GetProductAttrValuesByIdsWithProductAttrTask', [
+            $attr_key
+        ]);
         // 库存不足
         if($data->num > $sku->stock->quantity)
             throw new WrongEnoughIfException(GlobalStatusCode::PRODUCT_STOCK_INSUFFICIENT);

@@ -25,7 +25,7 @@ class Controller extends ApiController
     public function order(OrderRequest $request)
     {
         // sku_id num address_id
-        $result = Apiato::call('Order@OrderAction', [new DataTransporter($request)]);
+        $result = Apiato::call('Order@CreateOrderAction', [new DataTransporter($request)]);
         $result = is_string($result) ? $result : $this->transform($result, OrderBaseTransformer::class);
         return $this->successResponse($request, $result);
     }

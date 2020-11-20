@@ -5,6 +5,7 @@ namespace App\Containers\Order\Actions;
 use App\Containers\Order\Exceptions\WrongEnoughIfException;
 use App\Containers\Order\Models\Order;
 use App\Containers\Order\Models\OrderBase;
+use App\Containers\Order\Models\Snapshots;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
@@ -12,7 +13,7 @@ use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class OrderAction extends Action
+class CreateOrderAction extends Action
 {
     public function run($data)
     {
@@ -23,6 +24,7 @@ class OrderAction extends Action
                 // 校验产品数据
                 $prod_info = Apiato::call('Product@ValidateProductBySkuIdAndNumAction', [$data]);
                 if(is_string($prod_info)) throw new WrongEnoughIfException($prod_info);
+
                 // 获取用户地址数据
                 $address_info = Apiato::call('User@FindUserAddressByIdTask', [$data->address_id]);
                 // 获取登录用户信息
@@ -51,6 +53,7 @@ class OrderAction extends Action
         $total_price = 0;
         $brand_id = '';
         $order_child_data = [];
+        $order_snapshot = [];
         foreach ($prod_info as $key => $value){
             $prod_sku_id = $value->id;
             $num = is_string($sku_id) ? $request_info->num : $sku_id->$prod_sku_id;
@@ -62,7 +65,8 @@ class OrderAction extends Action
 //                'shipping_fee' => null,
                 'number' => $num,
             ];
-            $total_price = $total_price + upDecimal($value->price*$num);
+            $order_snapshot['sku_info'][] = $value;
+            $total_price = upDecimal($total_price + upDecimal($value->price*$num));
             $brand_id = $value->product->brand_id;
         }
 
@@ -77,6 +81,7 @@ class OrderAction extends Action
             'pay_status' => OrderBase::PAY_STATUS_PAY,
             'source' => OrderBase::SOURCE_ORDINARY,
         ];
+        $order_snapshot['order_base'] = $order_base_data;
         $order_base_result = Apiato::call('Order@CreateOrderBaseTask', [$order_base_data]);
 
         // 订单数据
@@ -86,6 +91,7 @@ class OrderAction extends Action
             'message' => $request_info->msg,
             'order_type' => Order::ORDER_TYPE_ORDINARY,
         ];
+        $order_snapshot['order'] = $order_data;
         $order_result = Apiato::call('Order@CreateOrderTask', [$order_data]);
 
         // 配送地址数据
@@ -99,15 +105,22 @@ class OrderAction extends Action
             'mobile' => $address_info->mobile,
             'code' => $address_info->code,
         ];
+        $order_snapshot['shipping_address'] = $shipping_address_data;
         Apiato::call('Order@CreateShippingAddressTask', [$shipping_address_data]);
 
         foreach ($order_child_data as $val) {
             $val['order_id'] = $order_result['id'];
+            $val['base_id'] = $order_base_result['id'];
+            $order_snapshot['order_child'][] = $val;
             Apiato::call('Order@CreateOrderChildTask', [$val]);
             // 减少库存
             Apiato::call('Product@DecrementProductSkuStockQuantityBySkuIdTask', [$val['sku_id']]);
         }
-
+        $snapshot['id_value'] = $order_base_result['id'];
+        $snapshot['value'] = je($order_snapshot);
+        $snapshot['type'] = Snapshots::TYPE_ORDER;
+        // 创建订单快照记录
+        Apiato::call('Order@CreateSnapshotsTask', [$snapshot]);
         return $order_base_result;
     }
 
