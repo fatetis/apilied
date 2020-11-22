@@ -20,14 +20,14 @@ class UpdateOrCreateUserAddressAction extends Action
                 $id = $data->id;
                 $arr = [
                     'name' => $data->name,
-                    'region_aid' => $data->aid,
+                    'region_code' => $data->area_code,
                     'address' => $data->address,
                     'mobile' => $data->mobile,
                     'code' => $data->code,
                     'is_default' => $data->default,
                 ];
                 //  通过区数据获取省市数据
-                $region_info = Apiato::call('Region@FindRegionByIdAndGradeTask', [$arr['region_aid'], Region::GRADE_AREA]);
+                $region_info = Apiato::call('Region@FindRegionByCodeAndGradeTask', [$arr['region_code'], Region::GRADE_AREA]);
                 list($arr['region_pid'], $arr['region_cid'], $arr['region_aid']) = array_values(array_filter(explode(',', $region_info['region_path'])));
                 // 获取用户信息
                 $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');

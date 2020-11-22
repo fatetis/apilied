@@ -17,6 +17,6 @@ class GetUserAddressTask extends Task
 
     public function run($user_id)
     {
-        return $this->repository->where('user_id', $user_id)->get();
+        return $this->repository->where('user_id', $user_id)->orderByDesc('is_default')->orderByDesc('updated_at')->get();
     }
 }
