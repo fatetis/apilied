@@ -14,7 +14,11 @@ class GlobalStatusCode
 
     const YES = 1;
     const NO = 0;
+    // 用户登录校验返回码
+    const AUTHENTICATION_FAIL = 401;
+    const AUTHENTICATION_TIMEOUT_FAIL = 403;
 
+    const RESOURCE_NOTHING = 404;
 
     const RETURN_SUCCESS_CODE = 'S';
     const RETURN_FAIL_CODE = 'F';
@@ -54,8 +58,11 @@ class GlobalStatusCode
 
     // 错误码文本框
     public static $status_texts = [
-        'S' => '通讯成功',
-        'F' => '通讯失败',
+        'S'     => '通讯成功',
+        'F'     => '通讯失败',
+        '401'   => '请先登录',
+        '403'   => '登录过期，请重新登录',
+        '404'   => '请求的资源不存在',
         '00000' => '处理成功',
         'A0001' => '用户端错误',
         'A1001' => '今日错误次数过多，最多允许3次输入错误',
@@ -75,7 +82,7 @@ class GlobalStatusCode
         'A3001' => '收货地址不合法，请重新输入',
         'A3002' => '订单状态不存在，请刷新页面重试',
 
-        'B0001' => '系统端错误',
+        'B0001' => '系统端错误, 请联系管理员',
         'B0002' => '系统无此验证码使用类型',
         'B0003' => '数据出错，请重新刷新页面重试',
 
