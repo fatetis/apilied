@@ -55,7 +55,7 @@ class ProxyLoginForMobileApiClientRequest extends Request
     public function rules()
     {
         return [
-            'mobile' => 'required_without_all:username,email|min:11|max:11|mobile',
+            'mobile' => 'required_without_all:username,email|digits:11|mobile',
             'email' => 'required_without_all:username,mobile|email',
             // 至少2-16个字符，不允许包含特殊字符
             'username' => 'required_without_all:mobile,email|min:2|max:16|regex:/^[\x{4e00}-\x{9fa5}A-Za-z0-9]{2,16}$/u',
@@ -72,8 +72,7 @@ class ProxyLoginForMobileApiClientRequest extends Request
             'username.max' => '用户名最多为16个字符',
             'username.regex' => '用户名不合法，不允许包含特殊字符',
             'mobile.required_without_all' => '手机号为必填',
-            'mobile.min' => '手机号至少为11个字符',
-            'mobile.max' => '手机号最多为11个字符',
+            'mobile.digits' => '手机号必须为11个字符',
             'password.required' => '密码为必填',
             'password.min' => '密码至少为6个字符',
             'password.max' => '密码最多为16个字符',

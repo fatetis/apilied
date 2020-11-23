@@ -47,8 +47,8 @@ class UpdateUserRequest extends Request
     public function rules()
     {
         return [
-            'email'    => 'email|unique:users,email,deleted_at,null',
-            'mobile'    => 'mobile|unique:users,mobile,deleted_at,null',
+            'email'    => 'email|unique:users,email,deleted_at,NULL',
+            'mobile'    => 'mobile|unique:users,mobile,deleted_at,NULL',
             'id'       => 'required|exists:users,id',
             'password' => 'min:6|max:40',
             'name'     => 'min:2|max:50',

@@ -53,7 +53,7 @@ class LoginUsingMobileVerifyCodeRequest extends Request
     {
         return [
              'mobile' => 'required|mobile',
-             'code' => 'required|min:6|max:6|regex:/^\d{6,6}$/',
+             'code' => 'required|digits:6|regex:/^\d{6,6}$/',
         ];
     }
 
@@ -64,9 +64,8 @@ class LoginUsingMobileVerifyCodeRequest extends Request
             'mobile.mobile' => '手机号码不合法',
             'mobile.exists' => '手机号码不存在',
             'code.required' => '验证码为必填',
-            'code.min' => '验证码不合法1',
-            'code.max' => '验证码不合法2',
-            'code.regex' => '验证码不合法3',
+            'code.digits' => '验证码不合法1',
+            'code.regex' => '验证码不合法2',
         ];
     }
 

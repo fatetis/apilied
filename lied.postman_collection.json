@@ -542,6 +542,69 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "创建评论",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "base_id",
+									"value": "Je",
+									"type": "text"
+								},
+								{
+									"key": "pid",
+									"value": "Je",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "789",
+									"type": "text"
+								},
+								{
+									"key": "content_rank",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "media_id[]",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "media_id[]",
+									"value": "21",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{service}}/comment/create",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"comment",
+								"create"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}

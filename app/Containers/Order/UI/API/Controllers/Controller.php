@@ -3,11 +3,13 @@
 namespace App\Containers\Order\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Order\UI\API\Requests\CreateCommentsRequest;
 use App\Containers\Order\UI\API\Requests\FindOrderBaseByOrderNoRequest;
 use App\Containers\Order\UI\API\Requests\GetAllOrderBaseByStatusRequest;
 use App\Containers\Order\UI\API\Requests\HandleSyncCallBackToWeChatRequest;
 use App\Containers\Order\UI\API\Requests\OrderRequest;
 use App\Containers\Order\UI\API\Requests\UpdateOrderBaseRequest;
+use App\Containers\Order\UI\API\Transformers\CommentsTransformer;
 use App\Containers\Order\UI\API\Transformers\OrderBaseTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use App\Ship\Transporters\DataTransporter;
@@ -82,6 +84,13 @@ class Controller extends ApiController
     public function updateOrderBase(UpdateOrderBaseRequest $request)
     {
         $result = Apiato::call('Order@UpdateOrderBaseAction', [new DataTransporter($request)]);
+        return $this->successResponse($request, $result);
+    }
+
+    public function createComments(CreateCommentsRequest $request)
+    {
+        $result = Apiato::call('Order@CreateCommentsAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, CommentsTransformer::class);
         return $this->successResponse($request, $result);
     }
 
