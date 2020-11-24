@@ -127,7 +127,7 @@ class CreateOrderAction extends Action
     public function generateOrderNo($user_id)
     {
         $orderno = date("Ymd") . rand(10000, 99999) . cutNumber($user_id, 7) . rand(10000, 99999);
-        $result = Apiato::call('Order@FindOrderBaseByOrdernoOrUserIdTask', [$orderno]);
+        $result = Apiato::call('Order@FirstOrderBaseByOrdernoOrUserIdTask', [$orderno]);
         if (!empty($result)) {
             return $this->generateOrderNo($user_id);
         }

@@ -4,10 +4,10 @@ namespace App\Containers\Order\Tasks;
 
 use App\Containers\Order\Data\Repositories\OrderBaseRepository;
 use App\Ship\Exceptions\NotFoundException;
+use App\Ship\Parents\Exceptions\Exception;
 use App\Ship\Parents\Tasks\Task;
-use Exception;
 
-class FindOrderBaseByOrdernoOrUserIdTask extends Task
+class FirstOrderBaseByOrdernoWithOrderAndOrderChildTask extends Task
 {
 
     protected $repository;
@@ -17,11 +17,10 @@ class FindOrderBaseByOrdernoOrUserIdTask extends Task
         $this->repository = $repository;
     }
 
-    public function run($orderno, $user_id = '')
+    public function run($orderno)
     {
         try {
-            if(!empty($user_id)) $this->repository = $this->repository->where(['user_id' => $user_id]);
-            return $this->repository->where('orderno', $orderno)->first();
+            return $this->repository->where('orderno', $orderno)->with('order')->first();
         }
         catch (Exception $exception) {
             throw new NotFoundException();

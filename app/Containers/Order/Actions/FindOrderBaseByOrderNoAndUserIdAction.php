@@ -14,7 +14,7 @@ class FindOrderBaseByOrderNoAndUserIdAction extends Action
         try{
             $orderno = $data->id;
             $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');
-            $result = Apiato::call('Order@FindOrderBaseByOrdernoOrUserIdTask', [$orderno, $user_info['id']]);
+            $result = Apiato::call('Order@FirstOrderBaseByOrdernoOrUserIdTask', [$orderno, $user_info['id']]);
             return $result;
         }catch (NotFoundException $notFoundException){
             return GlobalStatusCode::MODEL_NOTHING_RESULT;

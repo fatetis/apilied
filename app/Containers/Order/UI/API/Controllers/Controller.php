@@ -3,9 +3,10 @@
 namespace App\Containers\Order\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
-use App\Containers\Order\UI\API\Requests\CreateCommentsRequest;
+use App\Containers\Order\UI\API\Requests\UpdateOrCreateCommentsRequest;
 use App\Containers\Order\UI\API\Requests\FindOrderBaseByOrderNoRequest;
 use App\Containers\Order\UI\API\Requests\GetAllOrderBaseByStatusRequest;
+use App\Containers\Order\UI\API\Requests\GetCommentsRequest;
 use App\Containers\Order\UI\API\Requests\HandleSyncCallBackToWeChatRequest;
 use App\Containers\Order\UI\API\Requests\OrderRequest;
 use App\Containers\Order\UI\API\Requests\UpdateOrderBaseRequest;
@@ -87,10 +88,23 @@ class Controller extends ApiController
         return $this->successResponse($request, $result);
     }
 
-    public function createComments(CreateCommentsRequest $request)
+    /**
+     * 创建一条订单评论
+     * @param UpdateOrCreateCommentsRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/23 002319:18
+     */
+    public function updateOrCreateComments(UpdateOrCreateCommentsRequest $request)
     {
-        $result = Apiato::call('Order@CreateCommentsAction', [new DataTransporter($request)]);
+        $result = Apiato::call('Order@UpdateOrCreateCommentsAction', [new DataTransporter($request)]);
         $result = is_string($result) ? $result : $this->transform($result, CommentsTransformer::class);
+        return $this->successResponse($request, $result);
+    }
+
+    public function getComments(GetCommentsRequest $request)
+    {
+        $result = Apiato::call('Order@GetCommentsAction', [new DataTransporter($request)]);
         return $this->successResponse($request, $result);
     }
 

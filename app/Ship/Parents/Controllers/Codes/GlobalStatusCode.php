@@ -10,7 +10,7 @@ namespace App\Ship\Parents\Controllers\Codes;
 class GlobalStatusCode
 {
 
-    // 1-loginContainer
+
 
     const YES = 1;
     const NO = 0;
@@ -43,6 +43,10 @@ class GlobalStatusCode
     // 订单模块
     const ORDER_ADDRESS_MATE = 'A3001';
     const ORDER_STATUS_FAIL = 'A3002';
+
+    // 评论
+    const COMMENTS_DATA_NOTHING = 'A4001';
+    const COMMENTS_ORDER_NOT_TRUE = 'A4002';
 
     // 服务端错误码
     const RESULT_SYSTEM_FAIL_CODE = 'B0001';
@@ -81,6 +85,11 @@ class GlobalStatusCode
 
         'A3001' => '收货地址不合法，请重新输入',
         'A3002' => '订单状态不存在，请刷新页面重试',
+
+
+        'A4001' => '评论数据不存在，请退出重试',
+        'A4002' => '订单状态不准确，请勿评论',
+
 
         'B0001' => '系统端错误, 请联系管理员',
         'B0002' => '系统无此验证码使用类型',

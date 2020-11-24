@@ -2,12 +2,13 @@
 
 namespace App\Containers\Order\UI\API\Requests;
 
+use App\Containers\Order\Models\OrderBase;
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class CreateCommentsRequest.
+ * Class UpdateOrCreateCommentsRequest.
  */
-class CreateCommentsRequest extends Request
+class UpdateOrCreateCommentsRequest extends Request
 {
 
     /**
@@ -34,7 +35,8 @@ class CreateCommentsRequest extends Request
      */
     protected $decode = [
         'base_id',
-        'pid'
+        'pid',
+//        'product_id',
         // 'id',
     ];
 
@@ -54,8 +56,9 @@ class CreateCommentsRequest extends Request
     public function rules()
     {
         return [
-            'base_id' => 'required|exists:order_base,id,deleted_at,NULL',
+            'base_id' => 'required|exists:order_base,id,order_status,'.OrderBase::ORDER_STATUS_WAIT_APPRAISE.',deleted_at,NULL',
             'pid' => 'exists:comments,id,deleted_at,NULL',
+            'product_id' => 'required|exists:comments,id,deleted_at,NULL',
             'content' => 'required|max:255',
             'content_rank' => 'numeric|min:0.5|max:5',
             'media_id' => 'array|exists:media,id,deleted_at,NULL'
@@ -67,6 +70,8 @@ class CreateCommentsRequest extends Request
         return [
             'base_id.required' => '缺少base_id必要参数，请刷新重试',
             'base_id.exists' => 'base_id数据不存在，请退出重试',
+            'product_id.required' => '缺少product_id必要参数，请刷新重试',
+            'product_id.exists' => 'product_id数据不存在，请退出重试',
             'pid.required' => '缺少pid必要参数，请刷新重试',
             'pid.exists' => 'pid数据不存在，请退出重试',
             'content.required' => '评论内容不能为空',

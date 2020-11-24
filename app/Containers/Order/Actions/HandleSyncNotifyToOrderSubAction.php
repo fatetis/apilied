@@ -12,8 +12,8 @@ class HandleSyncNotifyToOrderSubAction extends SubAction
     {
         //        orderno
         $orderno = $data->orderno;
-        $order_info = Apiato::call('Order@FindOrderBaseByOrdernoWithOrderAndOrderChildTask', [$orderno]);
-//        $order_info = Apiato::call('Order@FindOrderBaseByOrdernoOrUserIdTask', [$orderno]);
+        $order_info = Apiato::call('Order@FirstOrderBaseByOrdernoWithOrderAndOrderChildTask', [$orderno]);
+//        $order_info = Apiato::call('Order@FirstOrderBaseByOrdernoOrUserIdTask', [$orderno]);
         if(
             $order_info->order_status == OrderBase::ORDER_STATUS_WAIT_PAY
             && $order_info->pay_status == OrderBase::PAY_STATUS_PAY

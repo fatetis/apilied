@@ -20,9 +20,9 @@
  */
 
 /** @var Route $router */
-$router->post('comment/create', [
+$router->post('comment/modify', [
     'as' => 'api_order_create_comments',
-    'uses'  => 'Controller@createComments',
+    'uses'  => 'Controller@updateOrCreateComments',
     'middleware' => [
       'auth:api',
     ],
