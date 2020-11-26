@@ -22,6 +22,8 @@ class UpdateOrCreateCommentsAction extends Action
                 $id = $data->id;
                 $data = [
                     'user_id' => $user_info['id'],
+                    'name' => $user_info['name'],
+                    'media_id' => $user_info['media_id'],
                     'base_id' => $data->base_id,
                     'product_id' => $data->product_id,
                     'pid' => $data->pid ?? 0,

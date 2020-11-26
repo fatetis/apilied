@@ -3,6 +3,7 @@
 namespace App\Containers\Order\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Order\UI\API\Requests\GetCommentsByPidRequest;
 use App\Containers\Order\UI\API\Requests\UpdateOrCreateCommentsRequest;
 use App\Containers\Order\UI\API\Requests\FindOrderBaseByOrderNoRequest;
 use App\Containers\Order\UI\API\Requests\GetAllOrderBaseByStatusRequest;
@@ -102,10 +103,38 @@ class Controller extends ApiController
         return $this->successResponse($request, $result);
     }
 
+    /**
+     * 获取父级评论
+     * @param GetCommentsRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/26 002616:22
+     */
     public function getComments(GetCommentsRequest $request)
     {
         $result = Apiato::call('Order@GetCommentsAction', [new DataTransporter($request)]);
+        collect($result->items())->map(function($value) {
+            if(!empty($value['children'])) {
+                $value['children'] = $this->transform($value['child'], CommentsTransformer::class);
+            }
+        });
+        $result = is_string($result) ? $result : $this->transform($result, CommentsTransformer::class);
         return $this->successResponse($request, $result);
+    }
+
+    /**
+     * 获取一条父级评论下的所有评论
+     * @param GetCommentsByPidRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/26 002617:00
+     */
+    public function getCommentsByPid(GetCommentsByPidRequest $request)
+    {
+        $result = Apiato::call('Order@GetCommentsByPidAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, CommentsTransformer::class);
+        return $this->successResponse($request, $result);
+
     }
 
 

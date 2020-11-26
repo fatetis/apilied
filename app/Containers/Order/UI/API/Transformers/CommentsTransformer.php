@@ -2,6 +2,7 @@
 
 namespace App\Containers\Order\UI\API\Transformers;
 
+use App\Containers\Media\UI\API\Transformers\MediaTransformer;
 use App\Containers\Order\Models\Comments;
 use App\Ship\Parents\Transformers\Transformer;
 
@@ -11,7 +12,8 @@ class CommentsTransformer extends Transformer
      * @var  array
      */
     protected $defaultIncludes = [
-        'medias'
+        'medias',
+        'userimg'
     ];
 
     /**
@@ -32,6 +34,7 @@ class CommentsTransformer extends Transformer
 //            'object' => 'Comments',
             'id' => $entity->getHashedKey(),
 //            'user_id' => $entity->user_id,
+            'name' => $entity->name,
             'base_id' => $entity->getHashedKey('base_id'),
             'pid' => $entity->getHashedKey('pid'),
             'product_id' => $entity->getHashedKey('product_id'),
@@ -41,9 +44,10 @@ class CommentsTransformer extends Transformer
             'is_show' => $entity->is_show ?? 1,
             'is_brand' => $entity->is_brand ?? 0,
             'created_at' => toDateTimeString($entity->created_at),
+            'reply_num' => $entity->reply_num ?? 0,
 //            'updated_at' => $entity->updated_at,
 //            'deleted_at' => $entity->deleted_at,
-
+            'children' => $entity->children ?? [],
         ];
 
         $response = $this->ifAdmin([
@@ -58,4 +62,11 @@ class CommentsTransformer extends Transformer
     {
         return $this->collection($comments->medias, new CommentMediasTransformer());
     }
+
+    public function includeUserimg(Comments $comments)
+    {
+        return $this->item($comments->userimg, new MediaTransformer());
+    }
+
+
 }

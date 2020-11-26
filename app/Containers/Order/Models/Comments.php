@@ -2,6 +2,8 @@
 
 namespace App\Containers\Order\Models;
 
+use App\Containers\Media\Models\Media;
+use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
 use App\Ship\Parents\Models\Model;
 
 class Comments extends Model
@@ -32,9 +34,27 @@ class Comments extends Model
      */
     protected $resourceKey = 'comments';
 
+    /**
+     * 父级评论est
+     */
+    const PID_EST = 0;
+
     public function medias()
     {
         return $this->hasMany(CommentMedias::class, 'comment_id')->with(['media'])->orderByDesc('sort');
+    }
+
+    public function child()
+    {
+        return $this->hasMany(Comments::class, 'pid')
+            ->orderByDesc('is_brand')
+            ->orderByDesc('is_quality')
+            ->orderByDesc('created_at');
+    }
+
+    public function userimg()
+    {
+        return $this->belongsTo(Media::class, 'media_id')->where('is_show', GlobalStatusCode::YES);
     }
 
 }
