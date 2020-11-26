@@ -5,7 +5,7 @@ namespace App\Containers\Order\Tasks;
 use App\Containers\Order\Data\Repositories\CommentMediasRepository;
 use App\Ship\Parents\Tasks\Task;
 
-class UpdateOrCreateCommentMediasTask extends Task
+class DeleteCommentMediasByCommentIdAndNotInIdsTask extends Task
 {
 
     protected $repository;
@@ -15,9 +15,8 @@ class UpdateOrCreateCommentMediasTask extends Task
         $this->repository = $repository;
     }
 
-    public function run($array, $data)
+    public function run($comment_id, $ids)
     {
-        return $this->repository->updateOrCreate($array, $data);
-
+        return $this->repository->where('comment_id', $comment_id)->whereNotIn('id', $ids)->delete();
     }
 }

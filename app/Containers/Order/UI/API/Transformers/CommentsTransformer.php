@@ -34,6 +34,7 @@ class CommentsTransformer extends Transformer
 //            'user_id' => $entity->user_id,
             'base_id' => $entity->getHashedKey('base_id'),
             'pid' => $entity->getHashedKey('pid'),
+            'product_id' => $entity->getHashedKey('product_id'),
             'content' => $entity->content,
             'content_rank' => $entity->content_rank,
             'is_quality' => $entity->is_quality ?? 0,

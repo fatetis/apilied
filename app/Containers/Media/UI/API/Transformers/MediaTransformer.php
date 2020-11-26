@@ -30,7 +30,7 @@ class MediaTransformer extends Transformer
     {
         $response = [
 //            'object' => 'Media',
-//            'id' => $entity->getHashedKey(),
+            'id' => $entity->getHashedKey(),
 //            'type' => $entity->type,
             'link' => $entity->link,
 //            'rlink' => $entity->rlink,
@@ -42,6 +42,9 @@ class MediaTransformer extends Transformer
 //            'created_at' => $entity->created_at,
 //            'updated_at' => $entity->updated_at,
 //            'deleted_at' => $entity->deleted_at,
+            'original' => [
+                'id' => $entity->id
+            ]
 
         ];
 

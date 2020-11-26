@@ -19,6 +19,7 @@ class UpdateOrCreateCommentsAction extends Action
             DB::transaction(function() use($data, &$result) {
                 $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');
                 $media_id = $data->media_id;
+                $id = $data->id;
                 $data = [
                     'user_id' => $user_info['id'],
                     'base_id' => $data->base_id,
@@ -36,19 +37,32 @@ class UpdateOrCreateCommentsAction extends Action
                 // 检测当前订单是否处在待评价状态
                 if($validateUserComments['order_status'] !== OrderBase::ORDER_STATUS_WAIT_APPRAISE)
                     throw new WrongEnoughIfException(GlobalStatusCode::COMMENTS_ORDER_NOT_TRUE);
-                $result = Apiato::call('Order@CreateCommentsTask', [$data]);
+                // 更新或者创建评论
+                $result = Apiato::call('Order@UpdateOrCreateCommentsTask', [[
+                    'id' => $id ?? null
+                ], $data]);
+                // 图片处理
                 if(!empty($media_id)) {
-                    $create_data = [
-                        'comment_id' => $result['id']
-                    ];
                     $sort = count($media_id);
+                    $arr = [];
                     foreach ($media_id as $index => $value) {
                         $sort--;
-                        Apiato::call('Order@CreateCommentMediasTask', [array_merge($create_data, [
-                            'media_id' => $value,
-                            'sort' => $sort
-                        ])]);
+                        // 更新或者创建评论图片
+                        $deal_media = Apiato::call('Order@UpdateOrCreateCommentMediasTask', [
+                            [
+                                'comment_id' => $result['id'],
+                                'media_id' => $value,
+                            ],
+                            [
+                                'comment_id' => $result['id'],
+                                'media_id' => $value,
+                                'sort' => $sort
+                            ]
+                        ]);
+                        $arr[] = $deal_media['id'];
                     }
+                    // 删除评论图片
+                    Apiato::call('Order@DeleteCommentMediasByCommentIdAndNotInIdsTask', [$result['id'], $arr]);
                 }
             });
             return $result;
