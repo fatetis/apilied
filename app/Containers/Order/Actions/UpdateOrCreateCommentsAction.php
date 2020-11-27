@@ -6,12 +6,12 @@ use App\Containers\Order\Exceptions\WrongEnoughIfException;
 use App\Containers\Order\Models\OrderBase;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
-use App\Ship\Parents\Requests\Request;
 use Apiato\Core\Foundation\Facades\Apiato;
 use Illuminate\Support\Facades\DB;
 
 class UpdateOrCreateCommentsAction extends Action
 {
+
     public function run($data)
     {
         try{
@@ -19,21 +19,36 @@ class UpdateOrCreateCommentsAction extends Action
             DB::transaction(function() use($data, &$result) {
                 $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');
                 $media_id = $data->media_id;
-                $id = $data->id;
+                // todo: 暂不开放编辑评论功能
+                // $id = $data->id;
+                $tid = $data->tid;
                 $data = [
-                    'user_id' => $user_info['id'],
-                    'name' => $user_info['name'],
-                    'media_id' => $user_info['media_id'],
                     'base_id' => $data->base_id,
                     'product_id' => $data->product_id,
                     'pid' => $data->pid ?? 0,
-                    'content' => $data->content,
+                    // 当前用户信息
+                    'from_uid' => $user_info['id'],
+                    'from_name' => $user_info['name'],
+                    'from_media_id' => $user_info['media_id'],
+                    // 评论内容
+                    'content' => htmlspecialchars($data->content, ENT_QUOTES),
                     'content_rank' => $data->content_rank,
                 ];
+
+                // 获取目标用户信息
+                if(!empty($tid)) {
+                    $to_info = Apiato::call('Order@FindCommentsByIdTask', [$tid]);
+                    $data = array_merge($data, [
+                        // 目标用户信息
+                        'to_uid' => $to_info->from_uid,
+                        'to_name' => $to_info->from_name,
+                        'to_media_id' => $to_info->from_media_id,
+                    ]);
+                }
                 // 检测是否购买过该产品
                 $validateComments = Apiato::call('Order@FirstOrderChildByBaseIdAndProductIdTask', [$data['base_id'], $data['product_id']]);
                 // 检测是否该用户购买该产品
-                $validateUserComments = Apiato::call('Order@FindOrderBaseByUserIdAndIdTask', [$data['base_id'], $data['user_id']]);
+                $validateUserComments = Apiato::call('Order@FindOrderBaseByUserIdAndIdTask', [$data['base_id'], $data['from_uid']]);
                 if(empty($validateComments) || empty($validateUserComments))
                     throw new WrongEnoughIfException(GlobalStatusCode::COMMENTS_DATA_NOTHING);
                 // 检测当前订单是否处在待评价状态
@@ -43,6 +58,12 @@ class UpdateOrCreateCommentsAction extends Action
                 $result = Apiato::call('Order@UpdateOrCreateCommentsTask', [[
                     'id' => $id ?? null
                 ], $data]);
+                // 订单状态改变
+                Apiato::call('Order@UpdateOrderBaseTask', [[
+                    'id' => $data['base_id']
+                ], [
+                    'order_status' => OrderBase::ORDER_STATUS_SUCCESS
+                ]]);
                 // 图片处理
                 if(!empty($media_id)) {
                     $sort = count($media_id);

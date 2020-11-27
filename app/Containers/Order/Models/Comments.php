@@ -52,9 +52,9 @@ class Comments extends Model
             ->orderByDesc('created_at');
     }
 
-    public function userimg()
+    public function fromuserimg()
     {
-        return $this->belongsTo(Media::class, 'media_id')->where('is_show', GlobalStatusCode::YES);
+        return $this->belongsTo(Media::class, 'from_media_id')->where('is_show', GlobalStatusCode::YES);
     }
 
 }

@@ -38,6 +38,7 @@ class UpdateOrCreateCommentsRequest extends Request
         'base_id',
         'pid',
         'product_id',
+        'tid'
     ];
 
     /**
@@ -59,6 +60,7 @@ class UpdateOrCreateCommentsRequest extends Request
             'base_id' => 'required|exists:order_base,id,order_status,'.OrderBase::ORDER_STATUS_WAIT_APPRAISE.',deleted_at,NULL',
             'pid' => 'exists:comments,id,deleted_at,NULL',
             'id' => 'exists:comments,id,deleted_at,NULL',
+            'tid' => 'exists:comments,id,deleted_at,NULL',
             'product_id' => 'required|exists:comments,id,deleted_at,NULL',
             'content' => 'required|max:255',
             'content_rank' => 'numeric|min:0.5|max:5',
@@ -75,6 +77,7 @@ class UpdateOrCreateCommentsRequest extends Request
             'product_id.exists' => 'product_id数据不存在，请退出重试',
             'pid.exists' => 'pid数据不存在，请退出重试',
             'id.exists' => 'id数据不存在，请退出重试',
+            'tid.exists' => 'id数据不存在，请退出重试',
             'content.required' => '评论内容不能为空',
             'content.max' => '评论内容超出字符限制，最大255个字符',
             'content_rank.numeric' => '评论分数参数不正确',

@@ -2,9 +2,9 @@
 
 /**
  * @apiGroup           Order
- * @apiName            getComments
+ * @apiName            findCommentsById
  *
- * @api                {GET} /v1/comment/get Endpoint title here..
+ * @api                {GET} /v1/comment/:id Endpoint title here..
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0
@@ -20,9 +20,9 @@
  */
 
 /** @var Route $router */
-$router->get('comments/{prod_id}', [
-    'as' => 'api_order_get_comments',
-    'uses'  => 'Controller@getComments',
+$router->get('comment/{id}', [
+    'as' => 'api_order_find_comments_by_id',
+    'uses'  => 'Controller@findCommentsById',
     'middleware' => [
 //      'auth:api',
     ],

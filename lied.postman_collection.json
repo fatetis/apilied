@@ -372,6 +372,155 @@
 			"name": "order",
 			"item": [
 				{
+					"name": "comments",
+					"item": [
+						{
+							"name": "创建or编辑评论",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "base_id",
+											"value": "Je",
+											"type": "text"
+										},
+										{
+											"key": "pid",
+											"value": "Je",
+											"type": "text"
+										},
+										{
+											"key": "content",
+											"value": "这是评论内容11",
+											"type": "text"
+										},
+										{
+											"key": "content_rank",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "media_id[]",
+											"value": "20",
+											"type": "text"
+										},
+										{
+											"key": "media_id[]",
+											"value": "22",
+											"type": "text"
+										},
+										{
+											"key": "product_id",
+											"value": "ND",
+											"type": "text"
+										},
+										{
+											"key": "id",
+											"value": "Rd",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "tid",
+											"value": "Rd",
+											"description": "目标回复id",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{service}}/comment/modify",
+									"host": [
+										"{{service}}"
+									],
+									"path": [
+										"comment",
+										"modify"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取父级评论",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service}}/comments/ND",
+									"host": [
+										"{{service}}"
+									],
+									"path": [
+										"comments",
+										"ND"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "2",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取一条父级评论下的所有评论",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service}}/comment/parent/Je",
+									"host": [
+										"{{service}}"
+									],
+									"path": [
+										"comment",
+										"parent",
+										"Je"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "获取一条评论内容",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{service}}/comment/ND",
+									"host": [
+										"{{service}}"
+									],
+									"path": [
+										"comment",
+										"ND"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "购买产品下单",
 					"request": {
 						"auth": {
@@ -538,69 +687,6 @@
 									"key": "status",
 									"value": "ne"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "创建评论",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "base_id",
-									"value": "Je",
-									"type": "text"
-								},
-								{
-									"key": "pid",
-									"value": "Je",
-									"type": "text"
-								},
-								{
-									"key": "content",
-									"value": "789",
-									"type": "text"
-								},
-								{
-									"key": "content_rank",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "media_id[]",
-									"value": "20",
-									"type": "text"
-								},
-								{
-									"key": "media_id[]",
-									"value": "21",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{service}}/comment/create",
-							"host": [
-								"{{service}}"
-							],
-							"path": [
-								"comment",
-								"create"
 							]
 						}
 					},

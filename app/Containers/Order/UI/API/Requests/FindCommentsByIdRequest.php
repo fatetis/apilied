@@ -5,9 +5,9 @@ namespace App\Containers\Order\UI\API\Requests;
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class GetCommentsRequest.
+ * Class FindCommentsByIdRequest.
  */
-class GetCommentsRequest extends Request
+class FindCommentsByIdRequest extends Request
 {
 
     /**
@@ -33,7 +33,7 @@ class GetCommentsRequest extends Request
      * @var  array
      */
     protected $decode = [
-        'prod_id'
+         'id',
     ];
 
     /**
@@ -43,8 +43,7 @@ class GetCommentsRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
-        'prod_id'
-        // 'id',
+         'id',
     ];
 
     /**
@@ -53,15 +52,16 @@ class GetCommentsRequest extends Request
     public function rules()
     {
         return [
-            'prod_id' => 'required|exists:product,id,deleted_at,NULL',
+             'id' => 'required|exists:comments,id,deleted_at,NULL',
+            // '{user-input}' => 'required|max:255',
         ];
     }
 
     public function messages()
     {
         return [
-            'prod_id.required' => '缺少必要参数，请刷新页面重试',
-            'prod_id.exists' => '数据不存在，请退出重试',
+            'id.required' => '缺少必要参数，请刷新重试',
+            'id.exists' => '数据不存在，请退出重试',
         ];
     }
 

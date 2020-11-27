@@ -13,7 +13,7 @@ class CommentsTransformer extends Transformer
      */
     protected $defaultIncludes = [
         'medias',
-        'userimg'
+        'fromuserimg'
     ];
 
     /**
@@ -33,11 +33,12 @@ class CommentsTransformer extends Transformer
         $response = [
 //            'object' => 'Comments',
             'id' => $entity->getHashedKey(),
-//            'user_id' => $entity->user_id,
-            'name' => $entity->name,
             'base_id' => $entity->getHashedKey('base_id'),
             'pid' => $entity->getHashedKey('pid'),
             'product_id' => $entity->getHashedKey('product_id'),
+//            'user_id' => $entity->user_id,
+            'from_name' => $entity->name,
+            'to_name' => $entity->to_name,
             'content' => $entity->content,
             'content_rank' => $entity->content_rank,
             'is_quality' => $entity->is_quality ?? 0,
@@ -63,10 +64,11 @@ class CommentsTransformer extends Transformer
         return $this->collection($comments->medias, new CommentMediasTransformer());
     }
 
-    public function includeUserimg(Comments $comments)
+    public function includeFromUserimg(Comments $comments)
     {
-        return $this->item($comments->userimg, new MediaTransformer());
+        return $this->item($comments->fromuserimg, new MediaTransformer());
     }
+
 
 
 }

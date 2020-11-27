@@ -3,6 +3,7 @@
 namespace App\Containers\Order\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Order\UI\API\Requests\FindCommentsByIdRequest;
 use App\Containers\Order\UI\API\Requests\GetCommentsByPidRequest;
 use App\Containers\Order\UI\API\Requests\UpdateOrCreateCommentsRequest;
 use App\Containers\Order\UI\API\Requests\FindOrderBaseByOrderNoRequest;
@@ -134,7 +135,19 @@ class Controller extends ApiController
         $result = Apiato::call('Order@GetCommentsByPidAction', [new DataTransporter($request)]);
         $result = is_string($result) ? $result : $this->transform($result, CommentsTransformer::class);
         return $this->successResponse($request, $result);
+    }
 
+    /**
+     * 获取一条评论内容
+     * @param FindCommentsByIdRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/11/27 002717:09
+     */
+    public function findCommentsById(FindCommentsByIdRequest $request)
+    {
+        $result = Apiato::call('Order@FindCommentsByIdAction', [new DataTransporter($request)]);
+        return $this->successResponse($request, $this->transform($result, CommentsTransformer::class));
     }
 
 
