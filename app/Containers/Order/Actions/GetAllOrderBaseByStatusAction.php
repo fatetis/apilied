@@ -14,8 +14,10 @@ class GetAllOrderBaseByStatusAction extends Action
     {
         try{
             $status = $data->status;
-            if($status !== null && !in_array($status, array_keys(OrderBase::ORDER_STATUS)))
-                throw new WrongEnoughIfException();
+            if(
+                $status !== null
+                && (!is_numeric($status) || !in_array($status, array_keys(OrderBase::ORDER_STATUS)))
+            ) throw new WrongEnoughIfException();
             $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');
             $result = Apiato::call('Order@GetAllOrderBaseByStatusTask', [$status, $user_info['id']]);
             return $result;

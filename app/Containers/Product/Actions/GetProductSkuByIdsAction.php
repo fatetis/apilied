@@ -5,12 +5,12 @@ namespace App\Containers\Product\Actions;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 
-class FindProductBySkuIdAction extends Action
+class GetProductSkuByIdsAction extends Action
 {
     public function run($data)
     {
-        $product = Apiato::call('Product@FindProductSkuWithProductAndStockByIdTask', [
-            $data->id
+        $product = Apiato::call('Product@GetProductSkuByIdsTask', [
+            $data->ids
         ]);
 
         return $product;

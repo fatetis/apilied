@@ -3,8 +3,9 @@
 namespace App\Containers\Product\UI\API\Controllers;
 
 use App\Containers\Product\UI\API\Requests\FindProductByIdRequest;
-use App\Containers\Product\UI\API\Requests\FindProductBySkuIdRequest;
+use App\Containers\Product\UI\API\Requests\FindProductSkuByIdRequest;
 use App\Containers\Product\UI\API\Requests\GetProductByCategoryIdRequest;
+use App\Containers\Product\UI\API\Requests\GetProductSkuByIdsRequest;
 use App\Containers\Product\UI\API\Requests\GetProductCategoryByPidRequest;
 use App\Containers\Product\UI\API\Requests\ValidateProductBySkuIdAndNumRequest;
 use App\Containers\Product\UI\API\Transformers\ProductSkuTransformer;
@@ -47,14 +48,28 @@ class Controller extends ApiController
 
     /**
      * 根据sku_id获取一条产品数据
-     * @param FindProductBySkuIdRequest $request
+     * @param FindProductSkuByIdRequest $request
      * @return false|string
      * Author: fatetis
      * Date:2020/8/6 000611:19
      */
-    public function findProductBySkuId(FindProductBySkuIdRequest $request)
+    public function findProductSkuById(FindProductSkuByIdRequest $request)
     {
-        $result = Apiato::call('Product@FindProductBySkuIdAction', [new DataTransporter($request)]);
+        $result = Apiato::call('Product@FindProductSkuByIdAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, ProductSkuTransformer::class);
+        return $this->successResponse($request, $result);
+    }
+
+    /**
+     * 根据sku_ids获取多条产品数据
+     * @param GetProductSkuByIdsRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2020/12/9 000910:16
+     */
+    public function getProductSkuByIds(GetProductSkuByIdsRequest $request)
+    {
+        $result = Apiato::call('Product@GetProductSkuByIdsAction', [new DataTransporter($request)]);
         $result = is_string($result) ? $result : $this->transform($result, ProductSkuTransformer::class);
         return $this->successResponse($request, $result);
     }

@@ -37,7 +37,7 @@ class OrderBaseTransformer extends Transformer
             'price' => $entity->price,
             'shipping_price' => $entity->shipping_price,
 //            'pay_price' => $entity->pay_price,
-            'order_status' => $entity->getHashedKey('order_status'),
+            'order_status' => $entity->order_status,
 //            'pay_status' => $entity->pay_status,
 //            'source' => $entity->source,
             'created_at' => toDateTimeString($entity->created_at),

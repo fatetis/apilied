@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Containers\Order\UI\API\Requests;
+namespace App\Containers\Product\UI\API\Requests;
 
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class GetAllOrderBaseByStatusRequest.
+ * Class GetProductSkuByIdsRequest.
  */
-class GetAllOrderBaseByStatusRequest extends Request
+class GetProductSkuByIdsRequest extends Request
 {
 
     /**
@@ -33,7 +33,7 @@ class GetAllOrderBaseByStatusRequest extends Request
      * @var  array
      */
     protected $decode = [
-//        'status'
+        // 'id',
     ];
 
     /**
@@ -43,6 +43,7 @@ class GetAllOrderBaseByStatusRequest extends Request
      * @var  array
      */
     protected $urlParameters = [
+        // 'id',
     ];
 
     /**
@@ -51,8 +52,16 @@ class GetAllOrderBaseByStatusRequest extends Request
     public function rules()
     {
         return [
-            // 'id' => 'required',
+             'ids' => 'required|exists:product_sku,id,deleted_at,NULL',
             // '{user-input}' => 'required|max:255',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'ids.required' => '请选择需要购买的商品',
+            'ids.exists' => '该商品已下架，请刷新页面重试',
         ];
     }
 

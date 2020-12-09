@@ -33,7 +33,7 @@ class ValidateProductBySkuIdAndNumRequest extends Request
      * @var  array
      */
     protected $decode = [
-        'sku_id',
+//        'sku_id',
     ];
 
     /**
@@ -52,7 +52,7 @@ class ValidateProductBySkuIdAndNumRequest extends Request
     public function rules()
     {
         return [
-            'sku_id' => 'required|exists:product_sku,id,deleted_at,NULL',
+            'sku_id' => 'required',
             //  'sku_id' => 'required',
              'num' => 'numeric',
         ];

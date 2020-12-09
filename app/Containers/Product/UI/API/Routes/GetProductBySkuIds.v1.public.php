@@ -2,9 +2,9 @@
 
 /**
  * @apiGroup           Product
- * @apiName            findProductBySkuId
+ * @apiName            getProductBySkuIds
  *
- * @api                {GET} /v1/prod/sku/:id Endpoint title here..
+ * @api                {GET} /v1/prod/sku/get Endpoint title here..
  * @apiDescription     Endpoint description here..
  *
  * @apiVersion         1.0.0
@@ -20,14 +20,10 @@
  */
 
 /** @var Route $router */
-$router->get('prod/sku/{id}', [
-    'as' => 'api_product_find_product_sku_by_id',
-    'uses'  => 'Controller@findProductSkuById',
-    'where' => [
-        'id' => '([1-9]|[1-9][0-9]+)'
-    ],
+$router->get('prod/sku/get', [
+    'as' => 'api_product_get_product_sku_by_ids',
+    'uses'  => 'Controller@getProductSkuByIds',
     'middleware' => [
 //      'auth:api',
-    ]
-
+    ],
 ]);

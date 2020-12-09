@@ -5,9 +5,9 @@ namespace App\Containers\Product\UI\API\Requests;
 use App\Ship\Parents\Requests\Request;
 
 /**
- * Class FindProductBySkuIdRequest.
+ * Class FindProductSkuByIdRequest.
  */
-class FindProductBySkuIdRequest extends Request
+class FindProductSkuByIdRequest extends Request
 {
 
     /**
@@ -33,7 +33,7 @@ class FindProductBySkuIdRequest extends Request
      * @var  array
      */
     protected $decode = [
-         'id',
+//         'id',
     ];
 
     /**
@@ -52,7 +52,7 @@ class FindProductBySkuIdRequest extends Request
     public function rules()
     {
         return [
-             'id' => 'required|regex:/^[1-9][0-9]*$/|exists:product_sku,id,deleted_at,NULL',
+             'id' => 'required|exists:product_sku,id,deleted_at,NULL',
             // '{user-input}' => 'required|max:255',
         ];
     }
@@ -61,7 +61,6 @@ class FindProductBySkuIdRequest extends Request
     {
         return [
             'id.required' => '缺少必要参数，请刷新页面重试',
-            'id.regex' => '参数不合法，请刷新页面重试',
             'id.exists' => '数据不存在，请退出重试',
         ];
     }

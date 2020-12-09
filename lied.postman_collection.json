@@ -160,17 +160,19 @@
 								{
 									"key": "sku_id[10]",
 									"value": "1",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "sku_id[9]",
 									"value": "1",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
 						"url": {
-							"raw": "{{service}}/product/validate?num=1",
+							"raw": "{{service}}/product/validate?sku_id=9&num=1",
 							"host": [
 								"{{service}}"
 							],
@@ -181,8 +183,7 @@
 							"query": [
 								{
 									"key": "sku_id",
-									"value": "9",
-									"disabled": true
+									"value": "9"
 								},
 								{
 									"key": "num",
@@ -199,14 +200,63 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{service}}/prod/sku/dj",
+							"raw": "{{service}}/prod/sku/9?include=product,product.attrs",
 							"host": [
 								"{{service}}"
 							],
 							"path": [
 								"prod",
 								"sku",
-								"dj"
+								"9"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "product,product.attrs"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取多条产品sku的详细数据",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/prod/sku/get?ids[]=9&ids[]=10&include=product,product.attrs",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"prod",
+								"sku",
+								"get"
+							],
+							"query": [
+								{
+									"key": "ids[]",
+									"value": "9"
+								},
+								{
+									"key": "ids[]",
+									"value": "10"
+								},
+								{
+									"key": "include",
+									"value": "product,product.attrs"
+								}
 							]
 						}
 					},
@@ -369,157 +419,156 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "order",
+			"name": "comments",
 			"item": [
 				{
-					"name": "comments",
-					"item": [
-						{
-							"name": "创建or编辑评论",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
+					"name": "创建or编辑评论",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "base_id",
+									"value": "Je",
+									"type": "text"
 								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "base_id",
-											"value": "Je",
-											"type": "text"
-										},
-										{
-											"key": "pid",
-											"value": "Je",
-											"type": "text"
-										},
-										{
-											"key": "content",
-											"value": "这是评论内容11",
-											"type": "text"
-										},
-										{
-											"key": "content_rank",
-											"value": "1",
-											"type": "text"
-										},
-										{
-											"key": "media_id[]",
-											"value": "20",
-											"type": "text"
-										},
-										{
-											"key": "media_id[]",
-											"value": "22",
-											"type": "text"
-										},
-										{
-											"key": "product_id",
-											"value": "ND",
-											"type": "text"
-										},
-										{
-											"key": "id",
-											"value": "Rd",
-											"type": "text",
-											"disabled": true
-										},
-										{
-											"key": "tid",
-											"value": "Rd",
-											"description": "目标回复id",
-											"type": "text"
-										}
-									]
+								{
+									"key": "pid",
+									"value": "Je",
+									"type": "text"
 								},
-								"url": {
-									"raw": "{{service}}/comment/modify",
-									"host": [
-										"{{service}}"
-									],
-									"path": [
-										"comment",
-										"modify"
-									]
+								{
+									"key": "content",
+									"value": "这是评论内容11",
+									"type": "text"
+								},
+								{
+									"key": "content_rank",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "media_id[]",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "media_id[]",
+									"value": "22",
+									"type": "text"
+								},
+								{
+									"key": "product_id",
+									"value": "ND",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "Rd",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "tid",
+									"value": "Rd",
+									"description": "目标回复id",
+									"type": "text"
 								}
-							},
-							"response": []
+							]
 						},
-						{
-							"name": "获取父级评论",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{service}}/comments/ND",
-									"host": [
-										"{{service}}"
-									],
-									"path": [
-										"comments",
-										"ND"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "2",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "获取一条父级评论下的所有评论",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{service}}/comment/parent/Je",
-									"host": [
-										"{{service}}"
-									],
-									"path": [
-										"comment",
-										"parent",
-										"Je"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "获取一条评论内容",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{service}}/comment/ND",
-									"host": [
-										"{{service}}"
-									],
-									"path": [
-										"comment",
-										"ND"
-									]
-								}
-							},
-							"response": []
+						"url": {
+							"raw": "{{service}}/comment/modify",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"comment",
+								"modify"
+							]
 						}
-					],
-					"protocolProfileBehavior": {},
-					"_postman_isSubFolder": true
+					},
+					"response": []
 				},
+				{
+					"name": "获取父级评论",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/comments/ND",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"comments",
+								"ND"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取一条父级评论下的所有评论",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/comment/parent/Je",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"comment",
+								"parent",
+								"Je"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "获取一条评论内容",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/comment/ND",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"comment",
+								"ND"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "order",
+			"item": [
 				{
 					"name": "购买产品下单",
 					"request": {
@@ -627,7 +676,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{service}}/orders/list?status=ne&include=order,order.orderchild",
+							"raw": "{{service}}/orders/list?status=2&include=order,order.orderchild",
 							"host": [
 								"{{service}}"
 							],
@@ -638,7 +687,7 @@
 							"query": [
 								{
 									"key": "status",
-									"value": "ne"
+									"value": "2"
 								},
 								{
 									"key": "include",
