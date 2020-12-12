@@ -20,7 +20,7 @@ class FirstOrderBaseByOrdernoWithOrderAndOrderChildTask extends Task
     public function run($orderno)
     {
         try {
-            return $this->repository->where('orderno', $orderno)->with('order')->first();
+            return $this->repository->where('orderno', $orderno)->with('order')->lockForUpdate()->first();
         }
         catch (Exception $exception) {
             throw new NotFoundException();

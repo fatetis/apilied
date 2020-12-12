@@ -2,6 +2,7 @@
 
 namespace App\Containers\Order\Models;
 
+use App\Containers\Pay\Models\PayLog;
 use App\Ship\Parents\Models\Model;
 
 class OrderBase extends Model
@@ -71,5 +72,14 @@ class OrderBase extends Model
         return $this->hasOne(Order::class, 'base_id', 'id')->with('orderchild');
     }
 
+    public function snapshot()
+    {
+        return $this->belongsTo(Snapshots::class, 'id', 'id_value')->where('type', Snapshots::TYPE_ORDER);
+    }
+
+    public function paylog()
+    {
+        return $this->hasOne(PayLog::class, 'orderno', 'orderno');
+    }
 
 }

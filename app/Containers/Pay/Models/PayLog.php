@@ -6,6 +6,8 @@ use App\Ship\Parents\Models\Model;
 
 class PayLog extends Model
 {
+    protected $table = 'pay_log';
+
     protected $fillable = [
 
     ];

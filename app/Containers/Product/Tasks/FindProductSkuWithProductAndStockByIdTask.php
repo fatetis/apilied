@@ -20,7 +20,7 @@ class FindProductSkuWithProductAndStockByIdTask extends Task
     public function run($id)
     {
         try {
-            return $this->repository->with(['product', 'stock'])->lockForUpdate()->find($id);
+            return $this->repository->with(['product', 'stock', 'media'])->lockForUpdate()->find($id);
         }
         catch (Exception $exception) {
             throw new NotFoundException();
