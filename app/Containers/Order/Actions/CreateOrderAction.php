@@ -84,19 +84,8 @@ class CreateOrderAction extends Action
         $order_snapshot['order_base'] = $order_base_data;
         $order_base_result = Apiato::call('Order@CreateOrderBaseTask', [$order_base_data]);
 
-        // 订单数据
-        $order_data = [
-            'base_id' => $order_base_result['id'],
-            'brand_id' => $brand_id,
-            'message' => $request_info->msg,
-            'order_type' => Order::ORDER_TYPE_ORDINARY,
-        ];
-        $order_snapshot['order'] = $order_data;
-        $order_result = Apiato::call('Order@CreateOrderTask', [$order_data]);
-
         // 配送地址数据
         $shipping_address_data = [
-            'order_base_id' => $order_base_result['id'],
             'name' => $address_info->name,
             'region_pid' => $address_info->region_pid,
             'region_cid' => $address_info->region_cid,
@@ -106,7 +95,20 @@ class CreateOrderAction extends Action
             'code' => $address_info->code,
         ];
         $order_snapshot['shipping_address'] = $shipping_address_data;
-        Apiato::call('Order@CreateShippingAddressTask', [$shipping_address_data]);
+        $shipping_address_result = Apiato::call('Order@CreateShippingAddressTask', [$shipping_address_data]);
+
+        // 订单数据
+        $order_data = [
+            'base_id' => $order_base_result['id'],
+            'brand_id' => $brand_id,
+            'shipping_address_id' => $shipping_address_result['id'],
+            'message' => $request_info->msg,
+            'order_type' => Order::ORDER_TYPE_ORDINARY,
+        ];
+        $order_snapshot['order'] = $order_data;
+        $order_result = Apiato::call('Order@CreateOrderTask', [$order_data]);
+
+
 
         foreach ($order_child_data as $val) {
             $val['order_id'] = $order_result['id'];
