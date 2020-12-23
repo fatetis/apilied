@@ -33,7 +33,7 @@ class OrderRequest extends Request
      * @var  array
      */
     protected $decode = [
-        // 'id',
+        'address_id'
     ];
 
     /**

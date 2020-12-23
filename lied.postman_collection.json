@@ -200,7 +200,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{service}}/prod/sku/9?include=product,product.attrs",
+                          "raw": "{{service}}/prod/sku/9?include=product,product.attrs,product.brand",
 							"host": [
 								"{{service}}"
 							],
@@ -212,7 +212,7 @@
 							"query": [
 								{
 									"key": "include",
-									"value": "product,product.attrs"
+                                  "value": "product,product.attrs,product.brand"
 								}
 							]
 						}
@@ -600,7 +600,7 @@
 							]
 						},
 						"url": {
-							"raw": "{{service}}/order?num=1&address_id=4",
+                          "raw": "{{service}}/order?num=1&address_id=1n",
 							"host": [
 								"{{service}}"
 							],
@@ -619,7 +619,7 @@
 								},
 								{
 									"key": "address_id",
-									"value": "4"
+                                  "value": "1n"
 								}
 							]
 						}
@@ -1067,7 +1067,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{service}}/cart/get?include=sku",
+                          "raw": "{{service}}/cart/get?include=sku,product,brand",
 							"host": [
 								"{{service}}"
 							],
@@ -1078,7 +1078,7 @@
 							"query": [
 								{
 									"key": "include",
-									"value": "sku"
+                                  "value": "sku,product,brand"
 								}
 							]
 						}

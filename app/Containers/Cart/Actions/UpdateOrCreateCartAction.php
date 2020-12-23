@@ -17,10 +17,15 @@ class UpdateOrCreateCartAction extends Action
             ];
             $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');
             $arr['user_id'] = $user_info['id'];
+            $sku_info = Apiato::call('Product@FindProductSkuWithProductAndStockByIdTask', [
+                $data->sku_id
+            ]);
             $cart = Apiato::call('Cart@UpdateOrCreateCartTask', [
                 $arr,
                 array_merge($arr, [
-                    'number' => $data->num
+                    'number' => $data->num,
+                    'product_id' => $sku_info['product_id'],
+                    'brand_id' => $sku_info['product']['brand_id']
                 ])
             ]);
             return $cart;

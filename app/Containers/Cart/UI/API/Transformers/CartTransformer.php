@@ -2,8 +2,10 @@
 
 namespace App\Containers\Cart\UI\API\Transformers;
 
+use App\Containers\Brand\UI\API\Transformers\BrandTransformer;
 use App\Containers\Cart\Models\Cart;
 use App\Containers\Product\UI\API\Transformers\ProductSkuTransformer;
+use App\Containers\Product\UI\API\Transformers\ProductTransformer;
 use App\Ship\Parents\Transformers\Transformer;
 
 class CartTransformer extends Transformer
@@ -19,7 +21,9 @@ class CartTransformer extends Transformer
      * @var  array
      */
     protected $availableIncludes = [
-        'sku'
+        'sku',
+        'product',
+        'brand',
     ];
 
     /**
@@ -52,5 +56,15 @@ class CartTransformer extends Transformer
     public function includeSku(Cart $cart)
     {
         return $this->item($cart->sku, new ProductSkuTransformer());
+    }
+
+    public function includeProduct(Cart $cart)
+    {
+        return $this->item($cart->product, new ProductTransformer());
+    }
+
+    public function includeBrand(Cart $cart)
+    {
+        return $this->item($cart->brand, new BrandTransformer());
     }
 }
