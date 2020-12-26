@@ -33,7 +33,7 @@ class UpdateOrCreateCartRequest extends Request
      * @var  array
      */
     protected $decode = [
-         'sku_id',
+//         'sku_id',
     ];
 
     /**
@@ -53,7 +53,9 @@ class UpdateOrCreateCartRequest extends Request
     {
         return [
             'sku_id' => 'required|exists:product_sku,id,deleted_at,NULL',
-            'num' => 'required|numeric',
+            'num' => 'numeric',
+            'is_selected' => 'boolean',
+            'type' => 'in:create',
         ];
     }
 
@@ -62,8 +64,10 @@ class UpdateOrCreateCartRequest extends Request
         return [
             'sku_id.required' => '请选择需购买的产品sku',
             'sku_id.exists' => '产品数据不合法',
+            'is_selected.boolean' => '数据不合法【is_selected】，请刷新重试',
             'num.required' => '请输入需购买的产品数量',
             'num.numeric' => '产品数量数据类型不正确',
+            'type.in' => '数据不合法【type】，请刷新重试',
         ];
     }
 

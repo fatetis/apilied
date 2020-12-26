@@ -20,16 +20,26 @@ class UpdateOrCreateCartAction extends Action
             $sku_info = Apiato::call('Product@FindProductSkuWithProductAndStockByIdTask', [
                 $data->sku_id
             ]);
+            if($data->type && $data->type == 'create') {
+                $cart_info = Apiato::call('Cart@FirstCartBySkuIdAndUserIdTask', [$arr['sku_id'], $arr['user_id']]);
+//                $num = $data->num !== null ? $data->num : 1;
+                if($cart_info) $data->num += $cart_info['number'];
+            }
             $cart = Apiato::call('Cart@UpdateOrCreateCartTask', [
                 $arr,
-                array_merge($arr, [
-                    'number' => $data->num,
-                    'product_id' => $sku_info['product_id'],
-                    'brand_id' => $sku_info['product']['brand_id']
-                ])
+                array_merge(
+                    $arr,
+                    [
+                        'product_id' => $sku_info['product_id'],
+                        'brand_id' => $sku_info['product']['brand_id'],
+                    ],
+                    $data->is_selected !== null ? ['is_selected' => $data->is_selected] : [],
+                    $data->num !== null ? ['number' => $data->num] : []
+                )
             ]);
             return $cart;
         }catch (\Throwable $throwable) {
+            dd($throwable->getMessage());
             elog('创建购物车抛出异常', $throwable, $data);
             return GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE;
         }

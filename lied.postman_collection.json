@@ -48,8 +48,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "product",
@@ -200,7 +199,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-                          "raw": "{{service}}/prod/sku/9?include=product,product.attrs,product.brand",
+							"raw": "{{service}}/prod/sku/9?include=product,product.attrs,product.brand",
 							"host": [
 								"{{service}}"
 							],
@@ -212,7 +211,7 @@
 							"query": [
 								{
 									"key": "include",
-                                  "value": "product,product.attrs,product.brand"
+									"value": "product,product.attrs,product.brand"
 								}
 							]
 						}
@@ -235,7 +234,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{service}}/prod/sku/get?ids[]=9&ids[]=10&include=product,product.attrs",
+							"raw": "{{service}}/prod/sku/get?ids[]=9&ids[]=10&include=product,product.attrs,product.brand",
 							"host": [
 								"{{service}}"
 							],
@@ -255,15 +254,14 @@
 								},
 								{
 									"key": "include",
-									"value": "product,product.attrs"
+									"value": "product,product.attrs,product.brand"
 								}
 							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "login",
@@ -415,8 +413,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "comments",
@@ -563,8 +560,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "order",
@@ -600,7 +596,7 @@
 							]
 						},
 						"url": {
-                          "raw": "{{service}}/order?num=1&address_id=1n",
+							"raw": "{{service}}/order?num=1&address_id=1n",
 							"host": [
 								"{{service}}"
 							],
@@ -619,7 +615,7 @@
 								},
 								{
 									"key": "address_id",
-                                  "value": "1n"
+									"value": "1n"
 								}
 							]
 						}
@@ -741,8 +737,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "user",
@@ -933,8 +928,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "region",
@@ -968,8 +962,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "cart",
@@ -994,12 +987,23 @@
 							"formdata": [
 								{
 									"key": "sku_id",
-									"value": "ZX",
+									"value": "10",
 									"type": "text"
 								},
 								{
 									"key": "num",
 									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "is_selected",
+									"value": "0",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "create",
 									"type": "text"
 								}
 							]
@@ -1067,7 +1071,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-                          "raw": "{{service}}/cart/get?include=sku,product,brand",
+							"raw": "{{service}}/cart/get?include=sku,product,brand",
 							"host": [
 								"{{service}}"
 							],
@@ -1078,16 +1082,14 @@
 							"query": [
 								{
 									"key": "include",
-                                  "value": "sku,product,brand"
+									"value": "sku,product,brand"
 								}
 							]
 						}
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

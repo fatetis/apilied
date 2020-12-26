@@ -39,6 +39,7 @@ class CartTransformer extends Transformer
 //            'user_id' => $entity->user_id,
             'sku_id' => $entity->getHashedKey('sku_id'),
             'number' => $entity->number,
+            'is_selected' => $entity->is_selected,
             'created_at' => toDateTimeString($entity->created_at),
 //            'updated_at' => $entity->updated_at,
 //            'deleted_at' => $entity->deleted_at,

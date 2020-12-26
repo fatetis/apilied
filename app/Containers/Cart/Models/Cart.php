@@ -16,7 +16,8 @@ class Cart extends Model
         'sku_id',
         'product_id',
         'brand_id',
-        'number'
+        'number',
+        'is_selected'
     ];
 
     protected $attributes = [
