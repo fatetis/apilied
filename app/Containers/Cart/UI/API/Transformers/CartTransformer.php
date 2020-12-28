@@ -35,7 +35,7 @@ class CartTransformer extends Transformer
     {
         $response = [
 //            'object' => 'Cart',
-            'id' => $entity->getHashedKey(),
+            'id' => $entity->id,
 //            'user_id' => $entity->user_id,
             'sku_id' => $entity->getHashedKey('sku_id'),
             'number' => $entity->number,

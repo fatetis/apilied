@@ -24,7 +24,6 @@ class CreateOrderAction extends Action
                 // 校验产品数据
                 $prod_info = Apiato::call('Product@ValidateProductBySkuIdAndNumAction', [$data]);
                 if(is_string($prod_info)) throw new WrongEnoughIfException($prod_info);
-
                 // 获取用户地址数据
                 $address_info = Apiato::call('User@FindUserAddressByIdTask', [$data->address_id]);
                 // 获取登录用户信息
@@ -102,13 +101,18 @@ class CreateOrderAction extends Action
             'base_id' => $order_base_result['id'],
             'brand_id' => $brand_id,
             'shipping_address_id' => $shipping_address_result['id'],
-            'message' => $request_info->msg,
+            'message' => $request_info->msg ? $request_info->msg : null,
             'order_type' => Order::ORDER_TYPE_ORDINARY,
         ];
         $order_snapshot['order'] = $order_data;
         $order_result = Apiato::call('Order@CreateOrderTask', [$order_data]);
 
-
+        // 删除购物车数据
+        if ($request_info->cart_ids) {
+            foreach ($request_info->cart_ids as $val) {
+                Apiato::call('Cart@DeleteCartByUserIdAndIdTask', [$val, $user_info['id']]);
+            }
+        }
 
         foreach ($order_child_data as $val) {
             $val['order_id'] = $order_result['id'];
