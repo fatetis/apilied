@@ -15,6 +15,7 @@ class GlobalStatusCode
     const YES = 1;
     const NO = 0;
     // 用户登录校验返回码
+    const COLUMN_VALIDATE_FAIL = 400;
     const AUTHENTICATION_FAIL = 401;
     const AUTHENTICATION_TIMEOUT_FAIL = 403;
 
@@ -35,6 +36,8 @@ class GlobalStatusCode
     const VERIFY_CODE_ISSET_ACCOUNT = 'A1006';
     const VERIFY_CODE_NOT_ISSET_ACCOUNT = 'A1007';
     const VERIFY_CODE_MAXED_GET = 'A1008';
+    const LOGIN_DATA_VALIDATE_FAIL = 'A1009';
+
     // 产品模块
     const PRODUCT_STOCK_INSUFFICIENT = 'A2001';
     const PRODUCT_BUY_NUM_NECESSARY = 'A2002';
@@ -65,6 +68,7 @@ class GlobalStatusCode
     public static $status_texts = [
         'S'     => '通讯成功',
         'F'     => '通讯失败',
+        '400'   => '数据校验失败，请重新输入',
         '401'   => '请先登录',
         '403'   => '登录过期，请重新登录',
         '404'   => '请求的资源不存在',
@@ -78,6 +82,7 @@ class GlobalStatusCode
         'A1006' => '已存在该账户',
         'A1007' => '不存在该账户',
         'A1008' => '获取次数已达上限，每天最多获取3次验证码',
+        'A1009' => '账号或者密码错误，请重新输入',
 
         'A2001' => '商品库存不足',
         'A2002' => '请选择商品的购买数量',

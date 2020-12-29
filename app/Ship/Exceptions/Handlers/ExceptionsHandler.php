@@ -25,7 +25,9 @@ class ExceptionsHandler extends CoreExceptionsHandler
         }
 
         if(method_exists($e, 'getStatusCode')) {
-            if($e->getStatusCode() === GlobalStatusCode::AUTHENTICATION_FAIL) {
+            if($e->getStatusCode() === GlobalStatusCode::COLUMN_VALIDATE_FAIL) {
+                return $this->errorResponse($request, '', [], GlobalStatusCode::COLUMN_VALIDATE_FAIL);
+            }elseif($e->getStatusCode() === GlobalStatusCode::AUTHENTICATION_FAIL) {
                 return $this->errorResponse($request, '', [], GlobalStatusCode::AUTHENTICATION_FAIL);
             } elseif ($e->getStatusCode() === GlobalStatusCode::AUTHENTICATION_TIMEOUT_FAIL) {
                 return $this->errorResponse($request, '', [], GlobalStatusCode::AUTHENTICATION_TIMEOUT_FAIL);
