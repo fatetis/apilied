@@ -159,19 +159,17 @@
 								{
 									"key": "sku_id[10]",
 									"value": "1",
-									"type": "text",
-									"disabled": true
+									"type": "text"
 								},
 								{
 									"key": "sku_id[9]",
 									"value": "1",
-									"type": "text",
-									"disabled": true
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{service}}/product/validate?sku_id=9&num=1",
+							"raw": "{{service}}/product/validate",
 							"host": [
 								"{{service}}"
 							],
@@ -182,11 +180,13 @@
 							"query": [
 								{
 									"key": "sku_id",
-									"value": "9"
+									"value": "9",
+									"disabled": true
 								},
 								{
 									"key": "num",
-									"value": "1"
+									"value": "1",
+									"disabled": true
 								}
 							]
 						}
@@ -234,7 +234,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{service}}/prod/sku/get?ids[]=9&ids[]=10&include=product,product.attrs,product.brand",
+							"raw": "{{service}}/prod/sku/get?ids[]=10&include=product,product.attrs,product.brand",
 							"host": [
 								"{{service}}"
 							],
@@ -246,7 +246,8 @@
 							"query": [
 								{
 									"key": "ids[]",
-									"value": "9"
+									"value": "9",
+									"disabled": true
 								},
 								{
 									"key": "ids[]",
@@ -596,7 +597,7 @@
 							]
 						},
 						"url": {
-							"raw": "{{service}}/order?num=1&address_id=1n",
+							"raw": "{{service}}/order?address_id=1n&msg=我在留言",
 							"host": [
 								"{{service}}"
 							],
@@ -611,11 +612,16 @@
 								},
 								{
 									"key": "num",
-									"value": "1"
+									"value": "1",
+									"disabled": true
 								},
 								{
 									"key": "address_id",
 									"value": "1n"
+								},
+								{
+									"key": "msg",
+									"value": "我在留言"
 								}
 							]
 						}
@@ -1083,6 +1089,53 @@
 								{
 									"key": "include",
 									"value": "sku,product,brand"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pay",
+			"item": [
+				{
+					"name": "余额支付",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{service}}/balance/pay?orderno=2020122841486000000157913&price=1&type=wechatpay",
+							"host": [
+								"{{service}}"
+							],
+							"path": [
+								"balance",
+								"pay"
+							],
+							"query": [
+								{
+									"key": "orderno",
+									"value": "2020122841486000000157913"
+								},
+								{
+									"key": "price",
+									"value": "1"
+								},
+								{
+									"key": "type",
+									"value": "wechatpay"
 								}
 							]
 						}

@@ -8,9 +8,11 @@ class PayLog extends Model
 {
     protected $table = 'pay_log';
 
-    protected $fillable = [
+    protected $guarded = ['id'];
 
-    ];
+//    protected $fillable = [
+//
+//    ];
 
     protected $attributes = [
 
@@ -23,6 +25,7 @@ class PayLog extends Model
     protected $casts = [
 
     ];
+
 
     protected $dates = [
         'created_at',

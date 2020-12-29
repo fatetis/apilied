@@ -33,6 +33,9 @@ class ExceptionsHandler extends CoreExceptionsHandler
                 return $this->errorResponse($request, '', [], GlobalStatusCode::RESOURCE_NOTHING);
             }
         }
+        if(isset(GlobalStatusCode::$status_texts[$e->getMessage()])) {
+            return $this->errorResponse($request, '', [], $e->getMessage());
+        }
         elog('最终捕获获取异常', $e);
         return $this->errorResponse($request, '', [], GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE);
 

@@ -5,7 +5,7 @@ namespace App\Containers\Product\Tasks;
 use App\Containers\Product\Data\Repositories\ProductSkuRepository;
 use App\Ship\Parents\Tasks\Task;
 
-class IncrementProductSkuNumberByIdTask extends Task
+class IncrementProductSkuSoldNumByIdTask extends Task
 {
     protected $repository;
 
@@ -16,6 +16,6 @@ class IncrementProductSkuNumberByIdTask extends Task
 
     public function run($id, $number = 1)
     {
-        return $this->repository->where('id', $id)->increment('number', $number);
+        return $this->repository->where('id', $id)->increment('sold_num', $number);
     }
 }

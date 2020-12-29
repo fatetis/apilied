@@ -15,7 +15,7 @@ class HandleSyncCallBackToWeChatAction extends Action
             Apiato::call('Order@HandleSyncNotifyToOrderSubAction', [$data]);
             return 'SUCCESS';
         }catch (\Throwable $throwable){
-            elog('微信异步通知异常', $throwable);
+            elog('微信支付异步通知异常', $throwable);
             return 'FAIL';
         }
 

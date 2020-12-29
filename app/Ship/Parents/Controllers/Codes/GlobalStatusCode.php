@@ -43,6 +43,7 @@ class GlobalStatusCode
     // 订单模块
     const ORDER_ADDRESS_MATE = 'A3001';
     const ORDER_STATUS_FAIL = 'A3002';
+    const ORDER_DATA_NOTHING = 'A3003';
 
     // 评论
     const COMMENTS_DATA_NOTHING = 'A4001';
@@ -85,6 +86,7 @@ class GlobalStatusCode
 
         'A3001' => '收货地址不合法，请重新输入',
         'A3002' => '订单状态不存在，请刷新页面重试',
+        'A3003' => '订单数据不存在，请刷新页面重试',
 
 
         'A4001' => '评论数据不存在，请退出重试',

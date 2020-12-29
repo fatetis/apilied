@@ -28,13 +28,19 @@ class OrderBaseTransformer extends Transformer
      */
     public function transform(OrderBase $entity)
     {
+        $price = explode('.', $entity->price);
         $response = [
 //            'object' => 'OrderBase',
             'id' => $entity->getHashedKey(),
             'orderno' => $entity->orderno,
 //            'paidno' => $entity->paidno,
 //            'user_id' => $entity->user_id,
-            'price' => $entity->price,
+//            'price' => $entity->price,
+            'price' => [
+                'price' => $entity->price,
+                'int' => $price[0],
+                'point' => $price[1],
+            ],
             'shipping_price' => $entity->shipping_price,
 //            'pay_price' => $entity->pay_price,
             'order_status' => $entity->order_status,
