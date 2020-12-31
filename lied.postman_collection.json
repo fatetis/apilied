@@ -413,6 +413,32 @@
 						}
 					},
 					"response": []
+                },
+              {
+                "name": "更新access_token",
+                "request": {
+                  "method": "POST",
+                  "header": [],
+                  "url": {
+                    "raw": "{{service}}/client/api/mobile/refresh?refresh_token=def50200d270d0cd230ad109831c8b90d38d8ce3aeef61a43d97350a41bebc1ad70a6b6afe83397e0b5f2b7b4567ec87e894d1fa1c68fa42404b2d94e1138a867dfe0786b17c15b5adb86440ec2f5933b9f91161c5b798db551aa870bccc0e51e120965b9fbc522cd7341739748ce3a037436f922cedd9481ab6f2761334c470b1e0bdf105cbb9010a2aa6d138f08ce29a96a842a6c166601a71fc65c9d8d79c7e2c7c4d2c32ca42f618369de08fd7d1742ae6040fb9793d4968c9e114fa7efa932e8139ba9086ca0675f31a666e87fbaddae4b4e9d3c0997f5b0cefab262ca3f3c2582a6fdbe022fcbce7651cb34ec67ce179676edf029dd24e6cb4fd09d01fc30cc3a5e908f6e384b7dd28f4378ed4ffda79ab819daf0f0e2df8be931d92272e915bfffd3cf4a36c01b5344058d022181aa75d7362facc26e59740c4f72b43cf893e2b1ec1e6f8180d87ea6a004d8c2baf1d0e5962ed31d7c49d2f79e5503f0d",
+                    "host": [
+                      "{{service}}"
+                    ],
+                    "path": [
+                      "client",
+                      "api",
+                      "mobile",
+                      "refresh"
+                    ],
+                    "query": [
+                      {
+                        "key": "refresh_token",
+                        "value": "def50200d270d0cd230ad109831c8b90d38d8ce3aeef61a43d97350a41bebc1ad70a6b6afe83397e0b5f2b7b4567ec87e894d1fa1c68fa42404b2d94e1138a867dfe0786b17c15b5adb86440ec2f5933b9f91161c5b798db551aa870bccc0e51e120965b9fbc522cd7341739748ce3a037436f922cedd9481ab6f2761334c470b1e0bdf105cbb9010a2aa6d138f08ce29a96a842a6c166601a71fc65c9d8d79c7e2c7c4d2c32ca42f618369de08fd7d1742ae6040fb9793d4968c9e114fa7efa932e8139ba9086ca0675f31a666e87fbaddae4b4e9d3c0997f5b0cefab262ca3f3c2582a6fdbe022fcbce7651cb34ec67ce179676edf029dd24e6cb4fd09d01fc30cc3a5e908f6e384b7dd28f4378ed4ffda79ab819daf0f0e2df8be931d92272e915bfffd3cf4a36c01b5344058d022181aa75d7362facc26e59740c4f72b43cf893e2b1ec1e6f8180d87ea6a004d8c2baf1d0e5962ed31d7c49d2f79e5503f0d"
+                      }
+                    ]
+                  }
+                },
+                "response": []
 				}
 			]
 		},
