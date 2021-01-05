@@ -19,7 +19,7 @@ class GetAllOrderBaseByStatusAction extends Action
                 && (!is_numeric($status) || !in_array($status, array_keys(OrderBase::ORDER_STATUS)))
             ) throw new WrongEnoughIfException();
             $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');
-            $result = Apiato::call('Order@GetAllOrderBaseByStatusTask', [$status, $user_info['id']]);
+            $result = Apiato::call('Order@GetAllOrderBaseByUserIdAndStatusTask', [$status, $user_info['id']]);
             return $result;
         }catch (WrongEnoughIfException $wrongEnoughIfException){
             return GlobalStatusCode::ORDER_STATUS_FAIL;

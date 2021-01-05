@@ -5,7 +5,7 @@ namespace App\Containers\Order\Tasks;
 use App\Containers\Order\Data\Repositories\OrderBaseRepository;
 use App\Ship\Parents\Tasks\Task;
 
-class GetAllOrderBaseByStatusTask extends Task
+class GetAllOrderBaseByUserIdAndStatusTask extends Task
 {
 
     protected $repository;

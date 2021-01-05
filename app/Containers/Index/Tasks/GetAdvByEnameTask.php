@@ -20,16 +20,18 @@ class GetAdvByEnameTask extends Task
     public function run(array $data)
     {
         try{
-            return $this->repository
+            $sql = $this->repository
                 ->leftJoin('adv_position', 'adv_position.id', 'adv.position_id')
                 ->leftJoin('adv_open', 'adv_open.adv_id', 'adv.id')
                 ->whereIn('adv_position.ename', $data['ename'])
                 ->where('adv_open.start_time', '<=', dt())
                 ->where('adv_open.end_time', '>', dt())
                 ->where('adv.is_show', GlobalStatusCode::YES)
-                ->where('adv_position.is_show', GlobalStatusCode::YES)
-                ->where('adv_open.region_open_id', $data['region_open_id'])
-                ->with('media')
+                ->where('adv_position.is_show', GlobalStatusCode::YES);
+            if(isset($data['region_open_id'])) {
+                $sql->where('adv_open.region_open_id', $data['region_open_id']);
+            }
+            return $sql->with('media')
                 ->select('adv.name', 'adv.desc', 'adv.url', 'adv.media_id', 'adv.position_id', 'adv_open.adv_id', 'adv_open.id', 'adv_position.ename')
                 ->orderByDesc('sort')
                 ->get();

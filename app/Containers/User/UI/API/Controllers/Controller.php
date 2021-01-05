@@ -3,6 +3,7 @@
 namespace App\Containers\User\UI\API\Controllers;
 
 use Apiato\Core\Foundation\Facades\Apiato;
+use App\Containers\Index\UI\API\Transformers\AdvTransformer;
 use App\Containers\User\UI\API\Requests\CreateAdminRequest;
 use App\Containers\User\UI\API\Requests\DeleteUserAddressRequest;
 use App\Containers\User\UI\API\Requests\FindUserAddressByUserIdAndIdOrIsDefaultRequest;
@@ -16,6 +17,7 @@ use App\Containers\User\UI\API\Requests\GetAuthenticatedUserRequest;
 use App\Containers\User\UI\API\Requests\RegisterUserRequest;
 use App\Containers\User\UI\API\Requests\ResetPasswordRequest;
 use App\Containers\User\UI\API\Requests\UpdateUserRequest;
+use App\Containers\User\UI\API\Requests\UserCenterRequest;
 use App\Containers\User\UI\API\Transformers\FindUserAddressTransformer;
 use App\Containers\User\UI\API\Transformers\UserAddressTransformer;
 use App\Containers\User\UI\API\Transformers\UserPrivateProfileTransformer;
@@ -215,6 +217,21 @@ class Controller extends ApiController
     public function deleteUserAddress(DeleteUserAddressRequest $request)
     {
         $result = Apiato::call('User@DeleteUserAddressAction', [new DataTransporter($request)]);
+        return $this->successResponse($request, $result);
+    }
+
+    /**
+     * 用户中心数据
+     * @param UserCenterRequest $request
+     * @return false|\Illuminate\Http\JsonResponse|string
+     * Author: fatetis
+     * Date:2021/1/5 000510:26
+     */
+    public function userCenter(UserCenterRequest $request)
+    {
+        $result = Apiato::call('User@UserCenterAction', [new DataTransporter($request)]);
+        $result['user_info'] = $this->transform($result['user_info'], UserTransformer::class);
+        $result['adv'] = $this->transform($result['adv'], AdvTransformer::class);
         return $this->successResponse($request, $result);
     }
 
