@@ -75,6 +75,7 @@ class UserTransformer extends Transformer
 
     public function includeMedia(User $user)
     {
+        if(empty($user->media)) return null;
         return $this->item($user->media, new MediaTransformer());
     }
 
