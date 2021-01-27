@@ -34,12 +34,9 @@ class ValidateProductBySkuIdAndNumAction extends Action
                 foreach ($data->sku_id as $key => $value) {
                     $prod_data = $this->dealValidateProduct(new DataTransporter(['sku_id' => $key, 'num' => $value]));
                     // 只允许一个商家进行结算
-                    if(!empty($seller_id)) {
-                        if($seller_id !== $prod_data->product->brand_id)
-                            throw new WrongEnoughIfException(GlobalStatusCode::PRODUCT_SELLER_UNIQUE);
-                    }else{
-                        $seller_id = $prod_data->product->brand_id;
-                    }
+                    empty($seller_id) && $seller_id = $prod_data->product->brand_id;
+                    if($seller_id !== $prod_data->product->brand_id)
+                        throw new WrongEnoughIfException(GlobalStatusCode::PRODUCT_SELLER_UNIQUE);
                     $result[] = $prod_data;
                 }
             }else{

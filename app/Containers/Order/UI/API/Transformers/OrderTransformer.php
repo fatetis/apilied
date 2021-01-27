@@ -2,6 +2,7 @@
 
 namespace App\Containers\Order\UI\API\Transformers;
 
+use App\Containers\Brand\UI\API\Transformers\BrandTransformer;
 use App\Containers\Order\Models\Order;
 use App\Ship\Parents\Transformers\Transformer;
 
@@ -17,7 +18,8 @@ class OrderTransformer extends Transformer
      * @var  array
      */
     protected $availableIncludes = [
-        'orderchild'
+        'orderchild',
+        'brand'
     ];
 
     /**
@@ -51,5 +53,10 @@ class OrderTransformer extends Transformer
     public function includeOrderChild(Order $order)
     {
         return $this->collection($order->orderchild, new OrderChildTransformer());
+    }
+
+    public function includeBrand(Order $order)
+    {
+        return $this->item($order->brand, new BrandTransformer());
     }
 }

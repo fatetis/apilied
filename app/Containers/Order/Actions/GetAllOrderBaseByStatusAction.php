@@ -18,8 +18,20 @@ class GetAllOrderBaseByStatusAction extends Action
                 $status !== null
                 && (!is_numeric($status) || !in_array($status, array_keys(OrderBase::ORDER_STATUS)))
             ) throw new WrongEnoughIfException();
+
             $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');
-            $result = Apiato::call('Order@GetAllOrderBaseByUserIdAndStatusTask', [$status, $user_info['id']]);
+            /**
+             * 查询订单状态如果是待发货就自动吧部分发货的查询条件加上
+             */
+            $status === OrderBase::ORDER_STATUS_WAIT_DELIVERY && $status = [
+                OrderBase::ORDER_STATUS_WAIT_DELIVERY,
+                OrderBase::ORDER_STATUS_WAIT_PART_DELIVERY
+            ];
+
+            $result = Apiato::call('Order@GetAllOrderBaseByUserIdAndStatusTask', [
+                is_array($status) ? $status : [$status],
+                $user_info['id']
+            ]);
             return $result;
         }catch (WrongEnoughIfException $wrongEnoughIfException){
             return GlobalStatusCode::ORDER_STATUS_FAIL;

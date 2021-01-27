@@ -2,6 +2,7 @@
 
 namespace App\Containers\Order\Models;
 
+use App\Containers\Brand\Models\Brand;
 use App\Ship\Parents\Models\Model;
 
 class Order extends Model
@@ -43,5 +44,10 @@ class Order extends Model
     public function orderchild()
     {
         return $this->hasMany(OrderChild::class, 'order_id');
+    }
+
+    public function brand()
+    {
+        return $this->hasOne(Brand::class, 'id', 'brand_id');
     }
 }

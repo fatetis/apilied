@@ -17,9 +17,10 @@ class GetAllOrderBaseByUserIdAndStatusTask extends Task
 
     public function run($status, $user_id)
     {
-        $data = array_merge([
+        $sql = $this->repository->where([
             'user_id' => $user_id
-        ],$status === null ? [] : ['order_status' => $status]);
-        return $this->repository->where($data)->paginate();
+        ]);
+        !in_array(null, $status) && $sql = $sql->whereIn('order_status', $status);
+        return $sql->paginate(10);
     }
 }

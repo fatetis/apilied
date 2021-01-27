@@ -56,6 +56,7 @@ class CreateOrderAction extends Action
         foreach ($prod_info as $key => $value){
             $prod_sku_id = $value->id;
             $num = is_string($sku_id) ? $request_info->num : $sku_id->$prod_sku_id;
+
             // 商品订单数据
             $order_child_data[] = [
                 'product_id' => $value->product_id,
@@ -96,7 +97,7 @@ class CreateOrderAction extends Action
         $order_snapshot['shipping_address'] = $shipping_address_data;
         $shipping_address_result = Apiato::call('Order@CreateShippingAddressTask', [$shipping_address_data]);
 
-        // 订单数据
+        // todo: 订单数据需扩展兼容多商家结算
         $order_data = [
             'base_id' => $order_base_result['id'],
             'brand_id' => $brand_id,

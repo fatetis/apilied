@@ -22,7 +22,6 @@ class UpdateOrCreateCartAction extends Action
             ]);
             if($data->type && $data->type == 'create') {
                 $cart_info = Apiato::call('Cart@FirstCartBySkuIdAndUserIdTask', [$arr['sku_id'], $arr['user_id']]);
-//                $num = $data->num !== null ? $data->num : 1;
                 if($cart_info) $data->num += $cart_info['number'];
             }
             $cart = Apiato::call('Cart@UpdateOrCreateCartTask', [
@@ -39,7 +38,6 @@ class UpdateOrCreateCartAction extends Action
             ]);
             return $cart;
         }catch (\Throwable $throwable) {
-            dd($throwable->getMessage());
             elog('创建购物车抛出异常', $throwable, $data);
             return GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE;
         }

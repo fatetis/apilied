@@ -704,7 +704,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{service}}/orders/list?status=2&include=order,order.orderchild",
+							"raw": "{{service}}/orders/list?status=1&include=order,order.orderchild,snapshot,order.brand",
 							"host": [
 								"{{service}}"
 							],
@@ -715,11 +715,11 @@
 							"query": [
 								{
 									"key": "status",
-									"value": "2"
+									"value": "1"
 								},
 								{
 									"key": "include",
-									"value": "order,order.orderchild"
+									"value": "order,order.orderchild,snapshot,order.brand"
 								}
 							]
 						}
