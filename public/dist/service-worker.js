@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/dist/precache-manifest.0464c640dc17dece81750bce0712a680.js"
+  "/dist/precache-manifest.393238bc3a89ab22a3c4de4d30127e0e.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "lied"});
