@@ -2,14 +2,14 @@
 
 namespace App\Containers\Order\Tasks;
 
-use App\Containers\Order\Data\Repositories\OrderBaseRepository;
+use App\Containers\Order\Data\Repositories\ProductOrderRepository;
 use App\Ship\Parents\Tasks\Task;
 
 class UpdateOrderBaseTask extends Task
 {
     protected $repository;
 
-    public function __construct(OrderBaseRepository $repository)
+    public function __construct(ProductOrderRepository $repository)
     {
         $this->repository = $repository;
     }

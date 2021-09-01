@@ -2,7 +2,6 @@
 
 namespace App\Containers\Order\UI\API\Transformers;
 
-use App\Containers\Brand\UI\API\Transformers\BrandTransformer;
 use App\Containers\Order\Models\Order;
 use App\Ship\Parents\Transformers\Transformer;
 
@@ -12,14 +11,15 @@ class OrderTransformer extends Transformer
      * @var  array
      */
     protected $defaultIncludes = [
+
     ];
 
     /**
      * @var  array
      */
     protected $availableIncludes = [
-        'orderchild',
-        'brand'
+        'productOrder',
+        'snapshot'
     ];
 
     /**
@@ -29,13 +29,31 @@ class OrderTransformer extends Transformer
      */
     public function transform(Order $entity)
     {
+        $price = explode('.', $entity->price);
+        $pay_price = explode('.', $entity->pay_price);
         $response = [
-//            'object' => 'Order',
+//            'object' => 'OrderBase',
             'id' => $entity->getHashedKey(),
-            'base_id' => $entity->getHashedKey('base_id'),
-            'brand_id' => $entity->getHashedKey('brand_id'),
-            'message' => $entity->message,
-            'order_type' => $entity->order_type,
+            'orderno' => $entity->orderno,
+//            'paidno' => $entity->paidno,
+//            'user_id' => $entity->user_id,
+//            'price' => $entity->price,
+            'price' => [
+                'price' => $entity->price,
+                'int' => $price[0],
+                'point' => $price[1],
+            ],
+            'pay_price' => [
+                'price' => $entity->pay_price ?? 0,
+                'int' => !empty($pay_price[0]) ? $pay_price[0] : 0,
+                'point' => $pay_price[1] ?? 0,
+            ],
+            'shipping_price' => $entity->shipping_price,
+//            'pay_price' => $entity->pay_price,
+            'order_status' => $entity->order_status,
+            'order_status_text' => Order::ORDER_STATUS[$entity->order_status],
+//            'pay_status' => $entity->pay_status,
+//            'source' => $entity->source,
             'created_at' => toDateTimeString($entity->created_at),
 //            'updated_at' => $entity->updated_at,
 //            'deleted_at' => $entity->deleted_at,
@@ -50,13 +68,14 @@ class OrderTransformer extends Transformer
         return $response;
     }
 
-    public function includeOrderChild(Order $order)
+    public function includeProductOrder(Order $order)
     {
-        return $this->collection($order->orderchild, new OrderChildTransformer());
+        return $this->item($order->productOrder, new ProductOrderTransformer());
     }
 
-    public function includeBrand(Order $order)
+    public function includeSnapshot(Order $order)
     {
-        return $this->item($order->brand, new BrandTransformer());
+        return $this->item($order->snapshot, new SnapshotsTransFormer());
     }
+
 }

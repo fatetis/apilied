@@ -2,17 +2,17 @@
 
 namespace App\Containers\Order\Tasks;
 
-use App\Containers\Order\Data\Repositories\OrderBaseRepository;
+use App\Containers\Order\Data\Repositories\OrderRepository;
 use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class FirstOrderBaseByOrdernoOrUserIdTask extends Task
+class FirstOrderByOrdernoOrUserIdTask extends Task
 {
 
     protected $repository;
 
-    public function __construct(OrderBaseRepository $repository)
+    public function __construct(OrderRepository $repository)
     {
         $this->repository = $repository;
     }

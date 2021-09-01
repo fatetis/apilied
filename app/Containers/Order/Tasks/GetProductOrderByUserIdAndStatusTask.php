@@ -5,7 +5,7 @@ namespace App\Containers\Order\Tasks;
 use App\Containers\Order\Data\Repositories\ProductOrderRepository;
 use App\Ship\Parents\Tasks\Task;
 
-class FindOrderBaseByUserIdAndIdTask extends Task
+class GetProductOrderByUserIdAndStatusTask extends Task
 {
 
     protected $repository;
@@ -15,8 +15,12 @@ class FindOrderBaseByUserIdAndIdTask extends Task
         $this->repository = $repository;
     }
 
-    public function run($id, $user_id)
+    public function run($status, $user_id)
     {
-        return $this->repository->findWhere(['user_id' => $user_id])->find($id);
+        return $this->repository
+            ->leftJoin('order', 'order.id', 'product_order.order_id')
+            ->where(['user_id' => $user_id])
+            ->whereIn('show_status', $status)
+            ->get();
     }
 }

@@ -22,10 +22,9 @@ class HandleSyncCallBackToBalanceAction extends Action
             'is_pay'=> GlobalStatusCode::YES,
         ];
         try{
-            $order_info = Apiato::call('Order@FirstOrderBaseByOrdernoOrUserIdTask', [$data->orderno]);
+            $order_info = Apiato::call('Order@FirstOrderByOrdernoOrUserIdTask', [$data->orderno]);
             if(empty($order_info)) throw new WrongEnoughIfException(GlobalStatusCode::ORDER_DATA_NOTHING);
             $result = Apiato::call('Order@HandleSyncNotifyToOrderSubAction', [$params]);
-
             return $result;
         }catch (WrongEnoughIfException $wrongEnoughIfException) {
             return $wrongEnoughIfException->getMessage();

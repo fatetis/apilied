@@ -21,8 +21,8 @@
 
 /** @var Route $router */
 $router->get('order/{id}', [
-    'as' => 'api_order_find_order_base_by_order_no',
-    'uses'  => 'Controller@findOrderBaseByOrderNo',
+    'as' => 'api_order_find_order_by_order_no',
+    'uses'  => 'Controller@findOrderByOrderNo',
     'middleware' => [
       'auth:api',
     ],

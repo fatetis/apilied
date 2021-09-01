@@ -21,8 +21,8 @@
 
 /** @var Route $router */
 $router->get('orders/list', [
-    'as' => 'api_order_get_all_order_base_by_status',
-    'uses'  => 'Controller@getAllOrderBaseByStatus',
+    'as' => 'api_order_get_all_order_by_status',
+    'uses'  => 'Controller@getAllOrderByStatus',
     'middleware' => [
       'auth:api',
     ],

@@ -7,7 +7,7 @@ use App\Ship\Parents\Requests\Request;
 /**
  * Class GetAllOrderBaseByStatusRequest.
  */
-class GetAllOrderBaseByStatusRequest extends Request
+class GetAllOrderByStatusRequest extends Request
 {
 
     /**

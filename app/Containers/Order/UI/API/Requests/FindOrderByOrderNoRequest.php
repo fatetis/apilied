@@ -7,7 +7,7 @@ use App\Ship\Parents\Requests\Request;
 /**
  * Class FindOrderBaseByOrderNoRequest.
  */
-class FindOrderBaseByOrderNoRequest extends Request
+class FindOrderByOrderNoRequest extends Request
 {
 
     /**
@@ -52,7 +52,7 @@ class FindOrderBaseByOrderNoRequest extends Request
     public function rules()
     {
         return [
-             'id' => 'required|exists:order_base,orderno,deleted_at,NULL',
+             'id' => 'required|exists:order,orderno,deleted_at,NULL',
             // '{user-input}' => 'required|max:255',
         ];
     }

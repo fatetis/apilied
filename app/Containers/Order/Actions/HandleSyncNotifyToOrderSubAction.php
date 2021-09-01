@@ -3,7 +3,8 @@
 namespace App\Containers\Order\Actions;
 
 use App\Containers\Order\Exceptions\WrongEnoughIfException;
-use App\Containers\Order\Models\OrderBase;
+use App\Containers\Order\Models\Order;
+use App\Containers\Order\Models\ProductOrder;
 use App\Ship\Parents\Actions\SubAction;
 use Apiato\Core\Foundation\Facades\Apiato;
 use Illuminate\Support\Facades\DB;
@@ -13,17 +14,17 @@ class HandleSyncNotifyToOrderSubAction extends SubAction
     public function run($data)
     {
         DB::transaction(function () use($data){
-//        orderno
             $orderno = $data['orderno'];
-            $order_info = Apiato::call('Order@FirstOrderBaseByOrdernoWithOrderAndOrderChildTask', [$orderno]);
-//        $order_info = Apiato::call('Order@FirstOrderBaseByOrdernoOrUserIdTask', [$orderno]);
+            $order_info = Apiato::call('Order@FirstOrderByOrdernoWithProductOrderAndProductOrderChildTask', [$orderno]);
             if(
-                $order_info->order_status == OrderBase::ORDER_STATUS_WAIT_PAY
-                && $order_info->pay_status == OrderBase::PAY_STATUS_PAY
+                $order_info->productOrder->order_status == ProductOrder::SHOW_STATUS_WAIT_PAY
+                && $order_info->pay_status == Order::PAY_STATUS_PAY
+                && $order_info->order_status == Order::ORDER_STATUS_TRADING
             ) {
-                // 改变订单状态
-                $order_info->order_status = OrderBase::ORDER_STATUS_WAIT_DELIVERY;
-                $order_info->pay_status = OrderBase::PAY_STATUS_PAID;
+                /**
+                 * 改变订单状态
+                 */
+                $order_info->pay_status = Order::PAY_STATUS_PAID;
                 $order_info->pay_price = $data['pay_price'];
                 $order_info->paidno = $data['outside_orderno'];
                 $order_info->save();
@@ -42,9 +43,9 @@ class HandleSyncNotifyToOrderSubAction extends SubAction
                     'pay_name' => $data['pay_name'],
                     'is_pay'=> $data['is_pay'],
                 ];
-                $paylog_result = Apiato::call('Pay@UpdateOrCreatePayLogByOrdernoTask', [$filter_data, $data]);
+                Apiato::call('Pay@UpdateOrCreatePayLogByOrdernoTask', [$filter_data, $data]);
                 // 产品sku的销量新增
-                foreach ($order_info->order->orderchild as $value) {
+                foreach ($order_info->productOrder->productOrderChild as $value) {
                     Apiato::call('Product@IncrementProductSkuSoldNumByIdTask', [$value->id]);
                 }
             }

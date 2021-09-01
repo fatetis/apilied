@@ -33,6 +33,7 @@ class ValidateProductBySkuIdAndNumAction extends Action
                 $seller_id = '';
                 foreach ($data->sku_id as $key => $value) {
                     $prod_data = $this->dealValidateProduct(new DataTransporter(['sku_id' => $key, 'num' => $value]));
+
                     // 只允许一个商家进行结算
                     empty($seller_id) && $seller_id = $prod_data->product->brand_id;
                     if($seller_id !== $prod_data->product->brand_id)
@@ -49,10 +50,6 @@ class ValidateProductBySkuIdAndNumAction extends Action
             return $wrongEnoughIfException->getMessage();
         }catch (NotFoundException $notFoundException) {
             return GlobalStatusCode::MODEL_NOTHING_RESULT;
-        } catch (\Throwable $throwable) {
-            dd($throwable->getMessage());
-            elog('购买产品前校验异常', $throwable);
-            return GlobalStatusCode::RESULT_SYSTEM_FAIL_CODE;
         }
 
     }

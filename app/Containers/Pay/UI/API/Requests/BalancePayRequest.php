@@ -52,7 +52,7 @@ class BalancePayRequest extends Request
     public function rules()
     {
         return [
-            'orderno' => 'required|exists:order_base,orderno,deleted_at,NULL',
+            'orderno' => 'required|exists:order,orderno,deleted_at,NULL',
             'price' => 'required',
             'type' => 'required'
         ];

@@ -5,9 +5,9 @@ namespace App\Containers\Order\Data\Repositories;
 use App\Ship\Parents\Repositories\Repository;
 
 /**
- * Class OrderBaseRepository
+ * Class OrderChildRepository
  */
-class OrderBaseRepository extends Repository
+class ProductOrderChildRepository extends Repository
 {
 
     /**

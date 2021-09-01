@@ -3,7 +3,7 @@
 namespace App\Containers\Order\Actions;
 
 use App\Containers\Order\Exceptions\WrongEnoughIfException;
-use App\Containers\Order\Models\OrderBase;
+use App\Containers\Order\Models\Order;
 use App\Ship\Parents\Actions\Action;
 use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
 use Apiato\Core\Foundation\Facades\Apiato;
@@ -52,7 +52,7 @@ class UpdateOrCreateCommentsAction extends Action
                 if(empty($validateComments) || empty($validateUserComments))
                     throw new WrongEnoughIfException(GlobalStatusCode::COMMENTS_DATA_NOTHING);
                 // 检测当前订单是否处在待评价状态
-                if($validateUserComments['order_status'] !== OrderBase::ORDER_STATUS_WAIT_APPRAISE)
+                if($validateUserComments['order_status'] !== Order::ORDER_STATUS_WAIT_APPRAISE)
                     throw new WrongEnoughIfException(GlobalStatusCode::COMMENTS_ORDER_NOT_TRUE);
                 // 更新或者创建评论
                 $result = Apiato::call('Order@UpdateOrCreateCommentsTask', [[
@@ -62,7 +62,7 @@ class UpdateOrCreateCommentsAction extends Action
                 Apiato::call('Order@UpdateOrderBaseTask', [[
                     'id' => $data['base_id']
                 ], [
-                    'order_status' => OrderBase::ORDER_STATUS_SUCCESS
+                    'order_status' => Order::ORDER_STATUS_SUCCESS
                 ]]);
                 // 图片处理
                 if(!empty($media_id)) {

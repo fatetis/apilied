@@ -2,10 +2,10 @@
 
 namespace App\Containers\Order\UI\API\Transformers;
 
-use App\Containers\Order\Models\OrderChild;
+use App\Containers\Order\Models\ProductOrderChild;
 use App\Ship\Parents\Transformers\Transformer;
 
-class OrderChildTransformer extends Transformer
+class ProductOrderChildTransformer extends Transformer
 {
     /**
      * @var  array
@@ -22,16 +22,17 @@ class OrderChildTransformer extends Transformer
     ];
 
     /**
-     * @param OrderChild $entity
+     * @param ProductOrderChild $entity
      *
      * @return array
      */
-    public function transform(OrderChild $entity)
+    public function transform(ProductOrderChild $entity)
     {
         $response = [
 //            'object' => 'OrderChild',
             'id' => $entity->getHashedKey(),
             'order_id' => $entity->getHashedKey('order_id'),
+            'product_order_id' => $entity->getHashedKey('product_order_id'),
             'product_id' => $entity->getHashedKey('product_id'),
             'sku_id' => $entity->sku_id,
             'product_price' => $entity->product_price,

@@ -4,9 +4,9 @@ namespace App\Containers\Order\Models;
 
 use App\Ship\Parents\Models\Model;
 
-class OrderChild extends Model
+class ProductOrderChild extends Model
 {
-    protected $table = 'order_child';
+    protected $table = 'product_order_child';
 
     protected $guarded = [
         'id'

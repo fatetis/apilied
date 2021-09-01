@@ -6,14 +6,15 @@ use Apiato\Core\Foundation\Facades\Apiato;
 use App\Containers\Order\UI\API\Requests\FindCommentsByIdRequest;
 use App\Containers\Order\UI\API\Requests\GetCommentsByPidRequest;
 use App\Containers\Order\UI\API\Requests\UpdateOrCreateCommentsRequest;
-use App\Containers\Order\UI\API\Requests\FindOrderBaseByOrderNoRequest;
-use App\Containers\Order\UI\API\Requests\GetAllOrderBaseByStatusRequest;
+use App\Containers\Order\UI\API\Requests\FindOrderByOrderNoRequest;
+use App\Containers\Order\UI\API\Requests\GetAllOrderByStatusRequest;
 use App\Containers\Order\UI\API\Requests\GetCommentsRequest;
 use App\Containers\Order\UI\API\Requests\HandleSyncCallBackToWeChatRequest;
 use App\Containers\Order\UI\API\Requests\OrderRequest;
 use App\Containers\Order\UI\API\Requests\UpdateOrderBaseRequest;
 use App\Containers\Order\UI\API\Transformers\CommentsTransformer;
-use App\Containers\Order\UI\API\Transformers\OrderBaseTransformer;
+use App\Containers\Order\UI\API\Transformers\OrderTransformer;
+use App\Containers\Order\UI\API\Transformers\ProductOrderTransformer;
 use App\Ship\Parents\Controllers\ApiController;
 use App\Ship\Transporters\DataTransporter;
 
@@ -31,7 +32,7 @@ class Controller extends ApiController
     {
         // sku_id num address_id
         $result = Apiato::call('Order@CreateOrderAction', [new DataTransporter($request)]);
-        $result = is_string($result) ? $result : $this->transform($result, OrderBaseTransformer::class);
+        $result = is_string($result) ? $result : $this->transform($result, OrderTransformer::class);
         return $this->successResponse($request, $result);
     }
 
@@ -51,29 +52,29 @@ class Controller extends ApiController
 
     /**
      * 获取一条订单详情的数据
-     * @param FindOrderBaseByOrderNoRequest $request
+     * @param FindOrderByOrderNoRequest $request
      * @return false|\Illuminate\Http\JsonResponse|string
      * Author: fatetis
      * Date:2020/11/16 001619:10
      */
-    public function findOrderBaseByOrderNo(FindOrderBaseByOrderNoRequest $request)
+    public function findOrderByOrderNo(FindOrderByOrderNoRequest $request)
     {
-        $result = Apiato::call('Order@FindOrderBaseByOrderNoAndUserIdAction', [new DataTransporter($request)]);
-        $result = is_string($result) ? $result : $this->transform($result, OrderBaseTransformer::class);
+        $result = Apiato::call('Order@FindOrderByOrderNoAndUserIdAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, OrderTransformer::class);
         return $this->successResponse($request, $result);
     }
 
     /**
      * 获取订单列表的数据
-     * @param GetAllOrderBaseByStatusRequest $request
+     * @param GetAllOrderByStatusRequest $request
      * @return false|\Illuminate\Http\JsonResponse|string
      * Author: fatetis
      * Date:2020/11/17 001710:34
      */
-    public function getAllOrderBaseByStatus(GetAllOrderBaseByStatusRequest $request)
+    public function getAllOrderByStatus(GetAllOrderByStatusRequest $request)
     {
-        $result = Apiato::call('Order@GetAllOrderBaseByStatusAction', [new DataTransporter($request)]);
-        $result = is_string($result) ? $result : $this->transform($result, OrderBaseTransformer::class);
+        $result = Apiato::call('Order@GetAllOrderByStatusAction', [new DataTransporter($request)]);
+        $result = is_string($result) ? $result : $this->transform($result, ProductOrderTransformer::class);
         return $this->successResponse($request, $result);
     }
 

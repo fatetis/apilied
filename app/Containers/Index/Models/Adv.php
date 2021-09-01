@@ -39,4 +39,9 @@ class Adv extends Model
     {
         return $this->belongsTo(Media::class, 'media_id');
     }
+
+    /**
+     * 个人中心广告图
+     */
+    const ENAME_USER_CENTER = 'user_center';
 }

@@ -2,7 +2,7 @@
 
 namespace App\Containers\Order\UI\API\Requests;
 
-use App\Containers\Order\Models\OrderBase;
+use App\Containers\Order\Models\Order;
 use App\Ship\Parents\Requests\Request;
 
 /**
@@ -57,11 +57,9 @@ class UpdateOrCreateCommentsRequest extends Request
     public function rules()
     {
         return [
-            'base_id' => 'required|exists:order_base,id,order_status,'.OrderBase::ORDER_STATUS_WAIT_APPRAISE.',deleted_at,NULL',
+            'child_id' => 'required|exists:order_child,id,deleted_at,NULL',
             'pid' => 'exists:comments,id,deleted_at,NULL',
-            'id' => 'exists:comments,id,deleted_at,NULL',
-            'tid' => 'exists:comments,id,deleted_at,NULL',
-            'product_id' => 'required|exists:comments,id,deleted_at,NULL',
+            't_uid' => 'exists:comments,id,deleted_at,NULL',
             'content' => 'required|max:255',
             'content_rank' => 'numeric|min:0.5|max:5',
             'media_id' => 'array|exists:media,id,deleted_at,NULL'
@@ -71,13 +69,12 @@ class UpdateOrCreateCommentsRequest extends Request
     public function messages()
     {
         return [
-            'base_id.required' => '缺少base_id必要参数，请刷新重试',
-            'base_id.exists' => 'base_id数据不存在，请退出重试',
+            'child_id.required' => '缺少base_id必要参数，请刷新重试',
+            'child_id.exists' => 'base_id数据不存在，请退出重试',
             'product_id.required' => '缺少product_id必要参数，请刷新重试',
             'product_id.exists' => 'product_id数据不存在，请退出重试',
             'pid.exists' => 'pid数据不存在，请退出重试',
-            'id.exists' => 'id数据不存在，请退出重试',
-            'tid.exists' => 'id数据不存在，请退出重试',
+            't_uid.exists' => 't_uid数据不存在，请退出重试',
             'content.required' => '评论内容不能为空',
             'content.max' => '评论内容超出字符限制，最大255个字符',
             'content_rank.numeric' => '评论分数参数不正确',

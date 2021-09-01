@@ -2,17 +2,17 @@
 
 namespace App\Containers\Order\Tasks;
 
-use App\Containers\Order\Data\Repositories\OrderChildRepository;
+use App\Containers\Order\Data\Repositories\ProductOrderRepository;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task;
 use Exception;
 
-class CreateOrderChildTask extends Task
+class CreateProductOrderTask extends Task
 {
 
     protected $repository;
 
-    public function __construct(OrderChildRepository $repository)
+    public function __construct(ProductOrderRepository $repository)
     {
         $this->repository = $repository;
     }

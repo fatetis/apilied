@@ -2,7 +2,7 @@
 
 namespace App\Containers\Order\Actions;
 
-use App\Containers\Order\Models\OrderBase;
+use App\Containers\Order\Models\Order;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
@@ -18,7 +18,7 @@ class UpdateOrderBaseAction extends Action
             ];
             $update_data = array_filter($update_data);
             $status = $data->status;
-            if($status !== null && in_array($status, OrderBase::ORDER_STATUS)) {
+            if($status !== null && in_array($status, Order::ORDER_STATUS)) {
                 $update_data['order_status'] = $status;
             }
             $user_info = Apiato::call('Authentication@GetAuthenticatedUserTask');
