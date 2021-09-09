@@ -24,6 +24,6 @@ class GetAllProductOrderByUserIdAndStatusTask extends Task
                 ]);
             }]);
         !in_array(null, $status) && $sql = $sql->whereIn('show_status', $status);
-        return $sql->paginate(10);
+        return $sql->orderBy('created_at', 'desc')->paginate(10);
     }
 }

@@ -28,6 +28,8 @@ class ProductOrderChildTransformer extends Transformer
      */
     public function transform(ProductOrderChild $entity)
     {
+        $product_price = explode('.', $entity->product_price);
+
         $response = [
 //            'object' => 'OrderChild',
             'id' => $entity->getHashedKey(),
@@ -35,7 +37,11 @@ class ProductOrderChildTransformer extends Transformer
             'product_order_id' => $entity->getHashedKey('product_order_id'),
             'product_id' => $entity->getHashedKey('product_id'),
             'sku_id' => $entity->sku_id,
-            'product_price' => $entity->product_price,
+            'product_price' => [
+                'price' => $entity->product_price,
+                'int' => $product_price[0],
+                'point' => empty((int)$product_price[1]) ? '' : $product_price[1],
+            ],
             'shipping_fee' => $entity->shipping_fee,
             'number' => $entity->number,
             'delivery_id' => $entity->getHashedKey('delivery_id'),

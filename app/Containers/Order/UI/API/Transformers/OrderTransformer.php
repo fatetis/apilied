@@ -31,25 +31,28 @@ class OrderTransformer extends Transformer
     {
         $price = explode('.', $entity->price);
         $pay_price = explode('.', $entity->pay_price);
+        $discount_price = explode('.', $entity->discount_price);
         $response = [
-//            'object' => 'OrderBase',
             'id' => $entity->getHashedKey(),
             'orderno' => $entity->orderno,
 //            'paidno' => $entity->paidno,
 //            'user_id' => $entity->user_id,
-//            'price' => $entity->price,
             'price' => [
                 'price' => $entity->price,
                 'int' => $price[0],
-                'point' => $price[1],
+                'point' => empty((int)$price[1]) ? '' : $price[1],
             ],
             'pay_price' => [
                 'price' => $entity->pay_price ?? 0,
-                'int' => !empty($pay_price[0]) ? $pay_price[0] : 0,
-                'point' => $pay_price[1] ?? 0,
+                'int' => empty((int)$pay_price[0]) ? 0 : $pay_price[0],
+                'point' => empty((int)($pay_price[1] ?? 0)) ? '' : $pay_price[1],
+            ],
+            'discount_price' => [
+                'price' => $entity->discount_price ?? 0,
+                'int' => empty((int)$discount_price[0]) ? 0 : $discount_price[0],
+                'point' => empty((int)($discount_price[1] ?? 0)) ? '' : $discount_price[1],
             ],
             'shipping_price' => $entity->shipping_price,
-//            'pay_price' => $entity->pay_price,
             'order_status' => $entity->order_status,
             'order_status_text' => Order::ORDER_STATUS[$entity->order_status],
 //            'pay_status' => $entity->pay_status,
