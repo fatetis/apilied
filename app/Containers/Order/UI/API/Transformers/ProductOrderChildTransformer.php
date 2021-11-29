@@ -3,6 +3,8 @@
 namespace App\Containers\Order\UI\API\Transformers;
 
 use App\Containers\Order\Models\ProductOrderChild;
+use App\Containers\Product\UI\API\Transformers\ProductSkuTransformer;
+use App\Containers\Product\UI\API\Transformers\ProductTransformer;
 use App\Ship\Parents\Transformers\Transformer;
 
 class ProductOrderChildTransformer extends Transformer
@@ -18,7 +20,8 @@ class ProductOrderChildTransformer extends Transformer
      * @var  array
      */
     protected $availableIncludes = [
-
+        'product',
+        'productSku'
     ];
 
     /**
@@ -57,5 +60,15 @@ class ProductOrderChildTransformer extends Transformer
         ], $response);
 
         return $response;
+    }
+
+    public function includeProduct(ProductOrderChild $order)
+    {
+        return $this->item($order->product, new ProductTransformer());
+    }
+
+    public function includeProductSku(ProductOrderChild $order)
+    {
+        return $this->item($order->productSku, new ProductSkuTransformer());
     }
 }

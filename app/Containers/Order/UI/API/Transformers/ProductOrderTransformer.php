@@ -20,7 +20,8 @@ class ProductOrderTransformer extends Transformer
     protected $availableIncludes = [
         'productOrderChild',
         'brand',
-        'order'
+        'order',
+        'shippingAddress'
     ];
 
     /**
@@ -65,5 +66,10 @@ class ProductOrderTransformer extends Transformer
     public function includeOrder(ProductOrder $order)
     {
         return $this->item($order->order, new OrderTransformer());
+    }
+
+    public function includeShippingAddress(ProductOrder $order)
+    {
+        return $this->item($order->shippingAddress, new ShippingAddressTransformer());
     }
 }

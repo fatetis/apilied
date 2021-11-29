@@ -55,7 +55,7 @@ class OrderRequest extends Request
             'sku_id' => 'required',
             'num' => 'numeric',
             'address_id' => 'required|numeric|exists:user_address,id,deleted_at,NULL',
-            'cart_ids' => 'exists:cart,id,deleted_at,NULL',
+//            'cart_ids' => 'exists:cart,id,deleted_at,NULL',
         ];
     }
 
@@ -67,7 +67,7 @@ class OrderRequest extends Request
             'address_id.required' => '请填写收货人信息',
             'address_id.numeric' => '收货人信息数据类型不正确',
             'address_id.exists' => '收货人信息不存在',
-            'cart_ids.exists' => '数据不存在【cart_ids】，请退出重试',
+//            'cart_ids.exists' => '数据不存在【cart_ids】，请退出重试',
         ];
     }
 

@@ -22,7 +22,7 @@ class GetCompletePCAByAreaIdAction extends Action
                 $result[$value['region_id']]['city'] = $region_name[$city];
                 $result[$value['region_id']]['county'] = $region_name[$county];
                 $result[$value['region_id']]['area_code'] = $value['region_code'];
-                $result[$value['region_id']]['pca'] = $region_name[$province].$region_name[$city].$region_name[$county];
+                $result[$value['region_id']]['pca'] = $region_name[$province].'/'.$region_name[$city].'/'.$region_name[$county];
             });
             return $result;
         }catch (\Throwable $throwable){

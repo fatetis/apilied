@@ -2,6 +2,7 @@
 
 namespace App\Containers\Order\Actions;
 
+use Apiato\Core\Traits\HashIdTrait;
 use App\Containers\Order\Exceptions\WrongEnoughIfException;
 use App\Containers\Order\Models\ProductOrder;
 use App\Containers\Order\Models\Order;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 class CreateOrderAction extends Action
 {
+    use HashIdTrait;
     public function run($data)
     {
         try{
@@ -76,11 +78,12 @@ class CreateOrderAction extends Action
             $brand_id = $value->product->brand_id;
         }
         /**
-         * 订单基础数据
+         * 订单基础数据 todo: 优惠价格与运费未进行处理
          */
-        $order_base_data = [
+        $order_data = [
             'orderno'      => $this->generateOrderNo($user_info['id']),
             'user_id'      => $user_info['id'],
+            'origin_price' => $total_price,
             'price'        => $total_price,
 //            'shipping_price' => null,
             'pay_price'    => null,
@@ -88,8 +91,8 @@ class CreateOrderAction extends Action
             'pay_status'   => Order::PAY_STATUS_PAY,
             'source'       => Order::SOURCE_ORDINARY,
         ];
-        $order_snapshot['order_base'] = $order_base_data;
-        $order_base_result = Apiato::call('Order@CreateOrderTask', [$order_base_data]);
+        $order_snapshot['order'] = $order_data;
+        $order_base_result = Apiato::call('Order@CreateOrderTask', [$order_data]);
         /**
          * 配送地址数据
          */
@@ -103,11 +106,12 @@ class CreateOrderAction extends Action
             'code'       => $address_info->code,
         ];
         $order_snapshot['shipping_address'] = $shipping_address_data;
-
+        $region = Apiato::call('Region@GetCompletePCAByAreaIdAction', [[$shipping_address_data['region_aid']]]);
+        $order_snapshot['shipping_address']['pca'] = $region[$shipping_address_data['region_aid']]['pca'];
         $shipping_address_result = Apiato::call('Order@CreateShippingAddressTask', [$shipping_address_data]);
 
         // todo: 订单数据需扩展兼容多商家结算
-        $order_data = [
+        $product_order_data = [
             'order_id'            => $order_base_result['id'],
             'brand_id'            => $brand_id,
             'shipping_address_id' => $shipping_address_result['id'],
@@ -115,14 +119,15 @@ class CreateOrderAction extends Action
             'order_type'          => ProductOrder::ORDER_TYPE_ORDINARY,
             'show_status'         => ProductOrder::SHOW_STATUS_WAIT_PAY
         ];
-        $order_snapshot['order'] = $order_data;
-        $order_result = Apiato::call('Order@CreateProductOrderTask', [$order_data]);
+        $order_snapshot['product_order'] = $product_order_data;
+        $order_result = Apiato::call('Order@CreateProductOrderTask', [$product_order_data]);
         /**
          * 删除购物车数据
          */
         if ($request_info->cart_ids) {
             foreach ($request_info->cart_ids as $val) {
-                Apiato::call('Cart@DeleteCartByUserIdAndIdTask', [$val, $user_info['id']]);
+                $decode = $this->decode($val);
+                Apiato::call('Cart@DeleteCartByUserIdAndIdTask', [$decode, $user_info['id']]);
             }
         }
 

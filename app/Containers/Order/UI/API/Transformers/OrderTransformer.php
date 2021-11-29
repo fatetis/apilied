@@ -29,14 +29,21 @@ class OrderTransformer extends Transformer
      */
     public function transform(Order $entity)
     {
+        $origin_price = explode('.', $entity->origin_price);
         $price = explode('.', $entity->price);
         $pay_price = explode('.', $entity->pay_price);
         $discount_price = explode('.', $entity->discount_price);
+        $shipping_price = explode('.', $entity->shipping_price);
         $response = [
             'id' => $entity->getHashedKey(),
             'orderno' => $entity->orderno,
 //            'paidno' => $entity->paidno,
 //            'user_id' => $entity->user_id,
+            'origin_price' => [
+                'price' => $entity->origin_price,
+                'int' => $origin_price[0],
+                'point' => empty((int)$origin_price[1]) ? '' : $origin_price[1],
+            ],
             'price' => [
                 'price' => $entity->price,
                 'int' => $price[0],
@@ -52,10 +59,14 @@ class OrderTransformer extends Transformer
                 'int' => empty((int)$discount_price[0]) ? 0 : $discount_price[0],
                 'point' => empty((int)($discount_price[1] ?? 0)) ? '' : $discount_price[1],
             ],
-            'shipping_price' => $entity->shipping_price,
+            'shipping_price' => [
+                'price' => $entity->shipping_price ?? 0,
+                'int' => empty((int)$shipping_price[0]) ? 0 : $shipping_price[0],
+                'point' => empty((int)($shipping_price[1] ?? 0)) ? '' : $shipping_price[1],
+            ],
             'order_status' => $entity->order_status,
             'order_status_text' => Order::ORDER_STATUS[$entity->order_status],
-//            'pay_status' => $entity->pay_status,
+            'pay_status' => $entity->pay_status,
 //            'source' => $entity->source,
             'created_at' => toDateTimeString($entity->created_at),
 //            'updated_at' => $entity->updated_at,
@@ -73,7 +84,7 @@ class OrderTransformer extends Transformer
 
     public function includeProductOrder(Order $order)
     {
-        return $this->item($order->productOrder, new ProductOrderTransformer());
+        return $this->collection($order->productOrder, new ProductOrderTransformer());
     }
 
     public function includeSnapshot(Order $order)

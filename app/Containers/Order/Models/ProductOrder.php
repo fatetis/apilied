@@ -81,4 +81,8 @@ class ProductOrder extends Model
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
+
+    public function shippingAddress() {
+        return $this->hasOne(ShippingAddress::class, 'id', 'shipping_address_id');
+    }
 }

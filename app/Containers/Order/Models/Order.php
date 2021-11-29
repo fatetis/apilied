@@ -63,7 +63,7 @@ class Order extends Model
 
     public function productOrder()
     {
-        return $this->hasOne(ProductOrder::class, 'order_id', 'id')->with('productOrderChild');
+        return $this->hasMany(ProductOrder::class, 'order_id', 'id')->with('productOrderChild');
     }
 
     public function snapshot()
