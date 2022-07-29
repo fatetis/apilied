@@ -17,8 +17,7 @@ class HandleSyncNotifyToOrderSubAction extends SubAction
             $orderno = $data['orderno'];
             $order_info = Apiato::call('Order@FirstOrderByOrdernoWithProductOrderAndProductOrderChildTask', [$orderno]);
             if(
-                $order_info->productOrder->order_status == ProductOrder::SHOW_STATUS_WAIT_PAY
-                && $order_info->pay_status == Order::PAY_STATUS_PAY
+                $order_info->pay_status == Order::PAY_STATUS_PAY
                 && $order_info->order_status == Order::ORDER_STATUS_TRADING
             ) {
                 /**
@@ -45,8 +44,17 @@ class HandleSyncNotifyToOrderSubAction extends SubAction
                 ];
                 Apiato::call('Pay@UpdateOrCreatePayLogByOrdernoTask', [$filter_data, $data]);
                 // 产品sku的销量新增
-                foreach ($order_info->productOrder->productOrderChild as $value) {
-                    Apiato::call('Product@IncrementProductSkuSoldNumByIdTask', [$value->id]);
+                foreach ($order_info->productOrder as $value) {
+                    $value->show_status = ProductOrder::SHOW_STATUS_WAIT_DELIVERY;
+                    $value->save();
+                    foreach ($value->productOrderChild as $val) {
+                        Apiato::call('Product@IncrementProductSkuSoldNumByIdTask', [
+                            $val->id,
+                            $val->number
+                        ]);
+                        $val->show_status = ProductOrder::SHOW_STATUS_WAIT_DELIVERY;
+                        $val->save();
+                    }
                 }
             }
         });

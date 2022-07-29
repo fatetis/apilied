@@ -11,7 +11,6 @@ use App\Ship\Exceptions\NotFoundException;
 use App\Ship\Parents\Actions\Action;
 use Apiato\Core\Foundation\Facades\Apiato;
 use App\Ship\Parents\Controllers\Codes\GlobalStatusCode;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class CreateOrderAction extends Action
@@ -139,7 +138,10 @@ class CreateOrderAction extends Action
             /**
              * 减少库存
              */
-            Apiato::call('Product@DecrementProductSkuStockQuantityBySkuIdTask', [$val['sku_id']]);
+            Apiato::call('Product@DecrementProductSkuStockQuantityBySkuIdTask', [
+                $val['sku_id'],
+                $val['number']
+            ]);
         }
         $snapshot['id_value'] = $order_base_result['id'];
         $snapshot['value']    = je($order_snapshot);
